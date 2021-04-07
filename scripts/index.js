@@ -10,32 +10,31 @@ startButton.addEventListener('click', startGame)
 
 // game state
 const width = 28
-const squares = []
+let squares = []
 let score = 0
 let pacmanCurrentIndex = 490
 
 // create board
 function createBoard () {
-  // for loop
-  for (let i = 0; i < layout.length; i++) {
-    // create a square
+  squares = layout.map(cell => {
     const square = document.createElement('div')
-    // put square in grid
-    grid.appendChild(square)
-    // put square in squares array
-    squares.push(square)
 
-    if (layout[i] === 0) {
-      squares[i].classList.add('pac-dot')
-    } else if (layout[i] === 1) {
-      squares[i].classList.add('wall')
-    } else if (layout[i] === 2) {
-      squares[i].classList.add('ghost-lair')
-    } else if (layout[i] === 3) {
-      squares[i].classList.add('power-pellet')
+    grid.appendChild(square)
+
+    if (cell === 0) {
+      square.classList.add('pac-dot')
+    } else if (cell === 1) {
+      square.classList.add('wall')
+    } else if (cell === 2) {
+      square.classList.add('ghost-lair')
+    } else if (cell === 3) {
+      square.classList.add('power-pellet')
     }
-  }
+
+    return square
+  })
 }
+
 createBoard()
 
 function startGame () {
