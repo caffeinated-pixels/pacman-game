@@ -1,8 +1,16 @@
-const width = 28
+// element variables
 const grid = document.querySelector('.grid')
 const scoreDisplay = document.getElementById('score')
+const startButton = document.getElementById('start-btn')
+
+document.addEventListener('keyup', control)
+startButton.addEventListener('click', startGame)
+
+// game state
+const width = 28
 const squares = []
 let score = 0
+let pacmanCurrentIndex = 490
 
 // 0 - pacdots
 // 1 - wall
@@ -66,13 +74,17 @@ function createBoard () {
 }
 createBoard()
 
+function startGame () {
+  ghosts.forEach(ghost => moveGhost(ghost))
+}
+
 // down - 40
 // up key - 38
 // left - 37
 // right - 39
 
 // starting position of pacman
-let pacmanCurrentIndex = 490
+
 squares[pacmanCurrentIndex].classList.add('pacman')
 
 function control (e) {
@@ -131,7 +143,6 @@ function control (e) {
   checkForWin()
   checkForGameOver()
 }
-document.addEventListener('keyup', control)
 
 function pacDotEaten () {
   if (squares[pacmanCurrentIndex].classList.contains('pac-dot')) {
@@ -182,9 +193,6 @@ ghosts.forEach(ghost => {
   squares[ghost.currentIndex].classList.add(ghost.className)
   squares[ghost.currentIndex].classList.add('ghost')
 })
-
-// move the ghosts
-ghosts.forEach(ghost => moveGhost(ghost))
 
 function moveGhost (ghost) {
   console.log('moved ghost')
