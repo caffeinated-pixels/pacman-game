@@ -5,7 +5,7 @@ const grid = document.querySelector('.grid')
 const scoreDisplay = document.getElementById('score')
 const startButton = document.getElementById('start-btn')
 
-document.addEventListener('keyup', control)
+document.addEventListener('keydown', control)
 startButton.addEventListener('click', startGame)
 
 // game state
@@ -41,13 +41,6 @@ createBoard()
 function startGame () {
   ghosts.forEach(ghost => moveGhost(ghost))
 }
-
-// down - 40
-// up key - 38
-// left - 37
-// right - 39
-
-// starting position of pacman
 
 squares[pacmanCurrentIndex].classList.add('pacman')
 
