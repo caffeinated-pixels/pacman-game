@@ -4,6 +4,11 @@ body {
   justify-content: center;
 }
 
+.score-board {
+  display: flex;
+  justify-content: space-between;
+}
+
 .grid {
   display: flex;
   flex-wrap: wrap;
