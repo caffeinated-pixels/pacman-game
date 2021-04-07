@@ -51,10 +51,10 @@ function startGame () {
 
 squares[pacmanCurrentIndex].classList.add('pacman')
 
-function control (e) {
+function control (event) {
   squares[pacmanCurrentIndex].classList.remove('pacman')
-  switch (e.keyCode) {
-    case 40:
+  switch (event.key) {
+    case 'ArrowDown':
       console.log('pressed down')
       if (
         !squares[pacmanCurrentIndex + width].classList.contains('ghost-lair') &&
@@ -64,7 +64,7 @@ function control (e) {
         pacmanCurrentIndex += width
       }
       break
-    case 38:
+    case 'ArrowUp':
       console.log('pressed up')
       if (
         !squares[pacmanCurrentIndex - width].classList.contains('ghost-lair') &&
@@ -74,7 +74,7 @@ function control (e) {
         pacmanCurrentIndex -= width
       }
       break
-    case 37:
+    case 'ArrowLeft':
       console.log('pressed left')
       if (
         !squares[pacmanCurrentIndex - 1].classList.contains('ghost-lair') &&
@@ -87,7 +87,7 @@ function control (e) {
         pacmanCurrentIndex = 391
       }
       break
-    case 39:
+    case 'ArrowRight':
       console.log('pressed right')
       if (
         !squares[pacmanCurrentIndex + 1].classList.contains('ghost-lair') &&
