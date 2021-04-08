@@ -13,8 +13,12 @@ const width = 28
 let squares = []
 let score = 0
 let pacmanCurrentIndex = 490
+let isPaused = true
 
-// create board
+// setup board
+createBoard()
+squares[pacmanCurrentIndex].classList.add('pacman')
+
 function createBoard () {
   squares = layout.map(cell => {
     const square = document.createElement('div')
@@ -35,13 +39,15 @@ function createBoard () {
   })
 }
 
-createBoard()
-
 function startGame () {
-  ghosts.forEach(ghost => moveGhost(ghost))
+  if (isPaused) {
+    isPaused = false
+    ghosts.forEach(ghost => moveGhost(ghost))
+  } else if (!isPaused) {
+    isPaused = true
+    ghosts.forEach(ghost => clearInterval(ghost.timerId))
+  }
 }
-
-squares[pacmanCurrentIndex].classList.add('pacman')
 
 function control (event) {
   squares[pacmanCurrentIndex].classList.remove('pacman')
