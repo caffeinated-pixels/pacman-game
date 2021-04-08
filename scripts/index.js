@@ -1,6 +1,12 @@
 import { layout } from './layout.js'
 import { state } from './game-state.js'
 import { createNewGhosts } from './ghosts.js'
+import {
+  movePacmanDown,
+  movePacmanUp,
+  movePacmanLeft,
+  movePacmanRight
+} from './pacman-movement.js'
 
 // element variables
 const grid = document.querySelector('.grid')
@@ -103,19 +109,19 @@ function handleControlInput (event) {
   switch (input) {
     case 'ArrowDown':
     case 'down':
-      movePacmanDown()
+      movePacmanDown(state, width)
       break
     case 'ArrowUp':
     case 'up':
-      movePacmanUp()
+      movePacmanUp(state, width)
       break
     case 'ArrowLeft':
     case 'left':
-      movePacmanLeft()
+      movePacmanLeft(state, width)
       break
     case 'ArrowRight':
     case 'right':
-      movePacmanRight()
+      movePacmanRight(state, width)
       break
   }
   state.squares[state.pacmanCurrentIndex].classList.add('pacman')
@@ -123,64 +129,6 @@ function handleControlInput (event) {
   powerPelletEaten()
   checkForWin()
   checkForGameOver()
-}
-
-function movePacmanDown () {
-  if (
-    !state.squares[state.pacmanCurrentIndex + width].classList.contains(
-      'ghost-lair'
-    ) &&
-    !state.squares[state.pacmanCurrentIndex + width].classList.contains(
-      'wall'
-    ) &&
-    state.pacmanCurrentIndex + width < width * width
-  ) {
-    state.pacmanCurrentIndex += width
-  }
-}
-
-function movePacmanUp () {
-  if (
-    !state.squares[state.pacmanCurrentIndex - width].classList.contains(
-      'ghost-lair'
-    ) &&
-    !state.squares[state.pacmanCurrentIndex - width].classList.contains(
-      'wall'
-    ) &&
-    state.pacmanCurrentIndex - width >= 0
-  ) {
-    state.pacmanCurrentIndex -= width
-  }
-}
-
-function movePacmanLeft () {
-  if (
-    !state.squares[state.pacmanCurrentIndex - 1].classList.contains(
-      'ghost-lair'
-    ) &&
-    !state.squares[state.pacmanCurrentIndex - 1].classList.contains('wall') &&
-    state.pacmanCurrentIndex % width !== 0
-  ) {
-    state.pacmanCurrentIndex -= 1
-  }
-  if (state.pacmanCurrentIndex === 364) {
-    state.pacmanCurrentIndex = 391
-  }
-}
-
-function movePacmanRight () {
-  if (
-    !state.squares[state.pacmanCurrentIndex + 1].classList.contains(
-      'ghost-lair'
-    ) &&
-    !state.squares[state.pacmanCurrentIndex + 1].classList.contains('wall') &&
-    state.pacmanCurrentIndex % width < width - 1
-  ) {
-    state.pacmanCurrentIndex += 1
-  }
-  if (state.pacmanCurrentIndex === 391) {
-    state.pacmanCurrentIndex = 364
-  }
 }
 
 function pacDotEaten () {
