@@ -1,6 +1,12 @@
 // main: ./main.scss
+.game-screen {
+  background: #202020;
+  padding: 1em;
+  border-radius: 20px;
+}
 
-.score-board {
+
+.score-board, .game-info {
   display: flex;
   justify-content: space-between;
 }

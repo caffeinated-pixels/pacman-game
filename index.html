@@ -4,6 +4,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Pac-Man</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
       rel="stylesheet"
@@ -13,12 +18,59 @@
   </head>
   <body>
     <div class="main-container">
-      <div class="score-board">
-        <p>Score: <span id="score">0</span></p>
-        <button id="start-btn" class="start-btn">Start/Pause</button>
+      <div class="game-screen">
+        <div class="score-board">
+          <p>Score: <span id="score">0</span></p>
+          <p>Hiscore: 0</p>
+        </div>
+        <div class="grid"></div>
+        <div class="game-info">
+          <p>Lives: 3</p>
+          <p>Cherry</p>
+        </div>
       </div>
-      <div class="grid"></div>
-      <div class="game-info"></div>
+
+      <div class="btn-container">
+        <div class="d-pad-container">
+          <div class="btn-row1">
+            <button id="up" class="button d-btn" aria-label="move snake up">
+              <i class="fas fa-arrow-up"></i>
+            </button>
+          </div>
+
+          <div class="btn-row2">
+            <button id="left" class="button d-btn" aria-label="move snake left">
+              <i class="fas fa-arrow-left"></i>
+            </button>
+            <button
+              id="right"
+              class="button d-btn"
+              aria-label="move snake right"
+            >
+              <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+
+          <div class="btn-row3">
+            <button id="down" class="button d-btn" aria-label="move snake down">
+              <i class="fas fa-arrow-down"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="game-btns-container">
+          <button
+            id="start-btn"
+            class="button game-btn"
+            aria-label="start/pause game"
+          >
+            <i class="fas fa-play"></i>
+          </button>
+          <button id="reset" class="button game-btn" aria-label="reset game">
+            <i class="fas fa-redo-alt"></i>
+          </button>
+        </div>
+      </div>
     </div>
 
     <script src="./scripts/index.js" type="module"></script>

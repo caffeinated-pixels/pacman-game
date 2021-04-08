@@ -1,0 +1,58 @@
+// main: ./main.scss
+
+.btn-container {
+  display: flex;
+  justify-content: space-between;
+  width: 88%;
+  margin: 25px auto;
+}
+
+.button {
+  width: 40px;
+  height: 40px;
+  border: unset;
+
+  cursor: pointer;
+  box-shadow: 2px 2px 4px black;
+
+  text-decoration: none;
+  padding: 0;
+  font-size: 1rem;
+  color: white;
+}
+
+.game-btn {
+  background-color: #ab3c63;
+  border-radius: 100%;
+}
+
+.d-btn {
+  border-radius: 5%;
+  background-color: #313130;
+}
+
+.button:hover,
+.button:focus {
+  border: 2px solid orange;
+  outline-style: none;
+}
+
+.button:active {
+  background-color: gray;
+  transform: scale(0.9);
+}
+
+.d-pad-container {
+  width: 120px;
+}
+
+.btn-row1,
+.btn-row3 {
+  display: flex;
+  justify-content: center;
+}
+
+.btn-row2 {
+  display: flex;
+  justify-content: space-between;
+}
