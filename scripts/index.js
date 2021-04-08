@@ -1,5 +1,5 @@
 import { layout } from './layout.js'
-import { ghosts } from './ghosts.js'
+import { createNewGhosts } from './ghosts.js'
 
 // element variables
 const grid = document.querySelector('.grid')
@@ -16,6 +16,7 @@ let score = 0
 let pacmanCurrentIndex = 490
 let isPaused = true
 const isGameOver = true
+const ghosts = createNewGhosts()
 
 // setup board
 createBoard()

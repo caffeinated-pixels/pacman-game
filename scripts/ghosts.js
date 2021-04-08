@@ -9,9 +9,11 @@ class Ghost {
   }
 }
 
-export const ghosts = [
-  new Ghost('blinky', 348, 250),
-  new Ghost('pinky', 376, 400),
-  new Ghost('inky', 351, 300),
-  new Ghost('clyde', 379, 500)
-]
+export function createNewGhosts () {
+  return [
+    new Ghost('blinky', 348, 250),
+    new Ghost('pinky', 376, 400),
+    new Ghost('inky', 351, 300),
+    new Ghost('clyde', 379, 500)
+  ]
+}
