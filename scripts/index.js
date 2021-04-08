@@ -47,7 +47,6 @@ function control (event) {
   squares[pacmanCurrentIndex].classList.remove('pacman')
   switch (event.key) {
     case 'ArrowDown':
-      console.log('pressed down')
       if (
         !squares[pacmanCurrentIndex + width].classList.contains('ghost-lair') &&
         !squares[pacmanCurrentIndex + width].classList.contains('wall') &&
@@ -57,7 +56,6 @@ function control (event) {
       }
       break
     case 'ArrowUp':
-      console.log('pressed up')
       if (
         !squares[pacmanCurrentIndex - width].classList.contains('ghost-lair') &&
         !squares[pacmanCurrentIndex - width].classList.contains('wall') &&
@@ -67,7 +65,6 @@ function control (event) {
       }
       break
     case 'ArrowLeft':
-      console.log('pressed left')
       if (
         !squares[pacmanCurrentIndex - 1].classList.contains('ghost-lair') &&
         !squares[pacmanCurrentIndex - 1].classList.contains('wall') &&
@@ -80,7 +77,6 @@ function control (event) {
       }
       break
     case 'ArrowRight':
-      console.log('pressed right')
       if (
         !squares[pacmanCurrentIndex + 1].classList.contains('ghost-lair') &&
         !squares[pacmanCurrentIndex + 1].classList.contains('wall') &&
@@ -103,7 +99,7 @@ function control (event) {
 function pacDotEaten () {
   if (squares[pacmanCurrentIndex].classList.contains('pac-dot')) {
     squares[pacmanCurrentIndex].classList.remove('pac-dot')
-    score++
+    score += 10
     scoreDisplay.innerHTML = score
   }
 }
@@ -114,7 +110,7 @@ function powerPelletEaten () {
     // remove power pellet class
     squares[pacmanCurrentIndex].classList.remove('power-pellet')
     // add a score of 10
-    score += 10
+    score += 50
     // change each of the four ghosts to isScared
     ghosts.forEach(ghost => (ghost.isScared = true))
     // use setTimeout to unscare ghosts after 10 seconds
@@ -151,10 +147,8 @@ ghosts.forEach(ghost => {
 })
 
 function moveGhost (ghost) {
-  console.log('moved ghost')
   const directions = [-1, +1, -width, +width]
   let direction = directions[Math.floor(Math.random() * directions.length)]
-  console.log(direction)
 
   ghost.timerId = setInterval(function () {
     // all our code
@@ -192,7 +186,7 @@ function moveGhost (ghost) {
       // change ghosts currentIndex back to its startIndex
       ghost.currentIndex = ghost.startIndex
       // add a score of 100
-      score += 100
+      score += 200
       // re-add classnames of ghost.className and 'ghost' to the ghosts new postion
       squares[ghost.currentIndex].classList.add(ghost.className, 'ghost')
     }
