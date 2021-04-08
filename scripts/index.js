@@ -1,5 +1,6 @@
 import { layout } from './layout.js'
 import { state } from './game-state.js'
+import { createNewGhosts } from './ghosts.js'
 
 // element variables
 const grid = document.querySelector('.grid')
@@ -7,8 +8,8 @@ const scoreDisplay = document.getElementById('score')
 const startButton = document.getElementById('start-btn')
 const resetButton = document.getElementById('reset')
 
-document.addEventListener('keydown', control)
-startButton.addEventListener('click', startGame)
+document.addEventListener('keydown', handleControlInput)
+startButton.addEventListener('click', handleStartBtn)
 
 const playIcon = '<i class="fas fa-play"></i>'
 const pauseIcon = '<i class="fas fa-pause"></i>'
@@ -16,7 +17,6 @@ const width = 28
 
 // setup board
 createBoard()
-state.squares[state.pacmanCurrentIndex].classList.add('pacman')
 
 function createBoard () {
   state.squares = layout.map(cell => {
@@ -38,8 +38,10 @@ function createBoard () {
   })
 }
 
-function startGame () {
-  if (state.isPaused) {
+function handleStartBtn () {
+  if (state.isGameOver) {
+    startGame()
+  } else if (state.isPaused) {
     state.isPaused = false
     startButton.innerHTML = pauseIcon
     state.ghosts.forEach(ghost => moveGhost(ghost))
@@ -50,7 +52,15 @@ function startGame () {
   }
 }
 
-function control (event) {
+function startGame () {
+  state.squares[state.pacmanCurrentIndex].classList.add('pacman')
+  state.ghosts = createNewGhosts()
+  state.ghosts.forEach(ghost => moveGhost(ghost))
+  state.isGameOver = false
+  state.isPaused = false
+}
+
+function handleControlInput (event) {
   state.squares[state.pacmanCurrentIndex].classList.remove('pacman')
   switch (event.key) {
     case 'ArrowDown':
