@@ -8,8 +8,10 @@ const scoreDisplay = document.getElementById('score')
 const startButton = document.getElementById('start-btn')
 const resetButton = document.getElementById('reset')
 
+// event handlers
 document.addEventListener('keydown', handleControlInput)
 startButton.addEventListener('click', handleStartBtn)
+resetButton.addEventListener('click', resetGame)
 
 const playIcon = '<i class="fas fa-play"></i>'
 const pauseIcon = '<i class="fas fa-pause"></i>'
@@ -49,6 +51,8 @@ function handleStartBtn () {
 }
 
 function startGame () {
+  startButton.innerHTML = pauseIcon
+  state.pacmanCurrentIndex = 490
   state.squares[state.pacmanCurrentIndex].classList.add('pacman')
   state.ghosts = createNewGhosts()
   state.ghosts.forEach(ghost => moveGhost(ghost))
@@ -66,6 +70,17 @@ function resumeGame () {
   state.isPaused = true
   startButton.innerHTML = playIcon
   state.ghosts.forEach(ghost => clearInterval(ghost.timerId))
+}
+
+function resetGame () {
+  state.ghosts.forEach(ghost => clearInterval(ghost.timerId))
+  state.isPaused = true
+  state.isGameOver = true
+  state.score = 0
+  scoreDisplay.textContent = state.score
+  grid.innerHTML = ''
+  startButton.innerHTML = playIcon
+  createBoard()
 }
 
 function handleControlInput (event) {
@@ -233,8 +248,7 @@ function checkForGameOver () {
   ) {
     // for each ghost - we need to stop it moving
     state.ghosts.forEach(ghost => clearInterval(ghost.timerId))
-    // remove eventlistener from our control function
-    document.removeEventListener('keyup', control)
+
     // tell user the game is over
     scoreDisplay.innerHTML = 'You LOSE'
     state.isGameOver = true
@@ -246,8 +260,7 @@ function checkForWin () {
   if (state.score === 274) {
     // stop each ghost
     state.ghosts.forEach(ghost => clearInterval(ghost.timerId))
-    // remove the eventListener for the control function
-    document.removeEventListener('keyup', control)
+
     // tell our user we have won
     scoreDisplay.innerHTML = 'You WON!'
   }

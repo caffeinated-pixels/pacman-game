@@ -1,7 +1,8 @@
 export const state = {
   squares: [],
   score: 0,
-  pacmanCurrentIndex: 490,
+  hiscore: 0,
+  pacmanCurrentIndex: 0,
   isPaused: true,
   isGameOver: true,
   ghosts: []
