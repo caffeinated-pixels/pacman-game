@@ -96,62 +96,16 @@ function handleControlInput (event) {
   state.squares[state.pacmanCurrentIndex].classList.remove('pacman')
   switch (event.key) {
     case 'ArrowDown':
-      if (
-        !state.squares[state.pacmanCurrentIndex + width].classList.contains(
-          'ghost-lair'
-        ) &&
-        !state.squares[state.pacmanCurrentIndex + width].classList.contains(
-          'wall'
-        ) &&
-        state.pacmanCurrentIndex + width < width * width
-      ) {
-        state.pacmanCurrentIndex += width
-      }
+      movePacmanDown()
       break
     case 'ArrowUp':
-      if (
-        !state.squares[state.pacmanCurrentIndex - width].classList.contains(
-          'ghost-lair'
-        ) &&
-        !state.squares[state.pacmanCurrentIndex - width].classList.contains(
-          'wall'
-        ) &&
-        state.pacmanCurrentIndex - width >= 0
-      ) {
-        state.pacmanCurrentIndex -= width
-      }
+      movePacmanUp()
       break
     case 'ArrowLeft':
-      if (
-        !state.squares[state.pacmanCurrentIndex - 1].classList.contains(
-          'ghost-lair'
-        ) &&
-        !state.squares[state.pacmanCurrentIndex - 1].classList.contains(
-          'wall'
-        ) &&
-        state.pacmanCurrentIndex % width !== 0
-      ) {
-        state.pacmanCurrentIndex -= 1
-      }
-      if (state.pacmanCurrentIndex === 364) {
-        state.pacmanCurrentIndex = 391
-      }
+      movePacmanLeft()
       break
     case 'ArrowRight':
-      if (
-        !state.squares[state.pacmanCurrentIndex + 1].classList.contains(
-          'ghost-lair'
-        ) &&
-        !state.squares[state.pacmanCurrentIndex + 1].classList.contains(
-          'wall'
-        ) &&
-        state.pacmanCurrentIndex % width < width - 1
-      ) {
-        state.pacmanCurrentIndex += 1
-      }
-      if (state.pacmanCurrentIndex === 391) {
-        state.pacmanCurrentIndex = 364
-      }
+      movePacmanRight()
       break
   }
   state.squares[state.pacmanCurrentIndex].classList.add('pacman')
@@ -159,6 +113,64 @@ function handleControlInput (event) {
   powerPelletEaten()
   checkForWin()
   checkForGameOver()
+}
+
+function movePacmanDown () {
+  if (
+    !state.squares[state.pacmanCurrentIndex + width].classList.contains(
+      'ghost-lair'
+    ) &&
+    !state.squares[state.pacmanCurrentIndex + width].classList.contains(
+      'wall'
+    ) &&
+    state.pacmanCurrentIndex + width < width * width
+  ) {
+    state.pacmanCurrentIndex += width
+  }
+}
+
+function movePacmanUp () {
+  if (
+    !state.squares[state.pacmanCurrentIndex - width].classList.contains(
+      'ghost-lair'
+    ) &&
+    !state.squares[state.pacmanCurrentIndex - width].classList.contains(
+      'wall'
+    ) &&
+    state.pacmanCurrentIndex - width >= 0
+  ) {
+    state.pacmanCurrentIndex -= width
+  }
+}
+
+function movePacmanLeft () {
+  if (
+    !state.squares[state.pacmanCurrentIndex - 1].classList.contains(
+      'ghost-lair'
+    ) &&
+    !state.squares[state.pacmanCurrentIndex - 1].classList.contains('wall') &&
+    state.pacmanCurrentIndex % width !== 0
+  ) {
+    state.pacmanCurrentIndex -= 1
+  }
+  if (state.pacmanCurrentIndex === 364) {
+    state.pacmanCurrentIndex = 391
+  }
+}
+
+function movePacmanRight () {
+  if (
+    !state.squares[state.pacmanCurrentIndex + 1].classList.contains(
+      'ghost-lair'
+    ) &&
+    !state.squares[state.pacmanCurrentIndex + 1].classList.contains('wall') &&
+    state.pacmanCurrentIndex % width < width - 1
+  ) {
+    state.pacmanCurrentIndex += 1
+  }
+  if (state.pacmanCurrentIndex === 391) {
+    state.pacmanCurrentIndex = 364
+  }
 }
 
 function pacDotEaten () {
