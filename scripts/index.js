@@ -42,13 +42,9 @@ function handleStartBtn () {
   if (state.isGameOver) {
     startGame()
   } else if (state.isPaused) {
-    state.isPaused = false
-    startButton.innerHTML = pauseIcon
-    state.ghosts.forEach(ghost => moveGhost(ghost))
+    pauseGame()
   } else if (!state.isPaused) {
-    state.isPaused = true
-    startButton.innerHTML = playIcon
-    state.ghosts.forEach(ghost => clearInterval(ghost.timerId))
+    resumeGame()
   }
 }
 
@@ -58,6 +54,18 @@ function startGame () {
   state.ghosts.forEach(ghost => moveGhost(ghost))
   state.isGameOver = false
   state.isPaused = false
+}
+
+function pauseGame () {
+  state.isPaused = false
+  startButton.innerHTML = pauseIcon
+  state.ghosts.forEach(ghost => moveGhost(ghost))
+}
+
+function resumeGame () {
+  state.isPaused = true
+  startButton.innerHTML = playIcon
+  state.ghosts.forEach(ghost => clearInterval(ghost.timerId))
 }
 
 function handleControlInput (event) {
