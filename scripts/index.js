@@ -13,6 +13,9 @@ const resetButton = document.getElementById('reset')
 document.addEventListener('keydown', handleControlInput)
 startButton.addEventListener('click', handleStartBtn)
 resetButton.addEventListener('click', resetGame)
+document
+  .querySelectorAll('.d-btn')
+  .forEach(item => item.addEventListener('click', handleControlInput))
 
 const playIcon = '<i class="fas fa-play"></i>'
 const pauseIcon = '<i class="fas fa-pause"></i>'
@@ -93,18 +96,25 @@ function resetGame () {
 }
 
 function handleControlInput (event) {
+  if (state.isPaused) return
+  const input = event.type === 'keydown' ? event.key : event.currentTarget.id
+
   state.squares[state.pacmanCurrentIndex].classList.remove('pacman')
-  switch (event.key) {
+  switch (input) {
     case 'ArrowDown':
+    case 'down':
       movePacmanDown()
       break
     case 'ArrowUp':
+    case 'up':
       movePacmanUp()
       break
     case 'ArrowLeft':
+    case 'left':
       movePacmanLeft()
       break
     case 'ArrowRight':
+    case 'right':
       movePacmanRight()
       break
   }
