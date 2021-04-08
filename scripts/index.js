@@ -5,6 +5,7 @@ import { createNewGhosts } from './ghosts.js'
 // element variables
 const grid = document.querySelector('.grid')
 const scoreDisplay = document.getElementById('score')
+const hiscoreDisplay = document.getElementById('hiscore')
 const startButton = document.getElementById('start-btn')
 const resetButton = document.getElementById('reset')
 
@@ -19,6 +20,14 @@ const width = 28
 
 // setup board
 createBoard()
+getHiscoreFromStorage()
+
+function getHiscoreFromStorage () {
+  if (localStorage.pacmanHiscore) {
+    state.hiscore = localStorage.pacmanHiscore
+    hiscoreDisplay.textContent = state.hiscore
+  }
+}
 
 function createBoard () {
   state.squares = layout.map(cell => {
@@ -249,9 +258,17 @@ function checkForGameOver () {
     // for each ghost - we need to stop it moving
     state.ghosts.forEach(ghost => clearInterval(ghost.timerId))
 
-    // tell user the game is over
-    scoreDisplay.innerHTML = 'You LOSE'
     state.isGameOver = true
+    checkForHiscore()
+    resetGame()
+  }
+}
+
+function checkForHiscore () {
+  if (state.score > state.hiscore) {
+    state.hiscore = state.score
+    hiscoreDisplay.textContent = state.hiscore
+    localStorage.setItem('pacmanHiscore', state.hiscore)
   }
 }
 
