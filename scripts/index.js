@@ -1,12 +1,7 @@
 import { layout } from './layout.js'
 import { state } from './game-state.js'
 import { createNewGhosts, drawGhosts } from './create-ghosts.js'
-import {
-  movePacmanDown,
-  movePacmanUp,
-  movePacmanLeft,
-  movePacmanRight
-} from './pacman-movement.js'
+import { movePacman } from './pacman-movement.js'
 
 // element variables
 const grid = document.querySelector('.grid')
@@ -112,25 +107,28 @@ function handleControlInput (event) {
   const input = event.type === 'keydown' ? event.key : event.currentTarget.id
 
   state.squares[state.pacmanCurrentIndex].classList.remove('pacman')
+
   switch (input) {
     case 'ArrowDown':
     case 'down':
-      movePacmanDown(state, width)
+      movePacman(state, state.pacmanCurrentIndex + width)
       break
     case 'ArrowUp':
     case 'up':
-      movePacmanUp(state, width)
+      movePacman(state, state.pacmanCurrentIndex - width)
       break
     case 'ArrowLeft':
     case 'left':
-      movePacmanLeft(state, width)
+      movePacman(state, state.pacmanCurrentIndex - 1)
       break
     case 'ArrowRight':
     case 'right':
-      movePacmanRight(state, width)
+      movePacman(state, state.pacmanCurrentIndex + 1)
       break
   }
+
   state.squares[state.pacmanCurrentIndex].classList.add('pacman')
+
   pacDotEaten()
   powerPelletEaten()
   checkForWin()
@@ -164,8 +162,6 @@ function powerPelletEaten () {
 function unScareGhosts () {
   state.ghosts.forEach(ghost => (ghost.isScared = false))
 }
-
-// draw my ghosts onto my grid
 
 function moveGhost (ghost) {
   const directions = [-1, +1, -width, +width]
