@@ -168,8 +168,6 @@ function moveGhost (ghost) {
   let direction = directions[Math.floor(Math.random() * directions.length)]
 
   ghost.timerId = setInterval(function () {
-    // all our code
-    // if the next square does NOT contain a wall and does not contain a ghost
     if (
       !state.squares[ghost.currentIndex + direction].classList.contains(
         'wall'
@@ -190,9 +188,7 @@ function moveGhost (ghost) {
     } else direction = directions[Math.floor(Math.random() * directions.length)]
 
     // if the ghost is currently scared
-    if (ghost.isScared) {
-      state.squares[ghost.currentIndex].classList.add('scared-ghost')
-    }
+    isGhostScared(ghost)
 
     // if the ghost is current scared AND pacman is on it
     if (
@@ -214,6 +210,12 @@ function moveGhost (ghost) {
     }
     checkForGameOver()
   }, ghost.speed)
+}
+
+function isGhostScared (ghost) {
+  if (ghost.isScared) {
+    state.squares[ghost.currentIndex].classList.add('scared-ghost')
+  }
 }
 
 // check for game over
