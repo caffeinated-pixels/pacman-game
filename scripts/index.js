@@ -189,25 +189,7 @@ function moveGhost (ghost) {
 
     // if the ghost is currently scared
     isGhostScared(ghost)
-
-    // if the ghost is current scared AND pacman is on it
-    if (
-      ghost.isScared &&
-      state.squares[ghost.currentIndex].classList.contains('pacman')
-    ) {
-      // remove classnames - ghost.className, 'ghost', 'scared-ghost'
-      state.squares[ghost.currentIndex].classList.remove(
-        ghost.className,
-        'ghost',
-        'scared-ghost'
-      )
-      // change ghosts currentIndex back to its startIndex
-      ghost.currentIndex = ghost.startIndex
-
-      state.score += 200
-      // re-add classnames of ghost.className and 'ghost' to the ghosts new postion
-      state.squares[ghost.currentIndex].classList.add(ghost.className, 'ghost')
-    }
+    didPacmanEatGhost(ghost)
     checkForGameOver()
   }, ghost.speed)
 }
@@ -215,6 +197,26 @@ function moveGhost (ghost) {
 function isGhostScared (ghost) {
   if (ghost.isScared) {
     state.squares[ghost.currentIndex].classList.add('scared-ghost')
+  }
+}
+
+function didPacmanEatGhost (ghost) {
+  if (
+    ghost.isScared &&
+    state.squares[ghost.currentIndex].classList.contains('pacman')
+  ) {
+    // remove classnames - ghost.className, 'ghost', 'scared-ghost'
+    state.squares[ghost.currentIndex].classList.remove(
+      ghost.className,
+      'ghost',
+      'scared-ghost'
+    )
+    // change ghosts currentIndex back to its startIndex
+    ghost.currentIndex = ghost.startIndex
+
+    state.score += 200
+    // re-add classnames of ghost.className and 'ghost' to the ghosts new postion
+    state.squares[ghost.currentIndex].classList.add(ghost.className, 'ghost')
   }
 }
 
