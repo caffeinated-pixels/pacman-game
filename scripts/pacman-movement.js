@@ -1,37 +1,31 @@
 export function movePacmanDown (state, width) {
+  const moveDown = state.pacmanCurrentIndex + width
+
   if (
-    !state.squares[state.pacmanCurrentIndex + width].classList.contains(
-      'ghost-lair'
-    ) &&
-    !state.squares[state.pacmanCurrentIndex + width].classList.contains(
-      'wall'
-    ) &&
-    state.pacmanCurrentIndex + width < width * width
+    !state.squares[moveDown].classList.contains('ghost-lair') &&
+    !state.squares[moveDown].classList.contains('wall') &&
+    moveDown < width * width
   ) {
     state.pacmanCurrentIndex += width
   }
 }
 
 export function movePacmanUp (state, width) {
+  const moveUp = state.pacmanCurrentIndex - width
   if (
-    !state.squares[state.pacmanCurrentIndex - width].classList.contains(
-      'ghost-lair'
-    ) &&
-    !state.squares[state.pacmanCurrentIndex - width].classList.contains(
-      'wall'
-    ) &&
-    state.pacmanCurrentIndex - width >= 0
+    !state.squares[moveUp].classList.contains('ghost-lair') &&
+    !state.squares[moveUp].classList.contains('wall') &&
+    moveUp >= 0
   ) {
     state.pacmanCurrentIndex -= width
   }
 }
 
 export function movePacmanLeft (state, width) {
+  const moveLeft = state.pacmanCurrentIndex - 1
   if (
-    !state.squares[state.pacmanCurrentIndex - 1].classList.contains(
-      'ghost-lair'
-    ) &&
-    !state.squares[state.pacmanCurrentIndex - 1].classList.contains('wall') &&
+    !state.squares[moveLeft].classList.contains('ghost-lair') &&
+    !state.squares[moveLeft].classList.contains('wall') &&
     state.pacmanCurrentIndex % width !== 0
   ) {
     state.pacmanCurrentIndex -= 1
@@ -42,11 +36,10 @@ export function movePacmanLeft (state, width) {
 }
 
 export function movePacmanRight (state, width) {
+  const moveRight = state.pacmanCurrentIndex + 1
   if (
-    !state.squares[state.pacmanCurrentIndex + 1].classList.contains(
-      'ghost-lair'
-    ) &&
-    !state.squares[state.pacmanCurrentIndex + 1].classList.contains('wall') &&
+    !state.squares[moveRight].classList.contains('ghost-lair') &&
+    !state.squares[moveRight].classList.contains('wall') &&
     state.pacmanCurrentIndex % width < width - 1
   ) {
     state.pacmanCurrentIndex += 1
