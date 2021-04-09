@@ -71,9 +71,11 @@ function startGame () {
   state.squares[state.pacmanCurrentIndex].classList.add('pacman')
 
   // draw Ghosts
-  state.ghosts = createNewGhosts()
-  state.ghosts.forEach(ghost => moveGhost(ghost))
+  state.ghosts = createNewGhosts(width)
   drawGhosts(state)
+
+  // initate ghost movement
+  state.ghosts.forEach(ghost => initGhostMovement(ghost))
 
   state.isGameOver = false
   state.isPaused = false
@@ -82,7 +84,7 @@ function startGame () {
 function pauseGame () {
   state.isPaused = false
   startButton.innerHTML = pauseIcon
-  state.ghosts.forEach(ghost => moveGhost(ghost))
+  state.ghosts.forEach(ghost => initGhostMovement(ghost))
 }
 
 function resumeGame () {
@@ -164,38 +166,42 @@ function unScareGhosts () {
   state.ghosts.forEach(ghost => (ghost.isScared = false))
 }
 
-function moveGhost (ghost) {
-  let newGhostIndex = getNewGhostIndex(ghost.currentIndex)
-
+function initGhostMovement (ghost) {
   ghost.timerId = setInterval(function () {
-    if (
-      !state.squares[newGhostIndex].classList.contains('wall') &&
-      !state.squares[newGhostIndex].classList.contains('ghost')
-    ) {
-      // remove any ghost
-      state.squares[ghost.currentIndex].classList.remove(ghost.className)
-      state.squares[ghost.currentIndex].classList.remove(
-        'ghost',
-        'scared-ghost'
-      )
-      // //add direction to current Index
-      ghost.currentIndex = newGhostIndex
-      // //add ghost class
-      state.squares[ghost.currentIndex].classList.add(ghost.className)
-      state.squares[ghost.currentIndex].classList.add('ghost')
-    } else newGhostIndex = getNewGhostIndex(ghost.currentIndex)
-
+    moveGhost(ghost)
     isGhostScared(ghost)
     didPacmanEatGhost(ghost)
     checkForGameOver()
   }, ghost.speed)
 }
 
-function getNewGhostIndex (currentIndex) {
-  const directions = [-1, +1, -width, +width]
+function moveGhost (ghost) {
+  if (checkForGhostCollision(ghost)) {
+    setNewGhostIndex(ghost)
+    moveGhost(ghost)
+  } else {
+    state.squares[ghost.currentIndex].classList.remove(ghost.className)
+    state.squares[ghost.currentIndex].classList.remove('ghost', 'scared-ghost')
+
+    ghost.currentIndex = ghost.newIndex
+
+    state.squares[ghost.currentIndex].classList.add(ghost.className)
+    state.squares[ghost.currentIndex].classList.add('ghost')
+  }
+}
+
+function checkForGhostCollision (ghost) {
   return (
-    currentIndex + directions[Math.floor(Math.random() * directions.length)]
+    state.squares[ghost.newIndex].classList.contains('wall') ||
+    state.squares[ghost.newIndex].classList.contains('ghost')
   )
+}
+
+function setNewGhostIndex (ghost) {
+  const directions = [-1, +1, -width, +width]
+  ghost.currentDirection =
+    directions[Math.floor(Math.random() * directions.length)]
+  ghost.newIndex = ghost.currentDirection + ghost.currentIndex
 }
 
 function isGhostScared (ghost) {
