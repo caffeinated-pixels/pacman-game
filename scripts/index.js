@@ -139,7 +139,7 @@ function pacDotEaten () {
   if (state.squares[state.pacmanCurrentIndex].classList.contains('pac-dot')) {
     state.squares[state.pacmanCurrentIndex].classList.remove('pac-dot')
     state.score += 10
-    scoreDisplay.innerHTML = state.score
+    scoreDisplay.textContent = state.score
   }
 }
 
@@ -152,6 +152,7 @@ function powerPelletEaten () {
     state.squares[state.pacmanCurrentIndex].classList.remove('power-pellet')
     // add a score of 10
     state.score += 50
+    scoreDisplay.textContent = state.score
     // change each of the four ghosts to isScared
     state.ghosts.forEach(ghost => (ghost.isScared = true))
     // use setTimeout to unscare ghosts after 10 seconds
