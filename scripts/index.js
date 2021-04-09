@@ -165,15 +165,12 @@ function unScareGhosts () {
 }
 
 function moveGhost (ghost) {
-  const directions = [-1, +1, -width, +width]
-  let direction = directions[Math.floor(Math.random() * directions.length)]
+  let newGhostIndex = getNewGhostIndex(ghost.currentIndex)
 
   ghost.timerId = setInterval(function () {
     if (
-      !state.squares[ghost.currentIndex + direction].classList.contains(
-        'wall'
-      ) &&
-      !state.squares[ghost.currentIndex + direction].classList.contains('ghost')
+      !state.squares[newGhostIndex].classList.contains('wall') &&
+      !state.squares[newGhostIndex].classList.contains('ghost')
     ) {
       // remove any ghost
       state.squares[ghost.currentIndex].classList.remove(ghost.className)
@@ -182,17 +179,23 @@ function moveGhost (ghost) {
         'scared-ghost'
       )
       // //add direction to current Index
-      ghost.currentIndex += direction
+      ghost.currentIndex = newGhostIndex
       // //add ghost class
       state.squares[ghost.currentIndex].classList.add(ghost.className)
       state.squares[ghost.currentIndex].classList.add('ghost')
-    } else direction = directions[Math.floor(Math.random() * directions.length)]
+    } else newGhostIndex = getNewGhostIndex(ghost.currentIndex)
 
-    // if the ghost is currently scared
     isGhostScared(ghost)
     didPacmanEatGhost(ghost)
     checkForGameOver()
   }, ghost.speed)
+}
+
+function getNewGhostIndex (currentIndex) {
+  const directions = [-1, +1, -width, +width]
+  return (
+    currentIndex + directions[Math.floor(Math.random() * directions.length)]
+  )
 }
 
 function isGhostScared (ghost) {
