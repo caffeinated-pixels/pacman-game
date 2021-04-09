@@ -17,3 +17,10 @@ export function createNewGhosts () {
     new Ghost('clyde', 379, 500)
   ]
 }
+
+export function drawGhosts (state) {
+  state.ghosts.forEach(ghost => {
+    state.squares[ghost.currentIndex].classList.add(ghost.className)
+    state.squares[ghost.currentIndex].classList.add('ghost')
+  })
+}

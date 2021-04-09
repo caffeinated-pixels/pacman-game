@@ -1,6 +1,6 @@
 import { layout } from './layout.js'
 import { state } from './game-state.js'
-import { createNewGhosts } from './ghosts.js'
+import { createNewGhosts, drawGhosts } from './create-ghosts.js'
 import {
   movePacmanDown,
   movePacmanUp,
@@ -70,10 +70,16 @@ function handleStartBtn () {
 
 function startGame () {
   startButton.innerHTML = pauseIcon
+
+  // draw Pacman
   state.pacmanCurrentIndex = 490
   state.squares[state.pacmanCurrentIndex].classList.add('pacman')
+
+  // draw Ghosts
   state.ghosts = createNewGhosts()
   state.ghosts.forEach(ghost => moveGhost(ghost))
+  drawGhosts(state)
+
   state.isGameOver = false
   state.isPaused = false
 }
@@ -160,10 +166,6 @@ function unScareGhosts () {
 }
 
 // draw my ghosts onto my grid
-state.ghosts.forEach(ghost => {
-  state.squares[ghost.currentIndex].classList.add(ghost.className)
-  state.squares[ghost.currentIndex].classList.add('ghost')
-})
 
 function moveGhost (ghost) {
   const directions = [-1, +1, -width, +width]
