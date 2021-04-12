@@ -21,6 +21,7 @@ document
 const playIcon = '<i class="fas fa-play"></i>'
 const pauseIcon = '<i class="fas fa-pause"></i>'
 const width = 28
+const height = 31
 
 // setup board
 createBoard()
@@ -45,6 +46,43 @@ function createBoard () {
     }
 
     return square
+  })
+
+  addWallborders()
+}
+
+function addWallborders () {
+  state.squares.forEach((square, i, arr) => {
+    // checking for wall exterior sides
+    const isAtTopEdge = i - width < 0
+    const isAtRightEdge = i % width === width - 1
+    const isAtBottomEdge = i + width >= width * height
+    const isAtLeftEdge = i % width === 0
+
+    // check for wall internal sides
+    const isTopSide =
+      i - width > 28 && !arr[i - width].classList.contains('wall')
+
+    const isRightSide = i + 1 < 867 && !arr[i + 1].classList.contains('wall')
+
+    const isBottomSide =
+      i + width < width * 30 && !arr[i + width].classList.contains('wall')
+
+    const isLeftSide = i - 1 > 0 && !arr[i - 1].classList.contains('wall')
+
+    // add wall border classes
+    if (square.classList.contains('wall')) {
+      if (isAtTopEdge || isTopSide) {
+        square.classList.add('border-top')
+      }
+      if (isAtRightEdge || isRightSide) {
+        square.classList.add('border-right')
+      }
+      if (isAtBottomEdge || isBottomSide) {
+        square.classList.add('border-bottom')
+      }
+      if (isAtLeftEdge || isLeftSide) square.classList.add('border-left')
+    }
   })
 }
 

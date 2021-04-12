@@ -21,6 +21,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   width: 420px;
+  height: 465px;
   border: solid black;
 }
 
@@ -31,7 +32,23 @@ body {
 }
 
 .wall {
-  background-color: #346ccc;
+  box-sizing: border-box;
+}
+
+.border-top {
+  border-top: 3px solid #2121ff;
+}
+
+.border-right {
+  border-right: 3px solid #2121ff;
+}
+
+.border-bottom {
+  border-bottom: 3px solid #2121ff;
+}
+
+.border-left {
+  border-left: 3px solid #2121ff;
 }
 
 .pac-dot,
@@ -51,8 +68,9 @@ body {
 
 .door {
   box-sizing: border-box;
-  border-top: 5px solid #202020;
-  border-bottom: 5px solid #202020;
+  border-color: #202020;
+  border-style: solid;
+  border-width: 5px 0;
 }
 
 .pacman {
