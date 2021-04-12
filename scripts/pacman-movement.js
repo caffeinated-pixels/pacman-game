@@ -6,9 +6,9 @@ export function movePacman (state, direction) {
     state.pacmanCurrentIndex = direction
   }
 
-  if (state.pacmanCurrentIndex === 391) {
-    state.pacmanCurrentIndex = 364
-  } else if (state.pacmanCurrentIndex === 364) {
-    state.pacmanCurrentIndex = 391
+  if (state.pacmanCurrentIndex === 392) {
+    state.pacmanCurrentIndex = 419
+  } else if (state.pacmanCurrentIndex === 419) {
+    state.pacmanCurrentIndex = 392
   }
 }

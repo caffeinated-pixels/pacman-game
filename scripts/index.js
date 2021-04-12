@@ -38,17 +38,7 @@ function createBoard () {
     const square = document.createElement('div')
 
     grid.appendChild(square)
-
-    if (cell === 0) {
-      square.classList.add('pac-dot')
-    } else if (cell === 1) {
-      square.classList.add('wall')
-    } else if (cell === 2) {
-      square.classList.add('ghost-lair')
-    } else if (cell === 3) {
-      square.classList.add('power-pellet')
-    }
-
+    square.classList.add(cell, 'cell')
     return square
   })
 }

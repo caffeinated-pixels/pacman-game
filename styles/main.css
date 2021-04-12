@@ -21,19 +21,18 @@ body {
   display: flex;
   flex-wrap: wrap;
   width: 420px;
-  height: 420px;
   border: solid black;
-  background: white;
 }
 
-.grid div {
+.cell {
   width: 15px;
   height: 15px;
+  background-color: #202020;
 }
 
 .pac-dot {
   background-color: green;
-  border: 5px solid white;
+  border: 5px solid #202020;
   box-sizing: border-box;
 }
 
@@ -41,7 +40,11 @@ body {
   background-color: blue;
 }
 
-.power-pellet {
+.door {
+  background-color: pink;
+}
+
+.power-pill {
   background-color: green;
   border-radius: 7.5px;
 }

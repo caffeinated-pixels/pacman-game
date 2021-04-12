@@ -4,19 +4,20 @@
     display: flex;
     flex-wrap: wrap;
     width: 420px;
-    height: 420px;
+    // height: 420px;
     border: solid black;
-    background: white;
+    // background: white;
 }
 
-.grid div {
+.cell {
     width: 15px;
     height: 15px;
+    background-color: $screen-black;
 }
 
 .pac-dot {
     background-color: green;
-    border: 5px solid white;
+    border: 5px solid $screen-black;
     box-sizing: border-box;
 }
 
@@ -24,7 +25,11 @@
     background-color: blue;
 }
 
-.power-pellet {
+.door {
+  background-color: pink;
+}
+
+.power-pill {
     background-color: green;
     border-radius: 7.5px;
 }
