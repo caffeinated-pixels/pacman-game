@@ -41,7 +41,10 @@ body {
 }
 
 .door {
-  background-color: pink;
+  box-sizing: border-box;
+  border-top: 5px solid #202020;
+  border-bottom: 5px solid #202020;
+  background-color: #ffb8ff;
 }
 
 .power-pill {
@@ -50,7 +53,7 @@ body {
 }
 
 .pacman {
-  background-color: orange;
+  background-color: #ffff00;
   border-radius: 7.5px;
   border: none;
 }

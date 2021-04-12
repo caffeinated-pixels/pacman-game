@@ -26,7 +26,10 @@
 }
 
 .door {
-  background-color: pink;
+  box-sizing: border-box;
+  border-top: 5px solid $screen-black;
+  border-bottom: 5px solid $screen-black;
+  background-color: #ffb8ff;
 }
 
 .power-pill {
