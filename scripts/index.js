@@ -38,7 +38,12 @@ function createBoard () {
     const square = document.createElement('div')
 
     grid.appendChild(square)
-    square.classList.add(cell, 'cell')
+    square.classList.add('cell', cell)
+
+    if (cell === 'door') {
+      square.classList.add('ghost-lair')
+    }
+
     return square
   })
 }
