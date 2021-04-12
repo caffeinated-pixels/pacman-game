@@ -1,38 +1,41 @@
 // main: ./main.scss
 
 .grid {
-    display: flex;
-    flex-wrap: wrap;
-    width: 420px;
-    // height: 420px;
-    border: solid black;
-    // background: white;
+  display: flex;
+  flex-wrap: wrap;
+  width: 420px;
+  // height: 420px;
+  border: solid black;
+  // background: white;
 }
 
 .cell {
-    width: 15px;
-    height: 15px;
-    background-color: $screen-black;
-}
-
-.pac-dot {
-    background-color: green;
-    border: 5px solid $screen-black;
-    box-sizing: border-box;
+  width: 15px;
+  height: 15px;
+  background-color: $screen-black;
 }
 
 .wall {
-    background-color: #346ccc;
+  background-color: #346ccc;
+}
+
+.pac-dot,
+.power-pill,
+.door {
+  background-color: $door-pill-pink;
+}
+
+.pac-dot {
+  border: 6px solid $screen-black;
+  box-sizing: border-box;
+}
+
+.power-pill {
+  border-radius: 7.5px;
 }
 
 .door {
   box-sizing: border-box;
   border-top: 5px solid $screen-black;
   border-bottom: 5px solid $screen-black;
-  background-color: #ffb8ff;
-}
-
-.power-pill {
-    background-color: green;
-    border-radius: 7.5px;
 }
