@@ -83,22 +83,26 @@ body {
 
 .ghost {
   border: none;
+  background-color: #202020;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
 }
 
 .blinky {
-  background-color: #ff0000;
+  background-image: url(../media/blinky.png);
 }
 
 .pinky {
-  background-color: #ffb8ff;
+  background-image: url(../media/pinky.png);
 }
 
 .inky {
-  background-color: #00ffff;
+  background-image: url(../media/inky.png);
 }
 
 .clyde {
-  background-color: #ffb851;
+  background-image: url(../media/clyde.png);
 }
 
 .scared-ghost {
