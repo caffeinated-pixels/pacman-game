@@ -106,7 +106,7 @@ body {
 }
 
 .scared-ghost {
-  background-color: #2121ff;
+  background-image: url(../media/scared-ghost.png);
 }
 
 .btn-container {
