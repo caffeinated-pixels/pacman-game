@@ -63,7 +63,9 @@ body {
 }
 
 .power-pill {
-  border-radius: 7.5px;
+  border: 2px solid #202020;
+  border-radius: 100%;
+  box-sizing: border-box;
 }
 
 .door {
