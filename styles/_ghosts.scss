@@ -6,27 +6,26 @@
     border: none;
 }
 
+.ghost {
+  border: none;
+}
+
 .blinky {
-    background-color: #ff0000;
-    border: none;
+    background-color: $blinky-red;
 }
 
 .pinky {
-    background-color: #ffb8ff;
-    border: none;
+    background-color: $pinky-pink;
 }
 
 .inky {
-    background-color: #00ffff;
-    border: none;
+    background-color: $inky-blue;
 }
 
 .clyde {
-    background-color: #ffb851;
-    border: none;
+    background-color: $clyde-orange;
 }
 
 .scared-ghost {
-    background-color: #2121ff;
-    border: none;
+    background-color: $scared-wall-blue;
 }
