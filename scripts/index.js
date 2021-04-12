@@ -138,10 +138,10 @@ function pacDotEaten () {
 function powerPelletEaten () {
   // if square pacman is in contains a power pellet
   if (
-    state.squares[state.pacmanCurrentIndex].classList.contains('power-pellet')
+    state.squares[state.pacmanCurrentIndex].classList.contains('power-pill')
   ) {
     // remove power pellet class
-    state.squares[state.pacmanCurrentIndex].classList.remove('power-pellet')
+    state.squares[state.pacmanCurrentIndex].classList.remove('power-pil')
     // add a score of 10
     state.score += 50
     scoreDisplay.textContent = state.score
