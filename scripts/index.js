@@ -255,6 +255,7 @@ function didPacmanEatGhost (ghost) {
       'scared-ghost'
     )
     // change ghosts currentIndex back to its startIndex
+    ghost.isScared = false
     ghost.currentIndex = ghost.startIndex
     ghost.currentDirection = -width
     ghost.newIndex = ghost.startIndex + -width
