@@ -165,7 +165,7 @@ function handleControlInput (event) {
   state.squares[state.pacmanCurrentIndex].classList.add('pacman')
 
   pacDotEaten()
-  powerPelletEaten()
+  powerPillEaten()
   checkForWin()
   checkForGameOver()
 }
@@ -178,13 +178,13 @@ function pacDotEaten () {
   }
 }
 
-function powerPelletEaten () {
+function powerPillEaten () {
   // if square pacman is in contains a power pellet
   if (
     state.squares[state.pacmanCurrentIndex].classList.contains('power-pill')
   ) {
     // remove power pellet class
-    state.squares[state.pacmanCurrentIndex].classList.remove('power-pil')
+    state.squares[state.pacmanCurrentIndex].classList.remove('power-pill')
     // add a score of 10
     state.score += 50
     scoreDisplay.textContent = state.score
@@ -256,6 +256,8 @@ function didPacmanEatGhost (ghost) {
     )
     // change ghosts currentIndex back to its startIndex
     ghost.currentIndex = ghost.startIndex
+    ghost.currentDirection = -width
+    // ghost.newIndex = ghost.startIndex + -width
 
     state.score += 200
     // re-add classnames of ghost.className and 'ghost' to the ghosts new postion
