@@ -225,7 +225,9 @@ function initGhostMovement (ghost) {
 
 function moveGhost (ghost) {
   // console.log(ghost.currentDirection, ghost.currentIndex)
-  if (checkForGhostCollision(ghost)) {
+  const newIndex = ghost.currentIndex + ghost.currentDirection
+
+  if (checkForGhostCollision(newIndex)) {
     setNewGhostIndex(ghost)
     moveGhost(ghost)
   } else {
@@ -239,9 +241,7 @@ function moveGhost (ghost) {
   }
 }
 
-function checkForGhostCollision (ghost) {
-  const newIndex = ghost.currentIndex + ghost.currentDirection
-
+function checkForGhostCollision (newIndex) {
   return (
     state.squares[newIndex].classList.contains('wall') ||
     state.squares[newIndex].classList.contains('ghost')
@@ -249,9 +249,15 @@ function checkForGhostCollision (ghost) {
 }
 
 function setNewGhostIndex (ghost) {
-  const directions = [-1, +1, -width, +width]
+  const directions = [-1, 1, -width, width]
+
+  const filteredDirections = directions.filter(direction => {
+    const newIndex = ghost.currentIndex + direction
+    return !checkForGhostCollision(newIndex)
+  })
+
   ghost.currentDirection =
-    directions[Math.floor(Math.random() * directions.length)]
+    filteredDirections[Math.floor(Math.random() * filteredDirections.length)]
   ghost.newIndex = ghost.currentDirection + ghost.currentIndex
 }
 
