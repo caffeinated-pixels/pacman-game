@@ -75,7 +75,8 @@ body {
   border-width: 5px 0;
 }
 
-.pacman-top, .pacman-bottom {
+.pacman-top,
+.pacman-bottom {
   background-color: #ffff00;
   height: 50%;
   width: 100%;
@@ -91,6 +92,18 @@ body {
   border-radius: 0 0 10px 10px;
   -webkit-animation: rotateBottom 0.7s infinite linear;
   animation: rotateBottom 0.7s infinite linear;
+}
+
+.pacman-facing-left {
+  transform: rotate(180deg);
+}
+
+.pacman-facing-up {
+  transform: rotate(270deg);
+}
+
+.pacman-facing-down {
+  transform: rotate(90deg);
 }
 
 @-webkit-keyframes rotateTop {

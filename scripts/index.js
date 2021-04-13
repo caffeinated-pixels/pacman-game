@@ -144,29 +144,35 @@ function handleControlInput (event) {
   if (state.isPaused) return
   const input = event.type === 'keydown' ? event.key : event.currentTarget.id
 
-  state.squares[state.pacmanCurrentIndex].classList.remove('pacman')
+  state.squares[state.pacmanCurrentIndex].classList.remove(
+    'pacman',
+    state.pacmanMovementClass
+  )
   state.squares[state.pacmanCurrentIndex].innerHTML = ''
 
   switch (input) {
     case 'ArrowDown':
     case 'down':
-      movePacman(state, state.pacmanCurrentIndex + width)
+      movePacman(state, width)
       break
     case 'ArrowUp':
     case 'up':
-      movePacman(state, state.pacmanCurrentIndex - width)
+      movePacman(state, -width)
       break
     case 'ArrowLeft':
     case 'left':
-      movePacman(state, state.pacmanCurrentIndex - 1)
+      movePacman(state, -1)
       break
     case 'ArrowRight':
     case 'right':
-      movePacman(state, state.pacmanCurrentIndex + 1)
+      movePacman(state, 1)
       break
   }
 
-  state.squares[state.pacmanCurrentIndex].classList.add('pacman')
+  state.squares[state.pacmanCurrentIndex].classList.add(
+    'pacman',
+    state.pacmanMovementClass
+  )
   state.squares[state.pacmanCurrentIndex].innerHTML = pacmanHTML
 
   pacDotEaten()
