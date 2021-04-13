@@ -104,6 +104,7 @@ function startGame () {
   // draw Pacman
   state.pacmanCurrentIndex = 490
   state.squares[state.pacmanCurrentIndex].classList.add('pacman')
+  state.squares[state.pacmanCurrentIndex].innerHTML = pacmanHTML
 
   // draw Ghosts
   state.ghosts = createNewGhosts(width)
