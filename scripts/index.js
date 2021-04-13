@@ -20,6 +20,8 @@ document
 
 const playIcon = '<i class="fas fa-play"></i>'
 const pauseIcon = '<i class="fas fa-pause"></i>'
+const pacmanHTML =
+  '<div class="pacman-top"></div><div class="pacman-bottom"></div>'
 const width = 28
 const height = 31
 
@@ -142,6 +144,7 @@ function handleControlInput (event) {
   const input = event.type === 'keydown' ? event.key : event.currentTarget.id
 
   state.squares[state.pacmanCurrentIndex].classList.remove('pacman')
+  state.squares[state.pacmanCurrentIndex].innerHTML = ''
 
   switch (input) {
     case 'ArrowDown':
@@ -163,6 +166,7 @@ function handleControlInput (event) {
   }
 
   state.squares[state.pacmanCurrentIndex].classList.add('pacman')
+  state.squares[state.pacmanCurrentIndex].innerHTML = pacmanHTML
 
   pacDotEaten()
   powerPillEaten()
