@@ -90,9 +90,9 @@ function handleStartBtn () {
   if (state.isGameOver) {
     startGame()
   } else if (state.isPaused) {
-    pauseGame()
-  } else if (!state.isPaused) {
     resumeGame()
+  } else if (!state.isPaused) {
+    pauseGame()
   }
 }
 
@@ -114,13 +114,13 @@ function startGame () {
   state.isPaused = false
 }
 
-function pauseGame () {
+function resumeGame () {
   state.isPaused = false
   startButton.innerHTML = pauseIcon
   state.ghosts.forEach(ghost => initGhostMovement(ghost))
 }
 
-function resumeGame () {
+function pauseGame () {
   state.isPaused = true
   startButton.innerHTML = playIcon
   state.ghosts.forEach(ghost => clearInterval(ghost.timerId))
@@ -257,7 +257,7 @@ function didPacmanEatGhost (ghost) {
     // change ghosts currentIndex back to its startIndex
     ghost.currentIndex = ghost.startIndex
     ghost.currentDirection = -width
-    // ghost.newIndex = ghost.startIndex + -width
+    ghost.newIndex = ghost.startIndex + -width
 
     state.score += 200
     // re-add classnames of ghost.className and 'ghost' to the ghosts new postion
