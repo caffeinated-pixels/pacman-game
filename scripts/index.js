@@ -229,8 +229,6 @@ function moveGhost (ghost) {
   const nextTile = ghost.currentIndex + ghost.currentDirection
   ghost.targetTile = state.pacmanCurrentIndex
 
-  console.log(ghost.targetTile)
-
   getNextGhostDirection(nextTile, ghost)
 
   state.squares[ghost.currentIndex].classList.remove(ghost.className)
@@ -280,11 +278,43 @@ function getNextGhostDirection (nextTile, ghost) {
       return false
     })
 
-    // console.log('legalDirection: ' + legalDirections)
-
-    ghost.nextDirection =
-      legalDirections[Math.floor(Math.random() * legalDirections.length)]
+    if (legalDirections.length > 1) {
+      ghost.nextDirection = getTargetTileDistance(
+        legalDirections,
+        nextTile,
+        ghost
+      )
+    } else {
+      ghost.nextDirection = legalDirections[0]
+    }
   }
+}
+
+function getTargetTileDistance (legalDirections, nextTile, ghost) {
+  const shortestDistance = legalDirections.map(direction => {
+    const optionTileIndex = nextTile + direction
+
+    // need to get x,y coords of optionTile and targetTile
+    const optionY = Math.floor(optionTileIndex / 28)
+    const optionX = optionTileIndex - optionY * 28
+    const targetY = Math.floor(ghost.targetTile / 28)
+    const targetX = ghost.targetTile - targetY * 28
+
+    const distance = Math.sqrt(
+      (optionX - targetX) ** 2 + (optionY - targetY) ** 2
+    )
+
+    return {
+      direction,
+      distance
+    }
+  })
+
+  shortestDistance.sort((a, b) => {
+    return a.distance - b.distance
+  })
+  // console.log(shortestDistance)
+  return shortestDistance[0].direction
 }
 
 function isGhostScared (ghost) {
