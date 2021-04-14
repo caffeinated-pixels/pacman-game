@@ -225,41 +225,60 @@ function initGhostMovement (ghost) {
 
 function moveGhost (ghost) {
   // console.log(ghost.currentDirection, ghost.currentIndex)
-  const newIndex = ghost.currentIndex + ghost.currentDirection
+  const nextTile = ghost.currentIndex + ghost.currentDirection
 
-  if (checkForGhostCollision(newIndex)) {
-    setNewGhostIndex(ghost)
-    moveGhost(ghost)
-  } else {
-    state.squares[ghost.currentIndex].classList.remove(ghost.className)
-    state.squares[ghost.currentIndex].classList.remove('ghost', 'scared-ghost')
+  getNextGhostDirection(nextTile, ghost)
 
-    ghost.currentIndex += ghost.currentDirection
+  state.squares[ghost.currentIndex].classList.remove(ghost.className)
+  state.squares[ghost.currentIndex].classList.remove('ghost', 'scared-ghost')
 
-    state.squares[ghost.currentIndex].classList.add(ghost.className)
-    state.squares[ghost.currentIndex].classList.add('ghost')
-  }
+  ghost.currentIndex += ghost.currentDirection
+
+  state.squares[ghost.currentIndex].classList.add(ghost.className)
+  state.squares[ghost.currentIndex].classList.add('ghost')
+
+  ghost.currentDirection = ghost.nextDirection
 }
 
-function checkForGhostCollision (newIndex) {
-  return (
-    state.squares[newIndex].classList.contains('wall') ||
-    state.squares[newIndex].classList.contains('ghost')
-  )
-}
+function getNextGhostDirection (nextTile, ghost) {
+  // ghost plans movement one tile ahead, so we check nextTile for legal direction options
+  // cannot reverse direction, return to lair, or move into wall
 
-function setNewGhostIndex (ghost) {
   const directions = [-1, 1, -width, width]
 
-  const filteredDirections = directions.filter(direction => {
-    const newIndex = ghost.currentIndex + direction
-    return !checkForGhostCollision(newIndex)
+  const legalDirections = directions.filter(direction => {
+    const directionOption = nextTile + direction
+    if (direction === -ghost.currentDirection) {
+      return false
+    } else if (state.squares[directionOption].classList.contains('wall')) {
+      return false
+    } else if (
+      state.squares[directionOption].classList.contains('ghost-lair')
+    ) {
+      return false
+    } else {
+      return true
+    }
   })
 
-  ghost.currentDirection =
-    filteredDirections[Math.floor(Math.random() * filteredDirections.length)]
-  ghost.newIndex = ghost.currentDirection + ghost.currentIndex
+  console.log(ghost.currentIndex, ghost.currentDirection, legalDirections)
+
+  ghost.nextDirection =
+    legalDirections[Math.floor(Math.random() * legalDirections.length)]
 }
+
+// function setNewGhostIndex (ghost) {
+//   const directions = [-1, 1, -width, width]
+//
+//   const filteredDirections = directions.filter(direction => {
+//     const newIndex = ghost.currentIndex + direction
+//     return !checkForGhostCollision(newIndex)
+//   })
+//
+//   ghost.currentDirection =
+//     filteredDirections[Math.floor(Math.random() * filteredDirections.length)]
+//   ghost.newIndex = ghost.currentDirection + ghost.currentIndex
+// }
 
 function isGhostScared (ghost) {
   if (ghost.isScared) {
