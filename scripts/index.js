@@ -234,37 +234,53 @@ function moveGhost (ghost) {
 
   ghost.currentIndex += ghost.currentDirection
 
+  if (ghost.currentIndex === 392) {
+    ghost.currentIndex = 419
+  } else if (ghost.currentIndex === 419) {
+    ghost.currentIndex = 392
+  }
+
   state.squares[ghost.currentIndex].classList.add(ghost.className)
   state.squares[ghost.currentIndex].classList.add('ghost')
 
   ghost.currentDirection = ghost.nextDirection
+
+  console.log(
+    `current: ${ghost.currentDirection}, next: ${ghost.nextDirection}`
+  )
 }
 
 function getNextGhostDirection (nextTile, ghost) {
   // ghost plans movement one tile ahead, so we check nextTile for legal direction options
   // cannot reverse direction, return to lair, or move into wall
 
-  const directions = [-1, 1, -width, width]
+  if (nextTile === 392) {
+    ghost.nextDirection = -1
+  } else if (nextTile === 419) {
+    ghost.nextDirection = 1
+  } else {
+    const directions = [-1, 1, -width, width]
 
-  const legalDirections = directions.filter(direction => {
-    const directionOption = nextTile + direction
-    if (direction === -ghost.currentDirection) {
-      return false
-    } else if (state.squares[directionOption].classList.contains('wall')) {
-      return false
-    } else if (
-      state.squares[directionOption].classList.contains('ghost-lair')
-    ) {
-      return false
-    } else {
-      return true
-    }
-  })
+    const legalDirections = directions.filter(direction => {
+      const directionOption = nextTile + direction
+      if (direction === -ghost.currentDirection) {
+        return false
+      } else if (state.squares[directionOption].classList.contains('wall')) {
+        return false
+      } else if (
+        state.squares[directionOption].classList.contains('ghost-lair')
+      ) {
+        return false
+      } else {
+        return true
+      }
+    })
 
-  console.log(ghost.currentIndex, ghost.currentDirection, legalDirections)
+    console.log('legalDirection: ' + legalDirections)
 
-  ghost.nextDirection =
-    legalDirections[Math.floor(Math.random() * legalDirections.length)]
+    ghost.nextDirection =
+      legalDirections[Math.floor(Math.random() * legalDirections.length)]
+  }
 }
 
 // function setNewGhostIndex (ghost) {
