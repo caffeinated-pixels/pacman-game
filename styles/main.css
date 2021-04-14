@@ -138,6 +138,7 @@ body {
 
 .ghost {
   border: none;
+  border-radius: 0;
   background-color: #202020;
   background-repeat: no-repeat;
   background-position: center;
