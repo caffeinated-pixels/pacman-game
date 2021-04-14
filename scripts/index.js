@@ -245,9 +245,9 @@ function moveGhost (ghost) {
 
   ghost.currentDirection = ghost.nextDirection
 
-  console.log(
-    `current: ${ghost.currentDirection}, next: ${ghost.nextDirection}`
-  )
+  // console.log(
+  //   `current: ${ghost.currentDirection}, next: ${ghost.nextDirection}`
+  // )
 }
 
 function getNextGhostDirection (nextTile, ghost) {
@@ -263,38 +263,25 @@ function getNextGhostDirection (nextTile, ghost) {
 
     const legalDirections = directions.filter(direction => {
       const directionOption = nextTile + direction
-      if (direction === -ghost.currentDirection) {
-        return false
-      } else if (state.squares[directionOption].classList.contains('wall')) {
-        return false
-      } else if (
-        state.squares[directionOption].classList.contains('ghost-lair')
-      ) {
-        return false
-      } else {
+      if (direction === -ghost.currentDirection) return false
+      if (state.squares[directionOption].classList.contains('blank')) {
         return true
       }
+      if (state.squares[directionOption].classList.contains('pac-dot')) {
+        return true
+      }
+      if (state.squares[directionOption].classList.contains('power-pill')) {
+        return true
+      }
+      return false
     })
 
-    console.log('legalDirection: ' + legalDirections)
+    // console.log('legalDirection: ' + legalDirections)
 
     ghost.nextDirection =
       legalDirections[Math.floor(Math.random() * legalDirections.length)]
   }
 }
-
-// function setNewGhostIndex (ghost) {
-//   const directions = [-1, 1, -width, width]
-//
-//   const filteredDirections = directions.filter(direction => {
-//     const newIndex = ghost.currentIndex + direction
-//     return !checkForGhostCollision(newIndex)
-//   })
-//
-//   ghost.currentDirection =
-//     filteredDirections[Math.floor(Math.random() * filteredDirections.length)]
-//   ghost.newIndex = ghost.currentDirection + ghost.currentIndex
-// }
 
 function isGhostScared (ghost) {
   if (ghost.isScared) {
