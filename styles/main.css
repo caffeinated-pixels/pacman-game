@@ -35,6 +35,10 @@ body {
   box-sizing: border-box;
 }
 
+.invisible-wall {
+  background-color: lightblue;
+}
+
 .border-top {
   border-top: 3px solid #2121ff;
 }
