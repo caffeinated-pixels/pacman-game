@@ -5,6 +5,7 @@ class Ghost {
     this.speed = speed
     this.currentIndex = startIndex
     this.currentDirection = direction
+    this.targetTile = 0
     this.nextDirection = 0
     this.isScared = false
     this.timerId = NaN
@@ -20,7 +21,7 @@ export function createNewGhosts (width) {
   // ]
 
   // return [new Ghost('blinky', 321, 1000, -1)]
-  return [new Ghost('blinky', 417, 300, 1)]
+  return [new Ghost('blinky', 321, 1000, 1)]
 }
 
 export function drawGhosts (state) {
