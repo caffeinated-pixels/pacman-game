@@ -188,6 +188,7 @@ function handleControlInput (event) {
 function pacDotEaten () {
   if (state.squares[state.pacmanCurrentIndex].classList.contains('pac-dot')) {
     state.squares[state.pacmanCurrentIndex].classList.remove('pac-dot')
+    state.squares[state.pacmanCurrentIndex].classList.add('blank')
     state.score += 10
     scoreDisplay.textContent = state.score
   }
@@ -226,6 +227,9 @@ function initGhostMovement (ghost) {
 function moveGhost (ghost) {
   // console.log(ghost.currentDirection, ghost.currentIndex)
   const nextTile = ghost.currentIndex + ghost.currentDirection
+  ghost.targetTile = state.pacmanCurrentIndex
+
+  console.log(ghost.targetTile)
 
   getNextGhostDirection(nextTile, ghost)
 
