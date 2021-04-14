@@ -24,6 +24,7 @@ const pacmanHTML =
   '<div class="pacman-top"></div><div class="pacman-bottom"></div>'
 const width = 28
 const height = 31
+const pacmanStartIndex = 658
 
 // setup board
 createBoard()
@@ -102,7 +103,7 @@ function startGame () {
   startButton.innerHTML = pauseIcon
 
   // draw Pacman
-  state.pacmanCurrentIndex = 490
+  state.pacmanCurrentIndex = pacmanStartIndex
   state.pacmanMovementClass = 'pacman-facing-right'
   state.squares[state.pacmanCurrentIndex].classList.add(
     'pacman',
@@ -227,7 +228,11 @@ function initGhostMovement (ghost) {
 function moveGhost (ghost) {
   // console.log(ghost.currentDirection, ghost.currentIndex)
   const nextTile = ghost.currentIndex + ghost.currentDirection
-  ghost.targetTile = state.pacmanCurrentIndex
+
+  if (ghost.className === 'blinky') ghost.targetTile = getBlinkysTarget()
+  if (ghost.className === 'pinky') ghost.targetTile = getPinkysTarget()
+  if (ghost.className === 'inky') ghost.targetTile = getInkysTarget()
+  if (ghost.className === 'clyde') ghost.targetTile = getClydesTarget()
 
   getNextGhostDirection(nextTile, ghost)
 
@@ -246,10 +251,23 @@ function moveGhost (ghost) {
   state.squares[ghost.currentIndex].classList.add('ghost')
 
   ghost.currentDirection = ghost.nextDirection
+}
 
-  // console.log(
-  //   `current: ${ghost.currentDirection}, next: ${ghost.nextDirection}`
-  // )
+function getBlinkysTarget () {
+  return state.pacmanCurrentIndex
+}
+
+function getPinkysTarget () {
+  return state.pacmanCurrentIndex
+}
+
+function getInkysTarget () {
+  const modifier = 4 * state.pacmanCurrentDirection
+  return state.pacmanCurrentIndex
+}
+
+function getClydesTarget () {
+  return state.pacmanCurrentIndex
 }
 
 function getNextGhostDirection (nextTile, ghost) {

@@ -5,6 +5,7 @@ export function movePacman (state, direction) {
     !state.squares[newIndex].classList.contains('wall')
   ) {
     state.pacmanCurrentIndex = newIndex
+    state.pacmanCurrentDirection = direction
     switch (direction) {
       case 1:
         state.pacmanMovementClass = 'pacman-facing-right'
