@@ -196,13 +196,12 @@ function pacDotEaten () {
 }
 
 function powerPillEaten () {
-  // if square pacman is in contains a power pellet
   if (
     state.squares[state.pacmanCurrentIndex].classList.contains('power-pill')
   ) {
-    // remove power pellet class
     state.squares[state.pacmanCurrentIndex].classList.remove('power-pill')
-    // add a score of 10
+    state.squares[state.pacmanCurrentIndex].classList.add('blank')
+
     state.score += 50
     scoreDisplay.textContent = state.score
     // change each of the four ghosts to isScared
@@ -229,10 +228,16 @@ function moveGhost (ghost) {
   // console.log(ghost.currentDirection, ghost.currentIndex)
   const nextTile = ghost.currentIndex + ghost.currentDirection
 
-  if (ghost.className === 'blinky') ghost.targetTile = getBlinkysTarget()
-  if (ghost.className === 'pinky') ghost.targetTile = getPinkysTarget()
-  if (ghost.className === 'inky') ghost.targetTile = getInkysTarget()
-  if (ghost.className === 'clyde') ghost.targetTile = getClydesTarget(ghost)
+  // if in ghost lair, set targetTile manually
+  if (state.squares[ghost.currentIndex].classList.contains('ghost-lair')) {
+    ghost.targetTile = 321
+  } else {
+    // else we use specific logic routines to calculate
+    if (ghost.className === 'blinky') ghost.targetTile = getBlinkysTarget()
+    if (ghost.className === 'pinky') ghost.targetTile = getPinkysTarget()
+    if (ghost.className === 'inky') ghost.targetTile = getInkysTarget()
+    if (ghost.className === 'clyde') ghost.targetTile = getClydesTarget(ghost)
+  }
 
   // console.log(
   //   `pacmanIndex: ${state.pacmanCurrentIndex}, ghostTarget: ${ghost.targetTile}`
@@ -338,6 +343,7 @@ function getNextGhostDirection (nextTile, ghost) {
     const legalDirections = directions.filter(direction => {
       const directionOption = nextTile + direction
       if (direction === -ghost.currentDirection) return false
+
       if (state.squares[directionOption].classList.contains('blank')) {
         return true
       }
@@ -345,6 +351,13 @@ function getNextGhostDirection (nextTile, ghost) {
         return true
       }
       if (state.squares[directionOption].classList.contains('power-pill')) {
+        return true
+      }
+
+      if (
+        state.squares[ghost.currentIndex].classList.contains('ghost-lair') &&
+        state.squares[directionOption].classList.contains('ghost-lair')
+      ) {
         return true
       }
       return false
