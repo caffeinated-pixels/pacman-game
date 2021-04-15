@@ -266,7 +266,7 @@ function getPinkysTarget () {
   // Pinky's target is 4 ahead of Pacman's current tile
   const pacmanXY = getIndexCoords(state.pacmanCurrentIndex)
 
-  // need to check if pacman < 4 tiles from grid edge if facing left (-1) or right (1)
+  // grid is 1D, so we need to prevent the target wrapping to other side of the grid!!!
   if (state.pacmanCurrentDirection === 1 && pacmanXY[0] > 23) {
     return pacmanXY[1] * width + (width - 1)
   }
@@ -280,7 +280,33 @@ function getPinkysTarget () {
 }
 
 function getInkysTarget () {
-  return state.pacmanCurrentIndex
+  // inky has the most complex targeting scheme!!!
+  // we find 2 tile offset from pacman's heading and draw a line from blinky's position
+  // we then double the distance and continue past the offset in the same direction
+
+  // find X,Y for 2 tile offset from pacman's heading
+  const twoTileOffset =
+    2 * state.pacmanCurrentDirection + state.pacmanCurrentIndex
+  const offsetXY = getIndexCoords(twoTileOffset)
+
+  // find X,Y for Blinky
+  const blinkyXY = getIndexCoords(state.ghosts[0].currentIndex)
+
+  const differenceX = offsetXY[0] - blinkyXY[0]
+  const differenceY = offsetXY[1] - blinkyXY[1]
+
+  let targetTileX = offsetXY[0] + differenceX
+  const targetTileY = offsetXY[1] + differenceY
+
+  // grid is 1D, so we need to prevent the target wrapping to other side of the grid!!!
+  if (targetTileX > 27) {
+    targetTileX = 27
+  } else if (targetTileX < 0) {
+    targetTileX = 0
+  }
+
+  const targetTileIndex = targetTileY * width + targetTileX
+  return targetTileIndex
 }
 
 function getClydesTarget (clyde) {
