@@ -232,7 +232,7 @@ function moveGhost (ghost) {
   if (ghost.className === 'blinky') ghost.targetTile = getBlinkysTarget()
   if (ghost.className === 'pinky') ghost.targetTile = getPinkysTarget()
   if (ghost.className === 'inky') ghost.targetTile = getInkysTarget()
-  if (ghost.className === 'clyde') ghost.targetTile = getClydesTarget()
+  if (ghost.className === 'clyde') ghost.targetTile = getClydesTarget(ghost)
 
   // console.log(
   //   `pacmanIndex: ${state.pacmanCurrentIndex}, ghostTarget: ${ghost.targetTile}`
@@ -264,11 +264,9 @@ function getBlinkysTarget () {
 
 function getPinkysTarget () {
   // Pinky's target is 4 ahead of Pacman's current tile
+  const pacmanXY = getIndexCoords(state.pacmanCurrentIndex)
 
   // need to check if pacman < 4 tiles from grid edge if facing left (-1) or right (1)
-  const pacmanXY = getIndexCoords(state.pacmanCurrentIndex)
-  // console.log(pacmanXY)
-
   if (state.pacmanCurrentDirection === 1 && pacmanXY[0] > 23) {
     return pacmanXY[1] * width + (width - 1)
   }
@@ -285,8 +283,9 @@ function getInkysTarget () {
   return state.pacmanCurrentIndex
 }
 
-function getClydesTarget () {
-  return state.pacmanCurrentIndex
+function getClydesTarget (clyde) {
+  return clyde.scatterTarget
+  // return state.pacmanCurrentIndex
 }
 
 function getNextGhostDirection (nextTile, ghost) {
