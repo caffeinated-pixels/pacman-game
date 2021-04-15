@@ -214,7 +214,12 @@ function frightenGhosts () {
   state.ghosts.forEach(ghost => {
     if (!state.squares[ghost.currentIndex].classList.contains('ghost-lair')) {
       ghost.isFrightened = true
-      ghost.currentDirection = -ghost.currentDirection
+      state.squares[ghost.currentIndex].classList.add('frightened-ghost')
+      // state.ghosts.forEach(ghost => clearInterval(ghost.timerId))
+
+      setTimeout(() => {
+        ghost.currentDirection = -ghost.currentDirection
+      }, ghost.speed)
     }
   })
   setTimeout(unFrightenGhosts, 10000)
@@ -222,6 +227,12 @@ function frightenGhosts () {
 
 function unFrightenGhosts () {
   state.ghosts.forEach(ghost => (ghost.isFrightened = false))
+}
+
+function isGhostFrightened (ghost) {
+  if (ghost.isFrightened) {
+    state.squares[ghost.currentIndex].classList.add('frightened-ghost')
+  }
 }
 
 function initGhostMovement (ghost) {
@@ -423,12 +434,6 @@ function getTargetTileDistance (legalDirections, nextTile, ghost) {
   })
   // console.log(shortestDistance)
   return shortestDistance[0].direction
-}
-
-function isGhostFrightened (ghost) {
-  if (ghost.isFrightened) {
-    state.squares[ghost.currentIndex].classList.add('frightened-ghost')
-  }
 }
 
 function didPacmanEatGhost (ghost) {
