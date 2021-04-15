@@ -287,8 +287,15 @@ function getClydesTarget (clyde) {
   const pacmanXY = getIndexCoords(state.pacmanCurrentIndex)
   const clydeXY = getIndexCoords(clyde.currentIndex)
 
-  return clyde.scatterTarget
-  // return state.pacmanCurrentIndex
+  const distance = calcDistance(pacmanXY, clydeXY)
+
+  if (distance > 8) {
+    // if clyde is > 8 tiles from pacman, his targetTile is pacman
+    return state.pacmanCurrentIndex
+  } else {
+    // if clyde is < 8 tiles from pacman, he uses his scatter target
+    return clyde.scatterTarget
+  }
 }
 
 function getNextGhostDirection (nextTile, ghost) {
