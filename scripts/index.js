@@ -264,6 +264,9 @@ function getBlinkysTarget () {
 
 function getPinkysTarget () {
   // Pinky's target is 4 ahead of Pacman's current tile
+
+  // need to check if pacman < 4 tiles from grid edge if facing left (-1) or right (1)
+
   const fourTileOffset = 4 * state.pacmanCurrentDirection
   return state.pacmanCurrentIndex + fourTileOffset
 }
@@ -314,18 +317,23 @@ function getNextGhostDirection (nextTile, ghost) {
   }
 }
 
+function getIndexCoords (tileIndex) {
+  // find the X,Y coordinates of a given index
+  const coordY = Math.floor(tileIndex / 28)
+  const coordX = tileIndex - coordY * 28
+
+  return [coordX, coordY]
+}
+
 function getTargetTileDistance (legalDirections, nextTile, ghost) {
   const shortestDistance = legalDirections.map(direction => {
     const optionTileIndex = nextTile + direction
 
-    // need to get x,y coords of optionTile and targetTile
-    const optionY = Math.floor(optionTileIndex / 28)
-    const optionX = optionTileIndex - optionY * 28
-    const targetY = Math.floor(ghost.targetTile / 28)
-    const targetX = ghost.targetTile - targetY * 28
+    const optionXY = getIndexCoords(optionTileIndex)
+    const targetXY = getIndexCoords(ghost.targetTile)
 
     const distance = Math.sqrt(
-      (optionX - targetX) ** 2 + (optionY - targetY) ** 2
+      (optionXY[0] - targetXY[0]) ** 2 + (optionXY[1] - targetXY[1]) ** 2
     )
 
     return {
