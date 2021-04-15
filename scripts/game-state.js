@@ -5,6 +5,7 @@ export const state = {
   pacmanCurrentIndex: 0,
   pacmanCurrentDirection: 1,
   pacmanMovementClass: 'pacman-facing-right',
+  dotsEaten: 0,
   isPaused: true,
   isGameOver: true,
   ghosts: []

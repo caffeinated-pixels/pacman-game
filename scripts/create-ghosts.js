@@ -26,18 +26,12 @@ class Ghost {
 export function createNewGhosts (width) {
   return [
     new Ghost('blinky', 321, 377, 0, 500, -1, -1),
-    new Ghost('pinky', 378, 378, 2000, 500, -width, -28),
-    new Ghost('inky', 376, 376, 5000, 500, 1, 895),
-    new Ghost('clyde', 379, 379, 15000, 500, -1, 868)
+    new Ghost('pinky', 378, 378, 10, 500, -width, -28),
+    new Ghost('inky', 376, 376, 30, 500, 1, 895),
+    new Ghost('clyde', 379, 379, 90, 500, -1, 868)
   ]
 
-  // return [new Ghost('blinky', 321, 1000, -1, -1)]
-  // return [new Ghost('pinky', 321, 1000, -1, -28)]
-  // return [
-  //   new Ghost('blinky', 376, 1000, 1, -1),
-  //   new Ghost('inky', 379, 1000, -1, 895)
-  // ]
-  // return [new Ghost('clyde', 321, 500, -1, 868)]
+  // return [new Ghost('clyde', 379, 379, 5000, 750, -1, 868)]
 }
 
 export function drawGhosts (state) {

@@ -139,6 +139,7 @@ function resetGame () {
   state.isPaused = true
   state.isGameOver = true
   state.score = 0
+  state.dotsEaten = 0
   scoreDisplay.textContent = state.score
   grid.innerHTML = ''
   startButton.innerHTML = playIcon
@@ -190,6 +191,7 @@ function pacDotEaten () {
   if (state.squares[state.pacmanCurrentIndex].classList.contains('pac-dot')) {
     state.squares[state.pacmanCurrentIndex].classList.remove('pac-dot')
     state.squares[state.pacmanCurrentIndex].classList.add('blank')
+    state.dotsEaten++
     state.score += 10
     scoreDisplay.textContent = state.score
   }
@@ -223,14 +225,14 @@ function unFrightenGhosts () {
 }
 
 function initGhostMovement (ghost) {
-  setTimeout(() => {
-    ghost.timerId = setInterval(function () {
+  ghost.timerId = setInterval(function () {
+    if (state.dotsEaten >= ghost.startTimer) {
       moveGhost(ghost)
       isGhostFrightened(ghost)
       didPacmanEatGhost(ghost)
       checkForGameOver()
-    }, ghost.speed)
-  }, ghost.startTimer)
+    }
+  }, ghost.speed)
 }
 
 function moveGhost (ghost) {
