@@ -363,30 +363,7 @@ function getNextGhostDirection (nextTile, ghost) {
   } else if (nextTile === 419) {
     ghost.nextDirection = 1
   } else {
-    const directions = [-1, 1, -width, width]
-
-    const legalDirections = directions.filter(direction => {
-      const directionOption = nextTile + direction
-      if (direction === -ghost.currentDirection) return false
-
-      if (state.squares[directionOption].classList.contains('blank')) {
-        return true
-      }
-      if (state.squares[directionOption].classList.contains('pac-dot')) {
-        return true
-      }
-      if (state.squares[directionOption].classList.contains('power-pill')) {
-        return true
-      }
-
-      if (
-        state.squares[ghost.currentIndex].classList.contains('ghost-lair') &&
-        state.squares[directionOption].classList.contains('ghost-lair')
-      ) {
-        return true
-      }
-      return false
-    })
+    const legalDirections = getLegalGhostDirections(nextTile, ghost)
 
     if (legalDirections.length > 1) {
       ghost.nextDirection = getTargetTileDistance(
@@ -398,6 +375,33 @@ function getNextGhostDirection (nextTile, ghost) {
       ghost.nextDirection = legalDirections[0]
     }
   }
+}
+
+function getLegalGhostDirections (nextTile, ghost) {
+  const directions = [-1, 1, -width, width]
+
+  return directions.filter(direction => {
+    const directionOption = nextTile + direction
+    if (direction === -ghost.currentDirection) return false
+
+    if (state.squares[directionOption].classList.contains('blank')) {
+      return true
+    }
+    if (state.squares[directionOption].classList.contains('pac-dot')) {
+      return true
+    }
+    if (state.squares[directionOption].classList.contains('power-pill')) {
+      return true
+    }
+
+    if (
+      state.squares[ghost.currentIndex].classList.contains('ghost-lair') &&
+      state.squares[directionOption].classList.contains('ghost-lair')
+    ) {
+      return true
+    }
+    return false
+  })
 }
 
 function getIndexCoords (tileIndex) {
