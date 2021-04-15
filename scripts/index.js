@@ -234,6 +234,10 @@ function moveGhost (ghost) {
   if (ghost.className === 'inky') ghost.targetTile = getInkysTarget()
   if (ghost.className === 'clyde') ghost.targetTile = getClydesTarget()
 
+  // console.log(
+  //   `pacmanIndex: ${state.pacmanCurrentIndex}, ghostTarget: ${ghost.targetTile}`
+  // )
+
   getNextGhostDirection(nextTile, ghost)
 
   state.squares[ghost.currentIndex].classList.remove(ghost.className)
@@ -254,15 +258,17 @@ function moveGhost (ghost) {
 }
 
 function getBlinkysTarget () {
+  // Blinky's target is Pacman's current tile
   return state.pacmanCurrentIndex
 }
 
 function getPinkysTarget () {
-  return state.pacmanCurrentIndex
+  // Pinky's target is 4 ahead of Pacman's current tile
+  const fourTileOffset = 4 * state.pacmanCurrentDirection
+  return state.pacmanCurrentIndex + fourTileOffset
 }
 
 function getInkysTarget () {
-  const modifier = 4 * state.pacmanCurrentDirection
   return state.pacmanCurrentIndex
 }
 
