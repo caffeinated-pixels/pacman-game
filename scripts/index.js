@@ -284,6 +284,9 @@ function getInkysTarget () {
 }
 
 function getClydesTarget (clyde) {
+  const pacmanXY = getIndexCoords(state.pacmanCurrentIndex)
+  const clydeXY = getIndexCoords(clyde.currentIndex)
+
   return clyde.scatterTarget
   // return state.pacmanCurrentIndex
 }
@@ -334,6 +337,12 @@ function getIndexCoords (tileIndex) {
   return [coordX, coordY]
 }
 
+function calcDistance (point1XY, point2XY) {
+  return Math.sqrt(
+    (point1XY[0] - point2XY[0]) ** 2 + (point1XY[1] - point2XY[1]) ** 2
+  )
+}
+
 function getTargetTileDistance (legalDirections, nextTile, ghost) {
   const shortestDistance = legalDirections.map(direction => {
     const optionTileIndex = nextTile + direction
@@ -341,9 +350,7 @@ function getTargetTileDistance (legalDirections, nextTile, ghost) {
     const optionXY = getIndexCoords(optionTileIndex)
     const targetXY = getIndexCoords(ghost.targetTile)
 
-    const distance = Math.sqrt(
-      (optionXY[0] - targetXY[0]) ** 2 + (optionXY[1] - targetXY[1]) ** 2
-    )
+    const distance = calcDistance(optionXY, targetXY)
 
     return {
       direction,

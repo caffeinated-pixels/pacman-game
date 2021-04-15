@@ -23,7 +23,7 @@ export function createNewGhosts (width) {
 
   // return [new Ghost('blinky', 321, 1000, -1, -1)]
   // return [new Ghost('pinky', 321, 1000, -1, -28)]
-  return [new Ghost('clyde', 321, 400, -1, 868)]
+  return [new Ghost('clyde', 321, 500, -1, 868)]
 }
 
 export function drawGhosts (state) {
