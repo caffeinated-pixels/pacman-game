@@ -204,22 +204,22 @@ function powerPillEaten () {
 
     state.score += 50
     scoreDisplay.textContent = state.score
-    // change each of the four ghosts to isScared
-    state.ghosts.forEach(ghost => (ghost.isScared = true))
-    // use setTimeout to unscare ghosts after 10 seconds
-    setTimeout(unScareGhosts, 10000)
+    // change each of the four ghosts to isFrightened
+    state.ghosts.forEach(ghost => (ghost.isFrightened = true))
+    // use setTimeout to unFrightened ghosts after 10 seconds
+    setTimeout(unFrightenGhosts, 10000)
   }
 }
 
-function unScareGhosts () {
-  state.ghosts.forEach(ghost => (ghost.isScared = false))
+function unFrightenGhosts () {
+  state.ghosts.forEach(ghost => (ghost.isFrightened = false))
 }
 
 function initGhostMovement (ghost) {
   setTimeout(() => {
     ghost.timerId = setInterval(function () {
       moveGhost(ghost)
-      isGhostScared(ghost)
+      isGhostFrightened(ghost)
       didPacmanEatGhost(ghost)
       checkForGameOver()
     }, ghost.speed)
@@ -248,7 +248,10 @@ function moveGhost (ghost) {
   getNextGhostDirection(nextTile, ghost)
 
   state.squares[ghost.currentIndex].classList.remove(ghost.className)
-  state.squares[ghost.currentIndex].classList.remove('ghost', 'scared-ghost')
+  state.squares[ghost.currentIndex].classList.remove(
+    'ghost',
+    'frightened-ghost'
+  )
 
   ghost.currentIndex += ghost.currentDirection
 
@@ -413,25 +416,25 @@ function getTargetTileDistance (legalDirections, nextTile, ghost) {
   return shortestDistance[0].direction
 }
 
-function isGhostScared (ghost) {
-  if (ghost.isScared) {
-    state.squares[ghost.currentIndex].classList.add('scared-ghost')
+function isGhostFrightened (ghost) {
+  if (ghost.isFrightened) {
+    state.squares[ghost.currentIndex].classList.add('frightened-ghost')
   }
 }
 
 function didPacmanEatGhost (ghost) {
   if (
-    ghost.isScared &&
+    ghost.isFrightened &&
     state.squares[ghost.currentIndex].classList.contains('pacman')
   ) {
-    // remove classnames - ghost.className, 'ghost', 'scared-ghost'
+    // remove classnames - ghost.className, 'ghost', 'frightened-ghost'
     state.squares[ghost.currentIndex].classList.remove(
       ghost.className,
       'ghost',
-      'scared-ghost'
+      'frightened-ghost'
     )
     // change ghosts currentIndex back to its startIndex
-    ghost.isScared = false
+    ghost.isFrightened = false
     ghost.currentIndex = ghost.startIndex
     ghost.currentDirection = -width
     ghost.newIndex = ghost.startIndex + -width
@@ -444,10 +447,12 @@ function didPacmanEatGhost (ghost) {
 
 // check for game over
 function checkForGameOver () {
-  // if the square pacman is in contains a ghost AND the square does NOT contain a scared ghost
+  // if the square pacman is in contains a ghost AND the square does NOT contain a frightened ghost
   if (
     state.squares[state.pacmanCurrentIndex].classList.contains('ghost') &&
-    !state.squares[state.pacmanCurrentIndex].classList.contains('scared-ghost')
+    !state.squares[state.pacmanCurrentIndex].classList.contains(
+      'frightened-ghost'
+    )
   ) {
     // for each ghost - we need to stop it moving
     state.ghosts.forEach(ghost => clearInterval(ghost.timerId))

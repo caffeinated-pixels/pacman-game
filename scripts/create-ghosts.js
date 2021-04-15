@@ -18,7 +18,7 @@ class Ghost {
     this.scatterTarget = scatterTarget
     this.targetTile = 0
     this.nextDirection = 0
-    this.isScared = false
+    this.isFrightened = false
     this.timerId = NaN
   }
 }
