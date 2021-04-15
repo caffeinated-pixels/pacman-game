@@ -204,11 +204,18 @@ function powerPillEaten () {
 
     state.score += 50
     scoreDisplay.textContent = state.score
-    // change each of the four ghosts to isFrightened
-    state.ghosts.forEach(ghost => (ghost.isFrightened = true))
-    // use setTimeout to unFrightened ghosts after 10 seconds
-    setTimeout(unFrightenGhosts, 10000)
+    frightenGhosts()
   }
+}
+
+function frightenGhosts () {
+  state.ghosts.forEach(ghost => {
+    if (!state.squares[ghost.currentIndex].classList.contains('ghost-lair')) {
+      ghost.isFrightened = true
+      ghost.currentDirection = -ghost.currentDirection
+    }
+  })
+  setTimeout(unFrightenGhosts, 10000)
 }
 
 function unFrightenGhosts () {
