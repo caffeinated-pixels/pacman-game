@@ -3,6 +3,7 @@ class Ghost {
     className,
     startIndex,
     respawnIndex,
+    startTimer,
     speed,
     direction,
     scatterTarget
@@ -10,6 +11,7 @@ class Ghost {
     this.className = className
     this.startIndex = startIndex
     this.respawnIndex = respawnIndex
+    this.startTimer = startTimer
     this.speed = speed
     this.currentIndex = startIndex
     this.currentDirection = direction
@@ -23,10 +25,10 @@ class Ghost {
 
 export function createNewGhosts (width) {
   return [
-    new Ghost('blinky', 321, 377, 500, -1, -1),
-    new Ghost('pinky', 378, 378, 500, -width, -28),
-    new Ghost('inky', 376, 376, 500, 1, 895),
-    new Ghost('clyde', 379, 379, 500, -1, 868)
+    new Ghost('blinky', 321, 377, 0, 500, -1, -1),
+    new Ghost('pinky', 378, 378, 2000, 500, -width, -28),
+    new Ghost('inky', 376, 376, 5000, 500, 1, 895),
+    new Ghost('clyde', 379, 379, 15000, 500, -1, 868)
   ]
 
   // return [new Ghost('blinky', 321, 1000, -1, -1)]

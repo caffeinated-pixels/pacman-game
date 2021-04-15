@@ -216,12 +216,14 @@ function unScareGhosts () {
 }
 
 function initGhostMovement (ghost) {
-  ghost.timerId = setInterval(function () {
-    moveGhost(ghost)
-    isGhostScared(ghost)
-    didPacmanEatGhost(ghost)
-    checkForGameOver()
-  }, ghost.speed)
+  setTimeout(() => {
+    ghost.timerId = setInterval(function () {
+      moveGhost(ghost)
+      isGhostScared(ghost)
+      didPacmanEatGhost(ghost)
+      checkForGameOver()
+    }, ghost.speed)
+  }, ghost.startTimer)
 }
 
 function moveGhost (ghost) {
