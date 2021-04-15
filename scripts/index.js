@@ -266,6 +266,16 @@ function getPinkysTarget () {
   // Pinky's target is 4 ahead of Pacman's current tile
 
   // need to check if pacman < 4 tiles from grid edge if facing left (-1) or right (1)
+  const pacmanXY = getIndexCoords(state.pacmanCurrentIndex)
+  // console.log(pacmanXY)
+
+  if (state.pacmanCurrentDirection === 1 && pacmanXY[0] > 23) {
+    return pacmanXY[1] * width + (width - 1)
+  }
+
+  if (state.pacmanCurrentDirection === -1 && pacmanXY[0] < 3) {
+    return pacmanXY[1] * width
+  }
 
   const fourTileOffset = 4 * state.pacmanCurrentDirection
   return state.pacmanCurrentIndex + fourTileOffset
