@@ -365,6 +365,8 @@ function getNextGhostDirection (nextTile, ghost) {
   } else {
     const legalDirections = getLegalGhostDirections(nextTile, ghost)
 
+    // drop something in here for fightened ghost behaviour
+
     if (legalDirections.length > 1) {
       ghost.nextDirection = getTargetTileDistance(
         legalDirections,
@@ -391,6 +393,9 @@ function getLegalGhostDirections (nextTile, ghost) {
       return true
     }
     if (state.squares[directionOption].classList.contains('power-pill')) {
+      return true
+    }
+    if (state.squares[directionOption].classList.contains('ghost')) {
       return true
     }
 
