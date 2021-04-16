@@ -19,19 +19,21 @@ class Ghost {
     this.targetTile = 0
     this.nextDirection = 0
     this.isFrightened = false
+    this.firstMoveAfterFrightened = false
     this.timerId = NaN
   }
 }
 
 export function createNewGhosts (width) {
-  return [
-    new Ghost('blinky', 321, 377, 0, 500, -1, -1),
-    new Ghost('pinky', 378, 378, 10, 500, -width, -28),
-    new Ghost('inky', 376, 376, 30, 500, 1, 895),
-    new Ghost('clyde', 379, 379, 90, 500, -1, 868)
-  ]
+  // return [
+  //   new Ghost('blinky', 321, 377, 0, 500, -1, -1),
+  //   new Ghost('pinky', 378, 378, 10, 500, -width, -28),
+  //   new Ghost('inky', 376, 376, 30, 500, 1, 895),
+  //   new Ghost('clyde', 379, 379, 90, 500, -1, 868)
+  // ]
 
   // return [new Ghost('clyde', 379, 379, 5000, 750, -1, 868)]
+  return [new Ghost('blinky', 321, 377, 0, 500, -1, -1)]
 }
 
 export function drawGhosts (state) {

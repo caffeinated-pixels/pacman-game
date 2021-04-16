@@ -25,6 +25,7 @@ const pacmanHTML =
 const width = 28
 const height = 31
 const pacmanStartIndex = 658
+const ghostDirections = [-width, -1, width, 1] // up, left, down, right
 
 // setup board
 createBoard()
@@ -214,12 +215,13 @@ function frightenGhosts () {
   state.ghosts.forEach(ghost => {
     if (!state.squares[ghost.currentIndex].classList.contains('ghost-lair')) {
       ghost.isFrightened = true
+      ghost.firstMoveAfterFrightened = true
       state.squares[ghost.currentIndex].classList.add('frightened-ghost')
       // state.ghosts.forEach(ghost => clearInterval(ghost.timerId))
 
-      setTimeout(() => {
-        ghost.currentDirection = -ghost.currentDirection
-      }, ghost.speed)
+      // setTimeout(() => {
+      //   ghost.currentDirection = -ghost.currentDirection
+      // }, ghost.speed)
     }
   })
   setTimeout(unFrightenGhosts, 10000)
@@ -247,25 +249,12 @@ function initGhostMovement (ghost) {
 }
 
 function moveGhost (ghost) {
-  // console.log(ghost.currentDirection, ghost.currentIndex)
-  const nextTile = ghost.currentIndex + ghost.currentDirection
-
-  // if in ghost lair, set targetTile manually
-  if (state.squares[ghost.currentIndex].classList.contains('ghost-lair')) {
-    ghost.targetTile = 321
+  if (ghost.isFrightened) {
+    ghost.nextDirection = getFrightenedGhostDirection(ghost)
   } else {
-    // else we use specific logic routines to calculate
-    if (ghost.className === 'blinky') ghost.targetTile = getBlinkysTarget()
-    if (ghost.className === 'pinky') ghost.targetTile = getPinkysTarget()
-    if (ghost.className === 'inky') ghost.targetTile = getInkysTarget()
-    if (ghost.className === 'clyde') ghost.targetTile = getClydesTarget(ghost)
+    setGhostTarget(ghost)
+    ghost.nextDirection = getNextGhostDirection(ghost)
   }
-
-  // console.log(
-  //   `pacmanIndex: ${state.pacmanCurrentIndex}, ghostTarget: ${ghost.targetTile}`
-  // )
-
-  getNextGhostDirection(nextTile, ghost)
 
   state.squares[ghost.currentIndex].classList.remove(ghost.className)
   state.squares[ghost.currentIndex].classList.remove(
@@ -275,6 +264,8 @@ function moveGhost (ghost) {
 
   ghost.currentIndex += ghost.currentDirection
 
+  // FIXME: ghost tunnel movement bugged again, presumably due to targeting scheme!!!
+  // tunnel movement
   if (ghost.currentIndex === 392) {
     ghost.currentIndex = 419
   } else if (ghost.currentIndex === 419) {
@@ -285,6 +276,127 @@ function moveGhost (ghost) {
   state.squares[ghost.currentIndex].classList.add('ghost')
 
   ghost.currentDirection = ghost.nextDirection
+}
+
+function getNextGhostDirection (ghost) {
+  // ghost plans movement one tile ahead, so we check nextTile for legal direction options
+  // cannot reverse direction, return to lair, or move into wall
+  const nextTile = ghost.currentIndex + ghost.currentDirection
+
+  if (nextTile === 392) {
+    ghost.nextDirection = -1
+  } else if (nextTile === 419) {
+    ghost.nextDirection = 1
+  } else {
+    const legalDirections = getLegalGhostDirections(nextTile, ghost)
+
+    if (legalDirections.length > 1) {
+      return getTargetTileDistance(legalDirections, nextTile, ghost)
+    } else {
+      return legalDirections[0]
+    }
+  }
+}
+
+function getFrightenedGhostDirection (ghost) {
+  if (ghost.firstMoveAfterFrightened) {
+    return firstDirectionAfterFrightened(ghost)
+  } else {
+    return getNextGhostDirection(ghost)
+  }
+}
+
+function firstDirectionAfterFrightened (ghost) {
+  const reverseTile = ghost.currentIndex + -ghost.currentDirection
+  ghost.firstMoveAfterFrightened = false
+
+  if (
+    !state.squares[reverseTile].classList.contains('wall') &&
+    !state.squares[reverseTile].classList.contains('ghost-lair')
+  ) {
+    return -ghost.currentDirection
+  } else {
+    return getNextGhostDirection(ghost)
+  }
+}
+
+function getRandomDirection (ghost) {}
+
+function getLegalGhostDirections (nextTile, ghost) {
+  return ghostDirections.filter(direction => {
+    const directionOption = nextTile + direction
+    if (direction === -ghost.currentDirection) return false
+
+    if (state.squares[directionOption].classList.contains('blank')) {
+      return true
+    }
+    if (state.squares[directionOption].classList.contains('pac-dot')) {
+      return true
+    }
+    if (state.squares[directionOption].classList.contains('power-pill')) {
+      return true
+    }
+    if (state.squares[directionOption].classList.contains('ghost')) {
+      return true
+    }
+
+    if (
+      state.squares[ghost.currentIndex].classList.contains('ghost-lair') &&
+      state.squares[directionOption].classList.contains('ghost-lair')
+    ) {
+      return true
+    }
+    return false
+  })
+}
+
+function getIndexCoords (tileIndex) {
+  // find the X,Y coordinates of a given index
+  const coordY = Math.floor(tileIndex / 28)
+  const coordX = tileIndex - coordY * 28
+
+  return [coordX, coordY]
+}
+
+function calcDistance (point1XY, point2XY) {
+  return Math.sqrt(
+    (point1XY[0] - point2XY[0]) ** 2 + (point1XY[1] - point2XY[1]) ** 2
+  )
+}
+
+function getTargetTileDistance (legalDirections, nextTile, ghost) {
+  const shortestDistance = legalDirections.map(direction => {
+    const optionTileIndex = nextTile + direction
+
+    const optionXY = getIndexCoords(optionTileIndex)
+    const targetXY = getIndexCoords(ghost.targetTile)
+
+    const distance = calcDistance(optionXY, targetXY)
+
+    return {
+      direction,
+      distance
+    }
+  })
+
+  shortestDistance.sort((a, b) => {
+    return a.distance - b.distance
+  })
+  // console.log(shortestDistance)
+  return shortestDistance[0].direction
+}
+
+function setGhostTarget (ghost) {
+  // if in ghost lair, set targetTile manually
+  if (state.squares[ghost.currentIndex].classList.contains('ghost-lair')) {
+    ghost.targetTile = 321
+  } else {
+    // else we use specific logic routines to calculate
+    if (ghost.className === 'blinky') ghost.targetTile = getBlinkysTarget()
+    if (ghost.className === 'pinky') ghost.targetTile = getPinkysTarget()
+    if (ghost.className === 'inky') ghost.targetTile = getInkysTarget()
+    if (ghost.className === 'clyde') ghost.targetTile = getClydesTarget(ghost)
+  }
 }
 
 function getBlinkysTarget () {
@@ -352,97 +464,6 @@ function getClydesTarget (clyde) {
     // if clyde is < 8 tiles from pacman, he uses his scatter target
     return clyde.scatterTarget
   }
-}
-
-function getNextGhostDirection (nextTile, ghost) {
-  // ghost plans movement one tile ahead, so we check nextTile for legal direction options
-  // cannot reverse direction, return to lair, or move into wall
-
-  if (nextTile === 392) {
-    ghost.nextDirection = -1
-  } else if (nextTile === 419) {
-    ghost.nextDirection = 1
-  } else {
-    const legalDirections = getLegalGhostDirections(nextTile, ghost)
-
-    // drop something in here for fightened ghost behaviour
-
-    if (legalDirections.length > 1) {
-      ghost.nextDirection = getTargetTileDistance(
-        legalDirections,
-        nextTile,
-        ghost
-      )
-    } else {
-      ghost.nextDirection = legalDirections[0]
-    }
-  }
-}
-
-function getLegalGhostDirections (nextTile, ghost) {
-  const directions = [-1, 1, -width, width]
-
-  return directions.filter(direction => {
-    const directionOption = nextTile + direction
-    if (direction === -ghost.currentDirection) return false
-
-    if (state.squares[directionOption].classList.contains('blank')) {
-      return true
-    }
-    if (state.squares[directionOption].classList.contains('pac-dot')) {
-      return true
-    }
-    if (state.squares[directionOption].classList.contains('power-pill')) {
-      return true
-    }
-    if (state.squares[directionOption].classList.contains('ghost')) {
-      return true
-    }
-
-    if (
-      state.squares[ghost.currentIndex].classList.contains('ghost-lair') &&
-      state.squares[directionOption].classList.contains('ghost-lair')
-    ) {
-      return true
-    }
-    return false
-  })
-}
-
-function getIndexCoords (tileIndex) {
-  // find the X,Y coordinates of a given index
-  const coordY = Math.floor(tileIndex / 28)
-  const coordX = tileIndex - coordY * 28
-
-  return [coordX, coordY]
-}
-
-function calcDistance (point1XY, point2XY) {
-  return Math.sqrt(
-    (point1XY[0] - point2XY[0]) ** 2 + (point1XY[1] - point2XY[1]) ** 2
-  )
-}
-
-function getTargetTileDistance (legalDirections, nextTile, ghost) {
-  const shortestDistance = legalDirections.map(direction => {
-    const optionTileIndex = nextTile + direction
-
-    const optionXY = getIndexCoords(optionTileIndex)
-    const targetXY = getIndexCoords(ghost.targetTile)
-
-    const distance = calcDistance(optionXY, targetXY)
-
-    return {
-      direction,
-      distance
-    }
-  })
-
-  shortestDistance.sort((a, b) => {
-    return a.distance - b.distance
-  })
-  // console.log(shortestDistance)
-  return shortestDistance[0].direction
 }
 
 function didPacmanEatGhost (ghost) {
