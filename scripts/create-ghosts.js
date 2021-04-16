@@ -33,7 +33,7 @@ export function createNewGhosts (width) {
   // ]
 
   // return [new Ghost('clyde', 379, 379, 5000, 750, -1, 868)]
-  return [new Ghost('blinky', 321, 377, 0, 500, -1, -1)]
+  return [new Ghost('blinky', 321, 377, 0, 1000, -1, -1)]
 }
 
 export function drawGhosts (state) {

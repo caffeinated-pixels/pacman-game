@@ -224,7 +224,7 @@ function frightenGhosts () {
       // }, ghost.speed)
     }
   })
-  setTimeout(unFrightenGhosts, 10000)
+  setTimeout(unFrightenGhosts, 1000000)
 }
 
 function unFrightenGhosts () {
@@ -249,12 +249,16 @@ function initGhostMovement (ghost) {
 }
 
 function moveGhost (ghost) {
+  // console.log('START OF MOVE')
+  // console.log(ghost)
   if (ghost.isFrightened) {
     ghost.nextDirection = getFrightenedGhostDirection(ghost)
   } else {
     setGhostTarget(ghost)
     ghost.nextDirection = getNextGhostDirection(ghost)
   }
+
+  // console.log('chosen direction = ' + ghost.nextDirection)
 
   state.squares[ghost.currentIndex].classList.remove(ghost.className)
   state.squares[ghost.currentIndex].classList.remove(
@@ -263,7 +267,6 @@ function moveGhost (ghost) {
   )
 
   ghost.currentIndex += ghost.currentDirection
-
   // FIXME: ghost tunnel movement bugged again, presumably due to targeting scheme!!!
   // tunnel movement
   if (ghost.currentIndex === 392) {
@@ -276,6 +279,8 @@ function moveGhost (ghost) {
   state.squares[ghost.currentIndex].classList.add('ghost')
 
   ghost.currentDirection = ghost.nextDirection
+  // console.log(ghost)
+  // console.log('END OF MOVE')
 }
 
 function getNextGhostDirection (ghost) {
@@ -299,10 +304,12 @@ function getNextGhostDirection (ghost) {
 }
 
 function getFrightenedGhostDirection (ghost) {
+  // after first becoming frightened, ghost will attempt to reverse direction (if legal)
+  // otherwise we choose a random direction
   if (ghost.firstMoveAfterFrightened) {
     return firstDirectionAfterFrightened(ghost)
   } else {
-    return getNextGhostDirection(ghost)
+    return getRandomDirection(ghost)
   }
 }
 
@@ -310,17 +317,48 @@ function firstDirectionAfterFrightened (ghost) {
   const reverseTile = ghost.currentIndex + -ghost.currentDirection
   ghost.firstMoveAfterFrightened = false
 
-  if (
-    !state.squares[reverseTile].classList.contains('wall') &&
-    !state.squares[reverseTile].classList.contains('ghost-lair')
-  ) {
+  if (isDirectionLegal(reverseTile)) {
     return -ghost.currentDirection
   } else {
-    return getNextGhostDirection(ghost)
+    return getRandomDirection(ghost)
   }
 }
 
-function getRandomDirection (ghost) {}
+function getRandomDirection (ghost) {
+  // if randomDirection not legal, ghost chooses next legal direction in order of up, left, down, right (same as order in ghostDirections arr)
+  const randomIndex = Math.floor(Math.random() * ghostDirections.length)
+  const randomDirection = ghostDirections[randomIndex]
+
+  const isNotReverseDirection = randomDirection !== -ghost.currentDirection
+  // console.log(isNotReverseDirection)
+
+  const nextTile = ghost.currentIndex + ghost.currentDirection
+
+  const directionOption = randomDirection + nextTile
+
+  if (isDirectionLegal(directionOption) && isNotReverseDirection) {
+    return randomDirection
+  }
+
+  const remainingDirections = ghostDirections.filter(direction => {
+    const directionOption = direction + nextTile
+
+    if (direction === randomDirection) return false
+    if (direction === -ghost.currentDirection) return false
+    return isDirectionLegal(directionOption)
+  })
+
+  return remainingDirections[0]
+}
+
+function isDirectionLegal (tileIndex) {
+  // TODO: incorporate into getLegalGhostDirections
+
+  return (
+    !state.squares[tileIndex].classList.contains('wall') &&
+    !state.squares[tileIndex].classList.contains('ghost-lair')
+  )
+}
 
 function getLegalGhostDirections (nextTile, ghost) {
   return ghostDirections.filter(direction => {
