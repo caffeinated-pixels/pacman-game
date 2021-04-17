@@ -206,6 +206,7 @@ function powerPillEaten () {
     state.squares[state.pacmanCurrentIndex].classList.add('blank')
 
     state.score += 50
+    state.dotsEaten++
     scoreDisplay.textContent = state.score
     frightenGhosts()
   }
@@ -224,7 +225,7 @@ function frightenGhosts () {
       // }, ghost.speed)
     }
   })
-  setTimeout(unFrightenGhosts, 1000000)
+  setTimeout(unFrightenGhosts, 10000)
 }
 
 function unFrightenGhosts () {
@@ -555,11 +556,11 @@ function checkForHiscore () {
 
 // check for win
 function checkForWin () {
-  if (state.score === 274) {
+  if (state.dotsEaten > 243) {
     // stop each ghost
     state.ghosts.forEach(ghost => clearInterval(ghost.timerId))
 
     // tell our user we have won
-    scoreDisplay.innerHTML = 'You WON!'
+    scoreDisplay.textContent = 'Winner!'
   }
 }
