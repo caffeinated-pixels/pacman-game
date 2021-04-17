@@ -54,7 +54,7 @@ export const layout = [
   b, b, b, b, b, w, d, w, w, b, b, b, b, b, b, b, b, b, b, w, w, d, w, b, b, b, b, b,
   b, b, b, b, b, w, d, w, w, b, w, w, w, e, e, w, w, w, b, w, w, d, w, b, b, b, b, b,
   w, w, w, w, w, w, d, w, w, b, w, x, l, l, l, l, x, w, b, w, w, d, w, w, w, w, w, w,
-  b, b, b, b, b, b, d, b, b, b, w, x, x, x, x, x, x, w, b, b, b, d, b, b, b, b, b, b,
+  b, b, b, b, b, w, d, b, b, b, w, x, x, x, x, x, x, w, b, b, b, d, w, b, b, b, b, b,
   w, w, w, w, w, w, d, w, w, b, w, x, x, x, x, x, x, w, b, w, w, d, w, w, w, w, w, w,
   b, b, b, b, b, w, d, w, w, b, w, w, w, w, w, w, w, w, b, w, w, d, w, b, b, b, b, b,
   b, b, b, b, b, w, d, w, w, b, b, b, b, b, b, b, b, b, b, w, w, d, w, b, b, b, b, b,
