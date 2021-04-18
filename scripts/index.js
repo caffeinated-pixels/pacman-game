@@ -218,11 +218,6 @@ function frightenGhosts () {
       ghost.isFrightened = true
       ghost.firstMoveAfterFrightened = true
       state.squares[ghost.currentIndex].classList.add('frightened-ghost')
-      // state.ghosts.forEach(ghost => clearInterval(ghost.timerId))
-
-      // setTimeout(() => {
-      //   ghost.currentDirection = -ghost.currentDirection
-      // }, ghost.speed)
     }
   })
   setTimeout(unFrightenGhosts, 10000)
@@ -241,9 +236,9 @@ function isGhostFrightened (ghost) {
 function initGhostMovement (ghost) {
   ghost.timerId = setInterval(function () {
     if (state.dotsEaten >= ghost.startTimer) {
+      didPacmanEatGhost(ghost)
       moveGhost(ghost)
       isGhostFrightened(ghost)
-      didPacmanEatGhost(ghost)
       checkForGameOver()
     }
   }, ghost.speed)
@@ -520,7 +515,6 @@ function didPacmanEatGhost (ghost) {
     ghost.isFrightened = false
     ghost.currentIndex = ghost.startIndex
     ghost.currentDirection = -width
-    ghost.newIndex = ghost.startIndex + -width
 
     state.score += 200
     // re-add classnames of ghost.className and 'ghost' to the ghosts new postion
