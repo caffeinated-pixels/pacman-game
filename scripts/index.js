@@ -513,7 +513,7 @@ function didPacmanEatGhost (ghost) {
     )
     // change ghosts currentIndex back to its startIndex
     ghost.isFrightened = false
-    ghost.currentIndex = ghost.startIndex
+    ghost.currentIndex = ghost.respawnIndex
     ghost.currentDirection = -width
 
     state.score += 200
