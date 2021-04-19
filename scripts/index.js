@@ -221,7 +221,7 @@ function frightenGhosts () {
       state.squares[ghost.currentIndex].classList.add('frightened-ghost')
     }
   })
-  setTimeout(unFrightenGhosts, 100000)
+  setTimeout(unFrightenGhosts, 10000)
 }
 
 function unFrightenGhosts () {

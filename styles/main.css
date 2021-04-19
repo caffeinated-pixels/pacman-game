@@ -12,9 +12,23 @@ body {
   border-radius: 20px;
 }
 
-.score-board, .game-info {
+.score-board,
+.game-info {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+
+.next-bonus {
+  width: 30px;
+  height: 30px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.bonus-cherry {
+  background-image: url(../media/bonus-cherry.png);
 }
 
 .grid {
