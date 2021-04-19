@@ -532,7 +532,6 @@ function getRandomDirection (ghost) {
   const randomDirection = ghostDirections[randomIndex]
 
   const isNotReverseDirection = randomDirection !== -ghost.currentDirection
-  // console.log(isNotReverseDirection)
 
   const nextTile = ghost.currentIndex + ghost.currentDirection
 
@@ -560,8 +559,7 @@ FRIGHTENED GHOST MOVEMENT FUNCTIONS (END)
 GHOST MOVEMENT HELPER FUNCTIONS (START)
 *************************************************/
 function isDirectionLegal (tileIndex) {
-  // TODO: incorporate into getLegalGhostDirections
-
+  // TODO: incorporate into getLegalGhostDirections???
   return (
     !state.squares[tileIndex].classList.contains('wall') &&
     !state.squares[tileIndex].classList.contains('ghost-lair')
@@ -570,25 +568,18 @@ function isDirectionLegal (tileIndex) {
 
 function getLegalGhostDirections (nextTile, ghost) {
   return ghostDirections.filter(direction => {
-    const directionOption = nextTile + direction
+    const directionOption = state.squares[nextTile + direction]
+
     if (direction === -ghost.currentDirection) return false
 
-    if (state.squares[directionOption].classList.contains('blank')) {
-      return true
-    }
-    if (state.squares[directionOption].classList.contains('pac-dot')) {
-      return true
-    }
-    if (state.squares[directionOption].classList.contains('power-pill')) {
-      return true
-    }
-    if (state.squares[directionOption].classList.contains('ghost')) {
-      return true
-    }
+    if (directionOption.classList.contains('blank')) return true
+    if (directionOption.classList.contains('pac-dot')) return true
+    if (directionOption.classList.contains('power-pill')) return true
+    if (directionOption.classList.contains('ghost')) return true
 
     if (
       state.squares[ghost.currentIndex].classList.contains('ghost-lair') &&
-      state.squares[directionOption].classList.contains('ghost-lair')
+      directionOption.classList.contains('ghost-lair')
     ) {
       return true
     }
