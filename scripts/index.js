@@ -3,22 +3,22 @@ import { state } from './game-state.js'
 import { createNewGhosts, drawGhosts } from './create-ghosts.js'
 import { movePacman } from './pacman-movement.js'
 
-// element variables
+/************************************************
+HTML ELEMENT VARIABLES (START)
+*************************************************/
 const grid = document.querySelector('.grid')
 const scoreDisplay = document.getElementById('score')
 const hiscoreDisplay = document.getElementById('hiscore')
 const livesLeftDisplay = document.getElementById('lives-left')
 const startButton = document.getElementById('start-btn')
 const resetButton = document.getElementById('reset')
+/************************************************
+HTML ELEMENT VARIABLES (END)
+*************************************************/
 
-// event handlers
-document.addEventListener('keydown', handleControlInput)
-startButton.addEventListener('click', handleStartBtn)
-resetButton.addEventListener('click', resetGame)
-document
-  .querySelectorAll('.d-btn')
-  .forEach(item => item.addEventListener('click', handleControlInput))
-
+/************************************************
+  GLOBAL CONSTANTS (START)
+*************************************************/
 const playIcon = '<i class="fas fa-play"></i>'
 const pauseIcon = '<i class="fas fa-pause"></i>'
 const pacmanHTML =
@@ -27,8 +27,26 @@ const width = 28
 const height = 31
 const pacmanStartIndex = 658
 const ghostDirections = [-width, -1, width, 1] // up, left, down, right
+/************************************************
+  GLOBAL CONSTANTS (END)
+*************************************************/
 
-// setup board
+/************************************************
+EVENT LISTENERS (START)
+*************************************************/
+document.addEventListener('keydown', handleControlInput)
+startButton.addEventListener('click', handleStartBtn)
+resetButton.addEventListener('click', resetGame)
+document
+  .querySelectorAll('.d-btn')
+  .forEach(item => item.addEventListener('click', handleControlInput))
+/************************************************
+EVENT LISTENERS (END)
+*************************************************/
+
+/************************************************
+GAMEBOARD SETUP FUNCTIONS (START)
+*************************************************/
 createBoard()
 getHiscoreFromStorage()
 
@@ -107,6 +125,22 @@ function addLivesDisplay () {
   }
 }
 
+function drawPacman () {
+  state.pacmanCurrentIndex = pacmanStartIndex
+  state.pacmanMovementClass = 'pacman-facing-right'
+  state.squares[state.pacmanCurrentIndex].classList.add(
+    'pacman',
+    state.pacmanMovementClass
+  )
+  state.squares[state.pacmanCurrentIndex].innerHTML = pacmanHTML
+}
+/************************************************
+GAMEBOARD SETUP FUNCTIONS (END)
+*************************************************/
+
+/************************************************
+GAME CONTROLS FUNCTIONS (START)
+*************************************************/
 function handleStartBtn () {
   if (state.isGameOver) {
     startGame()
@@ -120,20 +154,10 @@ function handleStartBtn () {
 function startGame () {
   startButton.innerHTML = pauseIcon
 
-  // draw Pacman
-  state.pacmanCurrentIndex = pacmanStartIndex
-  state.pacmanMovementClass = 'pacman-facing-right'
-  state.squares[state.pacmanCurrentIndex].classList.add(
-    'pacman',
-    state.pacmanMovementClass
-  )
-  state.squares[state.pacmanCurrentIndex].innerHTML = pacmanHTML
+  drawPacman()
 
-  // draw Ghosts
   state.ghosts = createNewGhosts(width)
   drawGhosts(state)
-
-  // initate ghost movement
   state.ghosts.forEach(ghost => initGhostMovement(ghost))
 
   state.isGameOver = false
@@ -214,7 +238,13 @@ function handleControlInput (event) {
   checkForWin()
   checkForGameOver()
 }
+/************************************************
+GAME CONTROLS FUNCTIONS (END)
+*************************************************/
 
+/************************************************
+PACMAN EATING FUNCTIONS (START)
+*************************************************/
 function pacDotEaten () {
   if (state.squares[state.pacmanCurrentIndex].classList.contains('pac-dot')) {
     state.squares[state.pacmanCurrentIndex].classList.remove('pac-dot')
@@ -277,10 +307,61 @@ function didPacmanEatBonus () {
   }
 }
 
+function didPacmanEatGhost () {
+  const pacmanCurrentSquare = state.squares[state.pacmanCurrentIndex]
+  if (pacmanCurrentSquare.classList.contains('frightened-ghost')) {
+    const ghost = whichGhostWasEaten(pacmanCurrentSquare)
+    returnGhostToLair(ghost)
+  }
+}
+/************************************************
+PACMAN EATING FUNCTIONS (END)
+*************************************************/
+
+/************************************************
+SCORING FUNCTIONS (START)
+*************************************************/
+
 function updateScore () {
   scoreDisplay.textContent = state.score
 }
 
+function checkForGameOver () {
+  if (
+    state.squares[state.pacmanCurrentIndex].classList.contains('ghost') &&
+    !state.squares[state.pacmanCurrentIndex].classList.contains(
+      'frightened-ghost'
+    )
+  ) {
+    state.ghosts.forEach(ghost => clearInterval(ghost.timerId))
+
+    state.isGameOver = true
+    checkForHiscore()
+    resetGame()
+  }
+}
+
+function checkForHiscore () {
+  if (state.score > state.hiscore) {
+    state.hiscore = state.score
+    hiscoreDisplay.textContent = state.hiscore
+    localStorage.setItem('pacmanHiscore', state.hiscore)
+  }
+}
+
+function checkForWin () {
+  if (state.dotsEaten > 243) {
+    state.ghosts.forEach(ghost => clearInterval(ghost.timerId))
+    scoreDisplay.textContent = 'Winner!'
+  }
+}
+/************************************************
+SCORING FUNCTIONS (END)
+*************************************************/
+
+/************************************************
+FRIGHTEN & UNFRIGHTEN GHOST FUNCTIONS (START)
+*************************************************/
 function frightenGhosts () {
   state.ghosts.forEach(ghost => {
     resetGhostTimers(ghost)
@@ -328,10 +409,39 @@ function resetGhostTimers (ghost) {
   ghost.isFlashing = false
 }
 
+function whichGhostWasEaten (pacmanCurrentSquare) {
+  if (pacmanCurrentSquare.classList.contains('blinky')) return state.ghosts[0]
+  if (pacmanCurrentSquare.classList.contains('pinky')) return state.ghosts[1]
+  if (pacmanCurrentSquare.classList.contains('inky')) return state.ghosts[2]
+  if (pacmanCurrentSquare.classList.contains('clyde')) return state.ghosts[3]
+}
+
+function returnGhostToLair (ghost) {
+  state.squares[ghost.currentIndex].classList.remove(
+    ghost.className,
+    'ghost',
+    'frightened-ghost',
+    'frightened-ghost-flash'
+  )
+  // change ghosts currentIndex back to its startIndex
+  ghost.isFrightened = false
+  ghost.currentIndex = ghost.respawnIndex
+  ghost.currentDirection = -width
+
+  state.score += 200
+  // re-add classnames of ghost.className and 'ghost' to the ghosts new postion
+  state.squares[ghost.currentIndex].classList.add(ghost.className, 'ghost')
+}
+/************************************************
+FRIGHTEN & UNFRIGHTEN GHOST FUNCTIONS (END)
+*************************************************/
+
+/************************************************
+GHOST MOVEMENT FUNCTIONS (START)
+*************************************************/
 function initGhostMovement (ghost) {
   ghost.timerId = setInterval(function () {
     if (state.dotsEaten >= ghost.startTimer) {
-      // didPacmanEatGhost(ghost)
       moveGhost(ghost)
       isGhostFrightened(ghost)
       checkForGameOver()
@@ -340,16 +450,12 @@ function initGhostMovement (ghost) {
 }
 
 function moveGhost (ghost) {
-  // console.log('START OF MOVE')
-  // console.log(ghost)
   if (ghost.isFrightened) {
     ghost.nextDirection = getFrightenedGhostDirection(ghost)
   } else {
     setGhostTarget(ghost)
     ghost.nextDirection = getNextGhostDirection(ghost)
   }
-
-  // console.log('chosen direction = ' + ghost.nextDirection)
 
   state.squares[ghost.currentIndex].classList.remove(ghost.className)
   state.squares[ghost.currentIndex].classList.remove(
@@ -371,8 +477,6 @@ function moveGhost (ghost) {
   state.squares[ghost.currentIndex].classList.add('ghost')
 
   ghost.currentDirection = ghost.nextDirection
-  // console.log(ghost)
-  // console.log('END OF MOVE')
 }
 
 function getNextGhostDirection (ghost) {
@@ -394,7 +498,13 @@ function getNextGhostDirection (ghost) {
     }
   }
 }
+/************************************************
+GHOST MOVEMENT FUNCTIONS (END)
+*************************************************/
 
+/************************************************
+FRIGHTENED GHOST MOVEMENT FUNCTIONS (START)
+*************************************************/
 function getFrightenedGhostDirection (ghost) {
   // after first becoming frightened, ghost will attempt to reverse direction (if legal)
   // otherwise we choose a random direction
@@ -442,7 +552,13 @@ function getRandomDirection (ghost) {
 
   return remainingDirections[0]
 }
+/************************************************
+FRIGHTENED GHOST MOVEMENT FUNCTIONS (END)
+*************************************************/
 
+/************************************************
+GHOST MOVEMENT HELPER FUNCTIONS (START)
+*************************************************/
 function isDirectionLegal (tileIndex) {
   // TODO: incorporate into getLegalGhostDirections
 
@@ -515,7 +631,13 @@ function getTargetTileDistance (legalDirections, nextTile, ghost) {
   // console.log(shortestDistance)
   return shortestDistance[0].direction
 }
+/************************************************
+GHOST MOVEMENT HELPER FUNCTIONS (END)
+*************************************************/
 
+/************************************************
+GHOST TARGETING FUNCTIONS (START)
+*************************************************/
 function setGhostTarget (ghost) {
   // if in ghost lair, set targetTile manually
   if (state.squares[ghost.currentIndex].classList.contains('ghost-lair')) {
@@ -595,72 +717,6 @@ function getClydesTarget (clyde) {
     return clyde.scatterTarget
   }
 }
-
-function didPacmanEatGhost () {
-  const pacmanCurrentSquare = state.squares[state.pacmanCurrentIndex]
-  if (pacmanCurrentSquare.classList.contains('frightened-ghost')) {
-    const ghost = whichGhostWasEaten(pacmanCurrentSquare)
-    returnGhostToLair(ghost)
-  }
-}
-
-function whichGhostWasEaten (pacmanCurrentSquare) {
-  if (pacmanCurrentSquare.classList.contains('blinky')) return state.ghosts[0]
-  if (pacmanCurrentSquare.classList.contains('pinky')) return state.ghosts[1]
-  if (pacmanCurrentSquare.classList.contains('inky')) return state.ghosts[2]
-  if (pacmanCurrentSquare.classList.contains('clyde')) return state.ghosts[3]
-}
-
-function returnGhostToLair (ghost) {
-  state.squares[ghost.currentIndex].classList.remove(
-    ghost.className,
-    'ghost',
-    'frightened-ghost',
-    'frightened-ghost-flash'
-  )
-  // change ghosts currentIndex back to its startIndex
-  ghost.isFrightened = false
-  ghost.currentIndex = ghost.respawnIndex
-  ghost.currentDirection = -width
-
-  state.score += 200
-  // re-add classnames of ghost.className and 'ghost' to the ghosts new postion
-  state.squares[ghost.currentIndex].classList.add(ghost.className, 'ghost')
-}
-
-// check for game over
-function checkForGameOver () {
-  // if the square pacman is in contains a ghost AND the square does NOT contain a frightened ghost
-  if (
-    state.squares[state.pacmanCurrentIndex].classList.contains('ghost') &&
-    !state.squares[state.pacmanCurrentIndex].classList.contains(
-      'frightened-ghost'
-    )
-  ) {
-    // for each ghost - we need to stop it moving
-    state.ghosts.forEach(ghost => clearInterval(ghost.timerId))
-
-    state.isGameOver = true
-    checkForHiscore()
-    resetGame()
-  }
-}
-
-function checkForHiscore () {
-  if (state.score > state.hiscore) {
-    state.hiscore = state.score
-    hiscoreDisplay.textContent = state.hiscore
-    localStorage.setItem('pacmanHiscore', state.hiscore)
-  }
-}
-
-// check for win
-function checkForWin () {
-  if (state.dotsEaten > 243) {
-    // stop each ghost
-    state.ghosts.forEach(ghost => clearInterval(ghost.timerId))
-
-    // tell our user we have won
-    scoreDisplay.textContent = 'Winner!'
-  }
-}
+/************************************************
+GHOST TARGETING FUNCTIONS (END)
+*************************************************/
