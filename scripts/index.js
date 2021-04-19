@@ -226,12 +226,12 @@ function powerPillEaten () {
 }
 
 function addBonusToBoard () {
-  if (state.dotsEaten === 10 && !state.firstBonusRemoved) {
+  if (state.dotsEaten === 70 && !state.firstBonusRemoved) {
     state.squares[490].classList.add('bonus-cherry')
     setTimeout(removeFirstCherry, 10000)
   }
 
-  if (state.dotsEaten === 50 && !state.secondBonusRemoved) {
+  if (state.dotsEaten === 170 && !state.secondBonusRemoved) {
     state.squares[490].classList.add('bonus-cherry')
     setTimeout(removeSecondCherry, 10000)
   }
