@@ -145,9 +145,11 @@ function resetGame () {
   state.isGameOver = true
   state.score = 0
   state.dotsEaten = 0
-  scoreDisplay.textContent = state.score
+  state.firstBonusRemoved = false
+  state.secondBonusRemoved = false
   grid.innerHTML = ''
   startButton.innerHTML = playIcon
+  updateScore()
   createBoard()
 }
 
@@ -190,6 +192,7 @@ function handleControlInput (event) {
   pacDotEaten()
   powerPillEaten()
   addBonusToBoard()
+  didPacmanEatBonus()
   checkForWin()
   checkForGameOver()
 }
@@ -200,7 +203,7 @@ function pacDotEaten () {
     state.squares[state.pacmanCurrentIndex].classList.add('blank')
     state.dotsEaten++
     state.score += 10
-    scoreDisplay.textContent = state.score
+    updateScore()
   }
 }
 
@@ -213,15 +216,51 @@ function powerPillEaten () {
 
     state.score += 50
     state.dotsEaten++
-    scoreDisplay.textContent = state.score
+    updateScore()
     frightenGhosts()
   }
 }
 
 function addBonusToBoard () {
-  if (state.dotsEaten === 70) {
-    console.log('70 eaten')
+  if (state.dotsEaten === 10 && !state.firstBonusRemoved) {
+    state.squares[490].classList.add('bonus-cherry')
+    setTimeout(removeFirstCherry, 10000)
   }
+
+  if (state.dotsEaten === 50 && !state.secondBonusRemoved) {
+    state.squares[490].classList.add('bonus-cherry')
+    setTimeout(removeSecondCherry, 10000)
+  }
+}
+
+function removeFirstCherry () {
+  state.squares[490].classList.remove('bonus-cherry')
+  state.firstBonusRemoved = true
+}
+
+function removeSecondCherry () {
+  state.squares[490].classList.remove('bonus-cherry')
+  state.secondBonusRemoved = true
+}
+
+function didPacmanEatBonus () {
+  if (
+    state.squares[state.pacmanCurrentIndex].classList.contains('bonus-cherry')
+  ) {
+    state.squares[state.pacmanCurrentIndex].classList.remove('bonus-cherry')
+    state.score += 100
+    updateScore()
+
+    if (!state.firstBonusRemoved) {
+      state.firstBonusRemoved = true
+    } else if (!state.secondBonusRemoved) {
+      state.secondBonusRemoved = true
+    }
+  }
+}
+
+function updateScore () {
+  scoreDisplay.textContent = state.score
 }
 
 function frightenGhosts () {
