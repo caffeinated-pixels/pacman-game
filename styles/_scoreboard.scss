@@ -6,10 +6,24 @@
 }
 
 .score-board,
-.game-info {
+.game-info,
+.lives-left {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.game-info {
+  margin-top: 10px;
+}
+
+.lives-left {
+  width: 70px;
+}
+
+.life {
+  width: 30px;
+  height: 30px;
 }
 
 .next-bonus {

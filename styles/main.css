@@ -13,10 +13,24 @@ body {
 }
 
 .score-board,
-.game-info {
+.game-info,
+.lives-left {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.game-info {
+  margin-top: 10px;
+}
+
+.lives-left {
+  width: 70px;
+}
+
+.life {
+  width: 30px;
+  height: 30px;
 }
 
 .next-bonus {
@@ -103,14 +117,14 @@ body {
 }
 
 .pacman-top {
-  border-radius: 10px 10px 0 0;
+  border-radius: 100px 100px 0 0;
   transform: rotate(-35deg);
   -webkit-animation: rotateTop 0.7s infinite linear;
   animation: rotateTop 0.7s infinite linear;
 }
 
 .pacman-bottom {
-  border-radius: 0 0 10px 10px;
+  border-radius: 0 0 100px 100px;
   transform: rotate(35deg);
   -webkit-animation: rotateBottom 0.7s infinite linear;
   animation: rotateBottom 0.7s infinite linear;

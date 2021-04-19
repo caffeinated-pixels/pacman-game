@@ -7,6 +7,7 @@ import { movePacman } from './pacman-movement.js'
 const grid = document.querySelector('.grid')
 const scoreDisplay = document.getElementById('score')
 const hiscoreDisplay = document.getElementById('hiscore')
+const livesLeftDisplay = document.getElementById('lives-left')
 const startButton = document.getElementById('start-btn')
 const resetButton = document.getElementById('reset')
 
@@ -57,6 +58,7 @@ function createBoard () {
   })
 
   addWallborders()
+  addLivesDisplay()
 }
 
 function addWallborders () {
@@ -92,6 +94,17 @@ function addWallborders () {
       if (isAtLeftEdge || isLeftSide) square.classList.add('border-left')
     }
   })
+}
+
+function addLivesDisplay () {
+  livesLeftDisplay.innerHTML = ''
+
+  for (let i = 0; i < state.livesLeft; i++) {
+    const live = document.createElement('div')
+    live.classList.add('life')
+    live.innerHTML = pacmanHTML
+    livesLeftDisplay.appendChild(live)
+  }
 }
 
 function handleStartBtn () {
@@ -148,6 +161,7 @@ function resetGame () {
   state.isPaused = true
   state.isGameOver = true
   state.score = 0
+  state.livesLeft = 2
   state.dotsEaten = 0
   state.firstBonusRemoved = false
   state.secondBonusRemoved = false
@@ -298,7 +312,6 @@ function isGhostFrightened (ghost) {
 }
 
 function makeGhostFlash (ghost) {
-  console.log('flashing')
   if (ghost.isFrightened) {
     ghost.isFlashing = true
     state.squares[ghost.currentIndex].classList.add('frightened-ghost-flash')
