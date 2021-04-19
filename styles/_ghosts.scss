@@ -34,3 +34,14 @@
   // background-color: $scared-wall-blue;
   background-image: url(../media/scared-ghost.png);
 }
+
+.frightened-ghost-flash {
+  background-image: url(../media/scared-ghost-flash.png);
+  animation: flash 1s infinite linear;
+}
+
+@keyframes flash {
+  50% {
+    background-image: url(../media/scared-ghost.png);
+  }
+}

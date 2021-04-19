@@ -140,7 +140,11 @@ function pauseGame () {
 }
 
 function resetGame () {
-  state.ghosts.forEach(ghost => clearInterval(ghost.timerId))
+  state.ghosts.forEach(ghost => {
+    clearInterval(ghost.timerId)
+    clearInterval(ghost.flashTimerId)
+  })
+
   state.isPaused = true
   state.isGameOver = true
   state.score = 0
@@ -269,18 +273,35 @@ function frightenGhosts () {
       ghost.isFrightened = true
       ghost.firstMoveAfterFrightened = true
       state.squares[ghost.currentIndex].classList.add('frightened-ghost')
+
+      ghost.flashTimerId = setTimeout(() => makeGhostFlash(ghost), 7000)
     }
   })
   setTimeout(unFrightenGhosts, 10000)
 }
 
 function unFrightenGhosts () {
-  state.ghosts.forEach(ghost => (ghost.isFrightened = false))
+  state.ghosts.forEach(ghost => {
+    ghost.isFrightened = false
+    ghost.isFlashing = false
+  })
 }
 
 function isGhostFrightened (ghost) {
   if (ghost.isFrightened) {
     state.squares[ghost.currentIndex].classList.add('frightened-ghost')
+  }
+
+  if (ghost.isFlashing) {
+    state.squares[ghost.currentIndex].classList.add('frightened-ghost-flash')
+  }
+}
+
+function makeGhostFlash (ghost) {
+  console.log('flashing')
+  if (ghost.isFrightened) {
+    ghost.isFlashing = true
+    state.squares[ghost.currentIndex].classList.add('frightened-ghost-flash')
   }
 }
 
@@ -310,7 +331,8 @@ function moveGhost (ghost) {
   state.squares[ghost.currentIndex].classList.remove(ghost.className)
   state.squares[ghost.currentIndex].classList.remove(
     'ghost',
-    'frightened-ghost'
+    'frightened-ghost',
+    'frightened-ghost-flash'
   )
 
   ghost.currentIndex += ghost.currentDirection
@@ -570,7 +592,8 @@ function returnGhostToLair (ghost) {
   state.squares[ghost.currentIndex].classList.remove(
     ghost.className,
     'ghost',
-    'frightened-ghost'
+    'frightened-ghost',
+    'frightened-ghost-flash'
   )
   // change ghosts currentIndex back to its startIndex
   ghost.isFrightened = false

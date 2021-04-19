@@ -19,8 +19,10 @@ class Ghost {
     this.targetTile = 0
     this.nextDirection = 0
     this.isFrightened = false
+    this.isFlashing = false
     this.firstMoveAfterFrightened = false
     this.timerId = NaN
+    this.flashTimerId = NaN
   }
 }
 
