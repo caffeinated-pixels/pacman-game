@@ -49,6 +49,10 @@ function createBoard () {
       square.classList.add('ghost-lair')
     }
 
+    if (cell === 'bonus-sq') {
+      square.classList.add('blank')
+    }
+
     return square
   })
 
@@ -185,6 +189,7 @@ function handleControlInput (event) {
   didPacmanEatGhost()
   pacDotEaten()
   powerPillEaten()
+  addBonusToBoard()
   checkForWin()
   checkForGameOver()
 }
@@ -210,6 +215,12 @@ function powerPillEaten () {
     state.dotsEaten++
     scoreDisplay.textContent = state.score
     frightenGhosts()
+  }
+}
+
+function addBonusToBoard () {
+  if (state.dotsEaten === 70) {
+    console.log('70 eaten')
   }
 }
 

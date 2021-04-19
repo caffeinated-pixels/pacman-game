@@ -82,6 +82,12 @@ body {
   box-sizing: border-box;
 }
 
+.bonus-sq {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
 .door {
   box-sizing: border-box;
   border-color: #202020;
