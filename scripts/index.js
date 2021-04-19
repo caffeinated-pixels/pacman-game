@@ -182,6 +182,7 @@ function handleControlInput (event) {
   )
   state.squares[state.pacmanCurrentIndex].innerHTML = pacmanHTML
 
+  didPacmanEatGhost()
   pacDotEaten()
   powerPillEaten()
   checkForWin()
@@ -220,7 +221,7 @@ function frightenGhosts () {
       state.squares[ghost.currentIndex].classList.add('frightened-ghost')
     }
   })
-  setTimeout(unFrightenGhosts, 10000)
+  setTimeout(unFrightenGhosts, 100000)
 }
 
 function unFrightenGhosts () {
@@ -236,7 +237,7 @@ function isGhostFrightened (ghost) {
 function initGhostMovement (ghost) {
   ghost.timerId = setInterval(function () {
     if (state.dotsEaten >= ghost.startTimer) {
-      didPacmanEatGhost(ghost)
+      // didPacmanEatGhost(ghost)
       moveGhost(ghost)
       isGhostFrightened(ghost)
       checkForGameOver()
@@ -500,26 +501,35 @@ function getClydesTarget (clyde) {
   }
 }
 
-function didPacmanEatGhost (ghost) {
-  if (
-    ghost.isFrightened &&
-    state.squares[ghost.currentIndex].classList.contains('pacman')
-  ) {
-    // remove classnames - ghost.className, 'ghost', 'frightened-ghost'
-    state.squares[ghost.currentIndex].classList.remove(
-      ghost.className,
-      'ghost',
-      'frightened-ghost'
-    )
-    // change ghosts currentIndex back to its startIndex
-    ghost.isFrightened = false
-    ghost.currentIndex = ghost.respawnIndex
-    ghost.currentDirection = -width
-
-    state.score += 200
-    // re-add classnames of ghost.className and 'ghost' to the ghosts new postion
-    state.squares[ghost.currentIndex].classList.add(ghost.className, 'ghost')
+function didPacmanEatGhost () {
+  const pacmanCurrentSquare = state.squares[state.pacmanCurrentIndex]
+  if (pacmanCurrentSquare.classList.contains('frightened-ghost')) {
+    const ghost = whichGhostWasEaten(pacmanCurrentSquare)
+    returnGhostToLair(ghost)
   }
+}
+
+function whichGhostWasEaten (pacmanCurrentSquare) {
+  if (pacmanCurrentSquare.classList.contains('blinky')) return state.ghosts[0]
+  if (pacmanCurrentSquare.classList.contains('pinky')) return state.ghosts[1]
+  if (pacmanCurrentSquare.classList.contains('inky')) return state.ghosts[2]
+  if (pacmanCurrentSquare.classList.contains('clyde')) return state.ghosts[3]
+}
+
+function returnGhostToLair (ghost) {
+  state.squares[ghost.currentIndex].classList.remove(
+    ghost.className,
+    'ghost',
+    'frightened-ghost'
+  )
+  // change ghosts currentIndex back to its startIndex
+  ghost.isFrightened = false
+  ghost.currentIndex = ghost.respawnIndex
+  ghost.currentDirection = -width
+
+  state.score += 200
+  // re-add classnames of ghost.className and 'ghost' to the ghosts new postion
+  state.squares[ghost.currentIndex].classList.add(ghost.className, 'ghost')
 }
 
 // check for game over
