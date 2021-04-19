@@ -155,7 +155,7 @@ function pauseGame () {
 function resetGame () {
   state.ghosts.forEach(ghost => {
     clearInterval(ghost.timerId)
-    clearInterval(ghost.flashTimerId)
+    clearTimeout(ghost.flashTimerId)
   })
 
   state.isPaused = true
@@ -283,15 +283,17 @@ function updateScore () {
 
 function frightenGhosts () {
   state.ghosts.forEach(ghost => {
+    resetGhostTimers(ghost)
+
     if (!state.squares[ghost.currentIndex].classList.contains('ghost-lair')) {
       ghost.isFrightened = true
       ghost.firstMoveAfterFrightened = true
       state.squares[ghost.currentIndex].classList.add('frightened-ghost')
 
       ghost.flashTimerId = setTimeout(() => makeGhostFlash(ghost), 7000)
+      ghost.frightenedTimer = setTimeout(unFrightenGhosts, 10000)
     }
   })
-  setTimeout(unFrightenGhosts, 10000)
 }
 
 function unFrightenGhosts () {
@@ -316,6 +318,14 @@ function makeGhostFlash (ghost) {
     ghost.isFlashing = true
     state.squares[ghost.currentIndex].classList.add('frightened-ghost-flash')
   }
+}
+
+function resetGhostTimers (ghost) {
+  // so that eating second pill while ghosts frightened resets timer
+  clearTimeout(ghost.frightenedTimer)
+  clearTimeout(ghost.flashTimerId)
+  state.squares[ghost.currentIndex].classList.remove('frightened-ghost-flash')
+  ghost.isFlashing = false
 }
 
 function initGhostMovement (ghost) {

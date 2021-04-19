@@ -22,6 +22,7 @@ class Ghost {
     this.isFlashing = false
     this.firstMoveAfterFrightened = false
     this.timerId = NaN
+    this.frightenedTimer = NaN
     this.flashTimerId = NaN
   }
 }
