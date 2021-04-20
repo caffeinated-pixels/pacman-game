@@ -227,12 +227,6 @@ function handleControlInput (event) {
   const pacmanCurrentTile = state.squares[state.pacmanCurrentIndex]
   removePacman(pacmanCurrentTile)
 
-  // state.squares[state.pacmanCurrentIndex].classList.remove(
-  //   'pacman',
-  //   state.pacmanMovementClass
-  // )
-  // state.squares[state.pacmanCurrentIndex].innerHTML = ''
-
   switch (input) {
     case 'ArrowDown':
     case 'down':
