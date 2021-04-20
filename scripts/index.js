@@ -10,6 +10,7 @@ const grid = document.querySelector('.grid')
 const scoreDisplay = document.getElementById('score')
 const hiscoreDisplay = document.getElementById('hiscore')
 const livesLeftDisplay = document.getElementById('lives-left')
+const startScreen = document.getElementById('start-screen')
 const startButton = document.getElementById('start-btn')
 const resetButton = document.getElementById('reset')
 /************************************************
@@ -153,6 +154,7 @@ function handleStartBtn () {
 
 function startGame () {
   startButton.innerHTML = pauseIcon
+  startScreen.style.display = 'none'
 
   drawPacman()
 
@@ -181,6 +183,8 @@ function resetGame () {
     clearInterval(ghost.timerId)
     clearTimeout(ghost.flashTimerId)
   })
+
+  startScreen.style.display = 'block'
 
   state.isPaused = true
   state.isGameOver = true
@@ -319,7 +323,7 @@ PACMAN EATING FUNCTIONS (END)
 *************************************************/
 
 /************************************************
-SCORING FUNCTIONS (START)
+SCORING/ENDPOINT FUNCTIONS (START)
 *************************************************/
 
 function updateScore () {

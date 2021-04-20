@@ -3,6 +3,7 @@
   background: $screen-black;
   padding: 1em;
   border-radius: 20px;
+  position: relative;
 }
 
 .score-board,
@@ -11,6 +12,25 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.game-message {
+  text-align: center;
+  font-size: 1.5rem;
+  line-height: 1.5;
+  letter-spacing: 1px;
+
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+}
+
+.start-screen {
+  color: $inky-blue;
+  text-shadow: 2px 2px 3px black;
 }
 
 .game-info {
