@@ -259,8 +259,8 @@ function handleControlInput (event) {
   state.squares[state.pacmanCurrentIndex].innerHTML = pacmanHTML
 
   didPacmanEatGhost()
-  pacDotEaten()
-  powerPillEaten()
+  didPacmanEatDot()
+  didPacmanEatPowerPill()
   addBonusToBoard()
   didPacmanEatBonus()
   checkForWin()
@@ -278,7 +278,7 @@ GAME CONTROLS FUNCTIONS (END)
 /************************************************
 PACMAN EATING FUNCTIONS (START)
 *************************************************/
-function pacDotEaten () {
+function didPacmanEatDot () {
   if (state.squares[state.pacmanCurrentIndex].classList.contains('pac-dot')) {
     state.squares[state.pacmanCurrentIndex].classList.remove('pac-dot')
     state.squares[state.pacmanCurrentIndex].classList.add('blank')
@@ -288,7 +288,7 @@ function pacDotEaten () {
   }
 }
 
-function powerPillEaten () {
+function didPacmanEatPowerPill () {
   if (
     state.squares[state.pacmanCurrentIndex].classList.contains('power-pill')
   ) {
