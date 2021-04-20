@@ -2,17 +2,19 @@
 
 // color variables
 $screen-black: #202020;
-
 $blinky-red: #ff0000;
 $pinky-pink: #ffb8ff;
 $inky-blue: #00ffff;
 $clyde-orange: #ffb851;
 $scared-wall-blue: #2121ff;
-
 $door-pill-pink: #ffb8ae;
-
 $wall-border: 3px solid $scared-wall-blue;
 
+@mixin mq-max($size) {
+  @media (max-width: $size) {
+    @content; /* lets us pass content block into mixin */
+  }
+}
 
 body {
   margin: 0;

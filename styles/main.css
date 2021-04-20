@@ -13,6 +13,21 @@ body {
   position: relative;
 }
 
+@media (max-width: 480px) {
+  .game-screen {
+    padding: 0.75em 0.25em;
+    /* lets us pass content block into mixin */
+  }
+}
+
+@media (max-width: 480px) {
+  .score-board {
+    font-size: 0.8rem;
+    margin: 0 0.5em;
+    /* lets us pass content block into mixin */
+  }
+}
+
 .score-board,
 .game-info,
 .lives-left {
@@ -36,6 +51,13 @@ body {
   transform: translateY(-50%);
 }
 
+@media (max-width: 480px) {
+  .game-message {
+    font-size: 1.3rem;
+    /* lets us pass content block into mixin */
+  }
+}
+
 .get-ready-screen {
   display: none;
 }
@@ -56,17 +78,40 @@ body {
   width: 70px;
 }
 
-.life {
+@media (max-width: 480px) {
+  .lives-left {
+    width: 45px;
+    margin-left: 0.5em;
+    /* lets us pass content block into mixin */
+  }
+}
+
+.life,
+.next-bonus {
   width: 30px;
   height: 30px;
 }
 
+@media (max-width: 480px) {
+  .life,
+  .next-bonus {
+    width: 20px;
+    height: 20px;
+    /* lets us pass content block into mixin */
+  }
+}
+
 .next-bonus {
-  width: 30px;
-  height: 30px;
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
+}
+
+@media (max-width: 480px) {
+  .next-bonus {
+    margin-right: 0.5em;
+    /* lets us pass content block into mixin */
+  }
 }
 
 .bonus-cherry {
@@ -81,10 +126,26 @@ body {
   border: solid black;
 }
 
+@media (max-width: 480px) {
+  .grid {
+    width: 336px;
+    height: 372px;
+    /* lets us pass content block into mixin */
+  }
+}
+
 .cell {
   width: 15px;
   height: 15px;
   background-color: #202020;
+}
+
+@media (max-width: 480px) {
+  .cell {
+    width: 12px;
+    height: 12px;
+    /* lets us pass content block into mixin */
+  }
 }
 
 .wall {
@@ -95,16 +156,44 @@ body {
   border-top: 3px solid #2121ff;
 }
 
+@media (max-width: 480px) {
+  .border-top {
+    border-width: 2px;
+    /* lets us pass content block into mixin */
+  }
+}
+
 .border-right {
   border-right: 3px solid #2121ff;
+}
+
+@media (max-width: 480px) {
+  .border-right {
+    border-width: 2px;
+    /* lets us pass content block into mixin */
+  }
 }
 
 .border-bottom {
   border-bottom: 3px solid #2121ff;
 }
 
+@media (max-width: 480px) {
+  .border-bottom {
+    border-width: 2px;
+    /* lets us pass content block into mixin */
+  }
+}
+
 .border-left {
   border-left: 3px solid #2121ff;
+}
+
+@media (max-width: 480px) {
+  .border-left {
+    border-width: 2px;
+    /* lets us pass content block into mixin */
+  }
 }
 
 .pac-dot,
@@ -116,6 +205,13 @@ body {
 .pac-dot {
   border: 6px solid #202020;
   box-sizing: border-box;
+}
+
+@media (max-width: 480px) {
+  .pac-dot {
+    border-width: 5px;
+    /* lets us pass content block into mixin */
+  }
 }
 
 .power-pill {
