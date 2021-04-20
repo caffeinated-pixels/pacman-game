@@ -11,6 +11,7 @@ const scoreDisplay = document.getElementById('score')
 const hiscoreDisplay = document.getElementById('hiscore')
 const livesLeftDisplay = document.getElementById('lives-left')
 const startScreen = document.getElementById('start-screen')
+const pauseScreen = document.getElementById('pause-screen')
 const startButton = document.getElementById('start-btn')
 const resetButton = document.getElementById('reset')
 /************************************************
@@ -169,12 +170,14 @@ function startGame () {
 function resumeGame () {
   state.isPaused = false
   startButton.innerHTML = pauseIcon
+  pauseScreen.style.display = 'none'
   state.ghosts.forEach(ghost => initGhostMovement(ghost))
 }
 
 function pauseGame () {
   state.isPaused = true
   startButton.innerHTML = playIcon
+  pauseScreen.style.display = 'block'
   state.ghosts.forEach(ghost => clearInterval(ghost.timerId))
 }
 
@@ -185,6 +188,7 @@ function resetGame () {
   })
 
   startScreen.style.display = 'block'
+  pauseScreen.style.display = 'none'
 
   state.isPaused = true
   state.isGameOver = true

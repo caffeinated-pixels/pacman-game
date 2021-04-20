@@ -19,6 +19,8 @@
   font-size: 1.5rem;
   line-height: 1.5;
   letter-spacing: 1px;
+  color: $inky-blue;
+  text-shadow: 2px 2px 3px black;
 
   position: absolute;
   width: 100%;
@@ -29,8 +31,11 @@
 }
 
 .start-screen {
-  color: $inky-blue;
-  text-shadow: 2px 2px 3px black;
+  // display: none;
+}
+
+.pause-screen {
+  display: none;
 }
 
 .game-info {

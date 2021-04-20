@@ -26,6 +26,8 @@ body {
   font-size: 1.5rem;
   line-height: 1.5;
   letter-spacing: 1px;
+  color: #00ffff;
+  text-shadow: 2px 2px 3px black;
   position: absolute;
   width: 100%;
   top: 50%;
@@ -34,9 +36,8 @@ body {
   transform: translateY(-50%);
 }
 
-.start-screen {
-  color: #00ffff;
-  text-shadow: 2px 2px 3px black;
+.pause-screen {
+  display: none;
 }
 
 .game-info {
