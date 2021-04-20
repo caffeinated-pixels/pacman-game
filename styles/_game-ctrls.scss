@@ -1,15 +1,35 @@
 // main: ./main.scss
 
+.joypad-container {
+  border: 1px solid black;
+  border-radius: 5px;
+  width: 80%;
+  margin: 20px auto 0;
+  padding: 0.75em;
+  background: #d3d3d3;
+
+  @include mq-max(480px) {
+    margin-top: 10px;
+    padding: 0.5em;
+    width: 90%;
+  }
+}
+
 .btn-container {
   display: flex;
   justify-content: space-between;
-  width: 88%;
-  margin: 25px auto;
+  padding: 1em;
+  background: #808080;
+  background: linear-gradient(to bottom right, #999999, #808080);
+
+  @include mq-max(480px) {
+    padding: 0.5em;
+  }
 }
 
 .button {
-  width: 40px;
-  height: 40px;
+  width: 35px;
+  height: 35px;
   border: unset;
 
   cursor: pointer;
@@ -22,8 +42,15 @@
 }
 
 .game-btn {
+  width: 40px;
+  height: 40px;
   background-color: #ab3c63;
   border-radius: 100%;
+
+  @include mq-max(480px) {
+    width: 35px;
+    height: 35px;
+  }
 }
 
 .d-btn {
@@ -43,7 +70,7 @@
 }
 
 .d-pad-container {
-  width: 120px;
+  width: 105px;
 }
 
 .btn-row1,
@@ -55,4 +82,25 @@
 .btn-row2 {
   display: flex;
   justify-content: space-between;
+}
+
+.right-container {
+  // background-color: lightblue;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mercBoy-logo {
+  text-align: center;
+  // background-color: yellow;
+  font-family: 'Dela Gothic One', cursive;
+  font-size: 1.25rem;
+  color: #4d4787;
+}
+
+.game-btns-container {
+  // background-color: green;
+  // margin: 0;
 }
