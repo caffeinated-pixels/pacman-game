@@ -12,6 +12,7 @@ const hiscoreDisplay = document.getElementById('hiscore')
 const livesLeftDisplay = document.getElementById('lives-left')
 const startScreen = document.getElementById('start-screen')
 const pauseScreen = document.getElementById('pause-screen')
+const getReadyScreen = document.getElementById('get-ready-screen')
 const startButton = document.getElementById('start-btn')
 const resetButton = document.getElementById('reset')
 /************************************************
@@ -145,7 +146,8 @@ GAME CONTROLS FUNCTIONS (START)
 *************************************************/
 function handleStartBtn () {
   if (state.isGameOver) {
-    startGame()
+    // startGame()
+    getReadyTimer()
   } else if (state.isPaused) {
     resumeGame()
   } else if (!state.isPaused) {
@@ -155,7 +157,8 @@ function handleStartBtn () {
 
 function startGame () {
   startButton.innerHTML = pauseIcon
-  startScreen.style.display = 'none'
+  // startScreen.style.display = 'none'
+  getReadyScreen.style.display = 'none'
 
   drawPacman()
 
@@ -174,6 +177,13 @@ function resumeGame () {
   state.ghosts.forEach(ghost => initGhostMovement(ghost))
 }
 
+function getReadyTimer () {
+  startScreen.style.display = 'none'
+  getReadyScreen.style.display = 'block'
+
+  state.getReadyTimer = setTimeout(startGame, 1500)
+}
+
 function pauseGame () {
   state.isPaused = true
   startButton.innerHTML = playIcon
@@ -189,6 +199,8 @@ function resetGame () {
 
   startScreen.style.display = 'block'
   pauseScreen.style.display = 'none'
+  getReadyScreen.style.display = 'none'
+  clearTimeout(state.getReadyTimer)
 
   state.isPaused = true
   state.isGameOver = true

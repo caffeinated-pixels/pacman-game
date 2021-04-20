@@ -36,6 +36,10 @@ body {
   transform: translateY(-50%);
 }
 
+.get-ready-screen {
+  display: none;
+}
+
 .pause-screen {
   display: none;
 }
