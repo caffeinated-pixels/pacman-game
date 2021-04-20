@@ -12,5 +12,6 @@ export const state = {
   isPaused: true,
   isGameOver: true,
   ghosts: [],
-  getReadyTimer: NaN
+  getReadyTimer: NaN,
+  gameoverTimer: NaN
 }

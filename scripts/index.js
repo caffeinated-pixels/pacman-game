@@ -13,6 +13,7 @@ const livesLeftDisplay = document.getElementById('lives-left')
 const startScreen = document.getElementById('start-screen')
 const pauseScreen = document.getElementById('pause-screen')
 const getReadyScreen = document.getElementById('get-ready-screen')
+const gameoverScreen = document.getElementById('gameover-screen')
 const startButton = document.getElementById('start-btn')
 const resetButton = document.getElementById('reset')
 /************************************************
@@ -200,7 +201,9 @@ function resetGame () {
   startScreen.style.display = 'block'
   pauseScreen.style.display = 'none'
   getReadyScreen.style.display = 'none'
+  gameoverScreen.style.display = 'none'
   clearTimeout(state.getReadyTimer)
+  clearTimeout(state.gameoverTimer)
 
   state.isPaused = true
   state.isGameOver = true
@@ -260,7 +263,12 @@ function handleControlInput (event) {
   addBonusToBoard()
   didPacmanEatBonus()
   checkForWin()
-  checkForGameOver()
+  checkForLifeLost()
+}
+
+function removePacman (pacmanCurrentTile) {
+  pacmanCurrentTile.classList.remove('pacman', state.pacmanMovementClass)
+  pacmanCurrentTile.innerHTML = ''
 }
 /************************************************
 GAME CONTROLS FUNCTIONS (END)
@@ -362,7 +370,6 @@ function checkForLifeLost () {
     removeAllGhosts()
     removePacman(pacmanCurrentTile)
     state.isPaused = true
-    getReadyTimer()
   }
 }
 
@@ -372,6 +379,7 @@ function removeLife () {
   } else {
     state.livesLeft--
     updateLivesDisplay()
+    getReadyTimer()
   }
 }
 
@@ -392,26 +400,12 @@ function removeAllGhostClasses (ghost) {
   )
 }
 
-function removePacman (pacmanCurrentTile) {
-  pacmanCurrentTile.classList.remove('pacman', state.pacmanMovementClass)
-  pacmanCurrentTile.innerHTML = ''
-}
+function gameOver () {
+  state.isGameOver = true
+  gameoverScreen.style.display = 'block'
+  checkForHiscore()
 
-function gameOver () {}
-
-function checkForGameOver () {
-  if (
-    state.squares[state.pacmanCurrentIndex].classList.contains('ghost') &&
-    !state.squares[state.pacmanCurrentIndex].classList.contains(
-      'frightened-ghost'
-    )
-  ) {
-    state.ghosts.forEach(ghost => clearInterval(ghost.timerId))
-
-    state.isGameOver = true
-    checkForHiscore()
-    resetGame()
-  }
+  state.gameoverTimer = setTimeout(resetGame, 2000)
 }
 
 function checkForHiscore () {

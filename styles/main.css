@@ -44,6 +44,10 @@ body {
   display: none;
 }
 
+.gameover-screen {
+  display: none;
+}
+
 .game-info {
   margin-top: 10px;
 }
