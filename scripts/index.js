@@ -79,7 +79,7 @@ function createBoard () {
   })
 
   addWallborders()
-  addLivesDisplay()
+  updateLivesDisplay()
 }
 
 function addWallborders () {
@@ -117,7 +117,7 @@ function addWallborders () {
   })
 }
 
-function addLivesDisplay () {
+function updateLivesDisplay () {
   livesLeftDisplay.innerHTML = ''
 
   for (let i = 0; i < state.livesLeft; i++) {
@@ -211,6 +211,7 @@ function resetGame () {
   state.secondBonusRemoved = false
   grid.innerHTML = ''
   startButton.innerHTML = playIcon
+
   updateScore()
   createBoard()
 }
@@ -219,11 +220,14 @@ function handleControlInput (event) {
   if (state.isPaused) return
   const input = event.type === 'keydown' ? event.key : event.currentTarget.id
 
-  state.squares[state.pacmanCurrentIndex].classList.remove(
-    'pacman',
-    state.pacmanMovementClass
-  )
-  state.squares[state.pacmanCurrentIndex].innerHTML = ''
+  const pacmanCurrentTile = state.squares[state.pacmanCurrentIndex]
+  removePacman(pacmanCurrentTile)
+
+  // state.squares[state.pacmanCurrentIndex].classList.remove(
+  //   'pacman',
+  //   state.pacmanMovementClass
+  // )
+  // state.squares[state.pacmanCurrentIndex].innerHTML = ''
 
   switch (input) {
     case 'ArrowDown':
@@ -346,6 +350,55 @@ function updateScore () {
   scoreDisplay.textContent = state.score
 }
 
+function checkForLifeLost () {
+  const pacmanCurrentTile = state.squares[state.pacmanCurrentIndex]
+  const didGhostGetPacman = pacmanCurrentTile.classList.contains('ghost')
+  const isGhostFrightened = pacmanCurrentTile.classList.contains(
+    'frightened-ghost'
+  )
+
+  if (didGhostGetPacman && !isGhostFrightened) {
+    removeLife()
+    removeAllGhosts()
+    removePacman(pacmanCurrentTile)
+    state.isPaused = true
+    getReadyTimer()
+  }
+}
+
+function removeLife () {
+  if (state.livesLeft === 0) {
+    gameOver()
+  } else {
+    state.livesLeft--
+    updateLivesDisplay()
+  }
+}
+
+function removeAllGhosts () {
+  state.ghosts.forEach(ghost => {
+    clearInterval(ghost.timerId)
+    resetGhostTimers(ghost)
+    removeAllGhostClasses(ghost)
+  })
+}
+
+function removeAllGhostClasses (ghost) {
+  state.squares[ghost.currentIndex].classList.remove(
+    ghost.className,
+    'ghost',
+    'frightened-ghost',
+    'frightened-ghost-flash'
+  )
+}
+
+function removePacman (pacmanCurrentTile) {
+  pacmanCurrentTile.classList.remove('pacman', state.pacmanMovementClass)
+  pacmanCurrentTile.innerHTML = ''
+}
+
+function gameOver () {}
+
 function checkForGameOver () {
   if (
     state.squares[state.pacmanCurrentIndex].classList.contains('ghost') &&
@@ -463,10 +516,12 @@ GHOST MOVEMENT FUNCTIONS (START)
 *************************************************/
 function initGhostMovement (ghost) {
   ghost.timerId = setInterval(function () {
+    // each ghost has dotsEaten threshold for leaving lair
     if (state.dotsEaten >= ghost.startTimer) {
       moveGhost(ghost)
       isGhostFrightened(ghost)
-      checkForGameOver()
+      // checkForGameOver()
+      checkForLifeLost()
     }
   }, ghost.speed)
 }

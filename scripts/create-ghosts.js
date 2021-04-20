@@ -11,7 +11,7 @@ class Ghost {
     this.className = className
     this.startIndex = startIndex
     this.respawnIndex = respawnIndex
-    this.startTimer = startTimer
+    this.startTimer = startTimer // state.dotsEaten threshold
     this.speed = speed
     this.currentIndex = startIndex
     this.currentDirection = direction
