@@ -122,6 +122,14 @@ body {
   border: 2px solid #202020;
   border-radius: 100%;
   box-sizing: border-box;
+  animation: powerpill 2.5s infinite;
+}
+
+@keyframes powerpill {
+  50% {
+    transform: scale(1.15);
+    background-color: #eafa8d;
+  }
 }
 
 .bonus-sq {
