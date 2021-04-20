@@ -263,7 +263,7 @@ function handleControlInput (event) {
   didPacmanEatPowerPill()
   addBonusToBoard()
   didPacmanEatBonus()
-  checkForWin()
+  checkForLevelEnd()
   checkForLifeLost()
 }
 
@@ -427,11 +427,28 @@ function checkForHiscore () {
   }
 }
 
-function checkForWin () {
+function checkForLevelEnd () {
+  // default is >243
   if (state.dotsEaten > 243) {
-    state.ghosts.forEach(ghost => clearInterval(ghost.timerId))
-    scoreDisplay.textContent = 'Winner!'
+    startNextLevel()
   }
+}
+
+function startNextLevel () {
+  state.isPaused = true
+  state.dotsEaten = 0
+  state.ghostsEatenPoints = 200
+  state.firstBonusRemoved = false
+  state.secondBonusRemoved = false
+  removeAllGhosts()
+
+  const pacmanCurrentTile = state.squares[state.pacmanCurrentIndex]
+  removePacman(pacmanCurrentTile)
+
+  grid.innerHTML = ''
+  createBoard()
+
+  getReadyTimer()
 }
 /************************************************
 SCORING FUNCTIONS (END)
