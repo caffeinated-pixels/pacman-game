@@ -556,12 +556,14 @@ function moveGhost (ghost) {
   )
 
   ghost.currentIndex += ghost.currentDirection
-  // FIXME: ghost tunnel movement bugged again, presumably due to targeting scheme!!!
-  // tunnel movement
+
+  //  override for ghost tunnel movement
   if (ghost.currentIndex === 392) {
     ghost.currentIndex = 419
+    ghost.nextDirection = -1
   } else if (ghost.currentIndex === 419) {
     ghost.currentIndex = 392
+    ghost.nextDirection = 1
   }
 
   state.squares[ghost.currentIndex].classList.add(ghost.className)
@@ -574,20 +576,23 @@ function getNextGhostDirection (ghost) {
   // ghost plans movement one tile ahead, so we check nextTile for legal direction options
   // cannot reverse direction, return to lair, or move into wall
   const nextTile = ghost.currentIndex + ghost.currentDirection
+  // console.log('currentIndex = ' + ghost.currentIndex)
+  // console.log('currentDirection = ' + ghost.currentDirection)
+  // console.log('nextTile = ' + nextTile)
 
-  if (nextTile === 392) {
-    ghost.nextDirection = -1
-  } else if (nextTile === 419) {
-    ghost.nextDirection = 1
+  // if (nextTile === 392) {
+  //   ghost.nextDirection = -1
+  // } else if (nextTile === 419) {
+  //   ghost.nextDirection = 1
+  // } else {
+  const legalDirections = getLegalGhostDirections(nextTile, ghost)
+
+  if (legalDirections.length > 1) {
+    return getTargetTileDistance(legalDirections, nextTile, ghost)
   } else {
-    const legalDirections = getLegalGhostDirections(nextTile, ghost)
-
-    if (legalDirections.length > 1) {
-      return getTargetTileDistance(legalDirections, nextTile, ghost)
-    } else {
-      return legalDirections[0]
-    }
+    return legalDirections[0]
   }
+  // }
 }
 /************************************************
 GHOST MOVEMENT FUNCTIONS (END)
