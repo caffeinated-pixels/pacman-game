@@ -423,6 +423,8 @@ function returnGhostToLair (ghost) {
     'frightened-ghost',
     'frightened-ghost-flash'
   )
+  resetGhostTimers(ghost)
+
   // change ghosts currentIndex back to its startIndex
   ghost.isFrightened = false
   ghost.currentIndex = ghost.respawnIndex
