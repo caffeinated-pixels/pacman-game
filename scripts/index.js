@@ -210,6 +210,7 @@ function resetGame () {
   state.score = 0
   state.livesLeft = 2
   state.dotsEaten = 0
+  state.ghostsEaten = 0
   state.firstBonusRemoved = false
   state.secondBonusRemoved = false
   grid.innerHTML = ''
@@ -484,12 +485,7 @@ function whichGhostWasEaten (pacmanCurrentSquare) {
 }
 
 function returnGhostToLair (ghost) {
-  state.squares[ghost.currentIndex].classList.remove(
-    ghost.className,
-    'ghost',
-    'frightened-ghost',
-    'frightened-ghost-flash'
-  )
+  removeAllGhostClasses(ghost)
   resetGhostTimers(ghost)
 
   // change ghosts currentIndex back to its startIndex
@@ -498,6 +494,7 @@ function returnGhostToLair (ghost) {
   ghost.currentDirection = -width
 
   state.score += 200
+  updateScore()
   // re-add classnames of ghost.className and 'ghost' to the ghosts new postion
   state.squares[ghost.currentIndex].classList.add(ghost.className, 'ghost')
 }
