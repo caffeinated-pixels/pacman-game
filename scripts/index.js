@@ -210,7 +210,7 @@ function resetGame () {
   state.score = 0
   state.livesLeft = 2
   state.dotsEaten = 0
-  state.ghostsEaten = 0
+  state.ghostsEatenPoints = 200
   state.firstBonusRemoved = false
   state.secondBonusRemoved = false
   grid.innerHTML = ''
@@ -297,6 +297,7 @@ function powerPillEaten () {
 
     state.score += 50
     state.dotsEaten++
+    state.ghostsEatenPoints = 200
     updateScore()
     frightenGhosts()
   }
@@ -347,6 +348,14 @@ function didPacmanEatGhost () {
     returnGhostToLair(ghost)
   }
 }
+
+function calcGhostEatenPoints () {
+  console.log('points awarded = ' + state.ghostsEatenPoints)
+  state.score += state.ghostsEatenPoints
+  state.ghostsEatenPoints *= 2
+
+  console.log('points increased to = ' + state.ghostsEatenPoints)
+}
 /************************************************
 PACMAN EATING FUNCTIONS (END)
 *************************************************/
@@ -371,6 +380,7 @@ function checkForLifeLost () {
     removeAllGhosts()
     removePacman(pacmanCurrentTile)
     state.isPaused = true
+    state.ghostsEatenPoints = 200
   }
 }
 
@@ -450,6 +460,7 @@ function unFrightenGhosts () {
     ghost.isFrightened = false
     ghost.isFlashing = false
   })
+  state.ghostsEatenPoints = 200
 }
 
 function isGhostFrightened (ghost) {
@@ -493,7 +504,8 @@ function returnGhostToLair (ghost) {
   ghost.currentIndex = ghost.respawnIndex
   ghost.currentDirection = -width
 
-  state.score += 200
+  // state.score += 200
+  calcGhostEatenPoints()
   updateScore()
   // re-add classnames of ghost.className and 'ghost' to the ghosts new postion
   state.squares[ghost.currentIndex].classList.add(ghost.className, 'ghost')
