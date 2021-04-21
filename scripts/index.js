@@ -49,6 +49,46 @@ EVENT LISTENERS (END)
 *************************************************/
 
 /************************************************
+AUDIO OBJECTS (START)
+*************************************************/
+const startGameSound = new Audio('../media/start-game.mp3')
+const munchSound = new Audio('../media/pacman-munch.mp3')
+const fruitEatenSound = new Audio('../media/fruit-eaten.mp3')
+const deathSound = new Audio('../media/pacman-death.mp3')
+const ghostEatenSound = new Audio('../media/ghost-eaten.mp3')
+const powerPillSound = new Audio('../media/pacman-energizer.mp3')
+
+function stopPowerPillSound () {
+  powerPillSound.pause()
+  powerPillSound.currentTime = 0
+}
+
+// fix for getting audio to play on iOS
+const audioToUnlock = [
+  startGameSound,
+  munchSound,
+  fruitEatenSound,
+  deathSound,
+  ghostEatenSound,
+  powerPillSound
+]
+document.addEventListener('touchstart', unlockAudioForiOS)
+
+function unlockAudioForiOS () {
+  audioToUnlock.forEach(audio => {
+    audio.play()
+    audio.pause()
+    audio.currentTime = 0
+  })
+
+  document.removeEventListener('touchstart', unlockAudioForiOS)
+}
+
+/************************************************
+AUDIO OBJECTS (END)
+*************************************************/
+
+/************************************************
 GAMEBOARD SETUP FUNCTIONS (START)
 *************************************************/
 createBoard()
@@ -147,7 +187,7 @@ GAME CONTROLS FUNCTIONS (START)
 *************************************************/
 function handleStartBtn () {
   if (state.isGameOver) {
-    // startGame()
+    startGameSound.play()
     getReadyTimer()
   } else if (state.isPaused) {
     resumeGame()
@@ -216,6 +256,7 @@ function resetGame () {
   grid.innerHTML = ''
   startButton.innerHTML = playIcon
 
+  stopPowerPillSound()
   updateScore()
   createBoard()
 }
@@ -279,6 +320,7 @@ function didPacmanEatDot () {
     state.dotsEaten++
     state.score += 10
     updateScore()
+    munchSound.play()
   }
 }
 
@@ -292,6 +334,8 @@ function didPacmanEatPowerPill () {
     state.score += 50
     state.dotsEaten++
     state.ghostsEatenPoints = 200
+    powerPillSound.currentTime = 0
+    powerPillSound.play()
     updateScore()
     frightenGhosts()
   }
@@ -326,6 +370,7 @@ function didPacmanEatBonus () {
     state.squares[state.pacmanCurrentIndex].classList.remove('bonus-cherry')
     state.score += 100
     updateScore()
+    fruitEatenSound.play()
 
     if (!state.firstBonusRemoved) {
       state.firstBonusRemoved = true
@@ -340,6 +385,7 @@ function didPacmanEatGhost () {
   if (pacmanCurrentSquare.classList.contains('frightened-ghost')) {
     const ghost = whichGhostWasEaten(pacmanCurrentSquare)
     returnGhostToLair(ghost)
+    ghostEatenSound.play()
   }
 }
 
@@ -379,6 +425,9 @@ function checkForLifeLost () {
 }
 
 function removeLife () {
+  deathSound.play()
+  stopPowerPillSound()
+
   if (state.livesLeft === 0) {
     gameOver()
   } else {
