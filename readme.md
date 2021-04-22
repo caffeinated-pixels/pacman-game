@@ -12,6 +12,7 @@ Features that I've added to the tutorial version include:
 - modified ghost behaviour when "frightened"
 - ghosts flash when frightened state coming to an end
 - ghosts have a dots-eaten threshold for leaving the lair
+- ghost can move through the tunnel
 - three lives for Pacman
 - bonus cherries that appear after 70 & 170 dots eaten
 - infinite levels
