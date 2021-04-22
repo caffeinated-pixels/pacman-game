@@ -469,6 +469,7 @@ function checkForHiscore () {
 function checkForLevelEnd () {
   // default is >243
   if (state.dotsEaten > 243) {
+    stopPowerPillSound()
     startNextLevel()
   }
 }
