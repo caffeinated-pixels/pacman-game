@@ -36,6 +36,7 @@ export function createNewGhosts (width) {
   ]
 
   // return [new Ghost('clyde', 379, 379, 0, 500, -1, 868)]
+  // return [new Ghost('blinky', 321, 377, 0, 1000, -1, -1)]
   // return [new Ghost('blinky', 394, 377, 0, 1000, -1, -1)]
   // return [new Ghost('blinky', 417, 377, 0, 1000, 1, -1)]
 }

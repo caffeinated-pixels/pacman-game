@@ -198,7 +198,6 @@ function handleStartBtn () {
 
 function startGame () {
   startButton.innerHTML = pauseIcon
-  // startScreen.style.display = 'none'
   getReadyScreen.style.display = 'none'
 
   drawPacman()
@@ -390,11 +389,8 @@ function didPacmanEatGhost () {
 }
 
 function calcGhostEatenPoints () {
-  console.log('points awarded = ' + state.ghostsEatenPoints)
   state.score += state.ghostsEatenPoints
   state.ghostsEatenPoints *= 2
-
-  console.log('points increased to = ' + state.ghostsEatenPoints)
 }
 /************************************************
 PACMAN EATING FUNCTIONS (END)
@@ -704,7 +700,6 @@ FRIGHTENED GHOST MOVEMENT FUNCTIONS (END)
 GHOST MOVEMENT HELPER FUNCTIONS (START)
 *************************************************/
 function isDirectionLegal (tileIndex) {
-  // TODO: incorporate into getLegalGhostDirections???
   return (
     !state.squares[tileIndex].classList.contains('wall') &&
     !state.squares[tileIndex].classList.contains('ghost-lair')
@@ -713,22 +708,17 @@ function isDirectionLegal (tileIndex) {
 
 function getLegalGhostDirections (nextTile, ghost) {
   return ghostDirections.filter(direction => {
-    const directionOption = state.squares[nextTile + direction]
+    const tileIndex = nextTile + direction
 
     if (direction === -ghost.currentDirection) return false
-
-    if (directionOption.classList.contains('blank')) return true
-    if (directionOption.classList.contains('pac-dot')) return true
-    if (directionOption.classList.contains('power-pill')) return true
-    if (directionOption.classList.contains('ghost')) return true
-
     if (
       state.squares[ghost.currentIndex].classList.contains('ghost-lair') &&
-      directionOption.classList.contains('ghost-lair')
+      state.squares[tileIndex].classList.contains('ghost-lair')
     ) {
       return true
     }
-    return false
+
+    return isDirectionLegal(tileIndex)
   })
 }
 
