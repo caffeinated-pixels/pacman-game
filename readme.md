@@ -55,3 +55,9 @@ Frightened ghosts move in a semi-random fashion. First, they reverse direction, 
 I based the animation on this [codepen](https://codepen.io/wifi/pen/olKxE)
 
 Pacman is divided into a top and bottom `<div>`, each with a background colour of yellow. We use the `border-radius` property to turn each half into a semi-circle. We then use `transform` and `@keyframes` to rotate each half in opposite directions (35deg and -35deg). Cute!
+
+### Audio on iOS
+
+So, iOS disables the playback of any HTML5 audio that is not directly initiated by the user. I guess this is to prevent annoying autoplaying music, etc, but it's very frustrating when you're trying to implement game audio!
+
+I found a hack to workaround this issue. Basically, you can "unlock" the audio objects by setting up an event listener that plays all the sounds the first time the user touches the screen (`touchstart` event). Obviously, we don't want the user to hear this, so we need to immediately stop and reset each sample.
