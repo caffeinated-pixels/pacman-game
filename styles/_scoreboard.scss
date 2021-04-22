@@ -43,10 +43,21 @@
   left: 0;
   right: 0;
   transform: translateY(-50%);
+
+  p {
+    margin: 0 1.75em 0.2em;
+  }
 }
 
 .start-screen {
   // display: none;
+}
+
+.ctrl-instructions {
+  font-size: 0.8rem;
+  @include mq-max(480px) {
+    font-size: 0.7rem;
+  }
 }
 
 .get-ready-screen {

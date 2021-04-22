@@ -58,6 +58,21 @@ body {
   }
 }
 
+.game-message p {
+  margin: 0 1.75em 0.2em;
+}
+
+.ctrl-instructions {
+  font-size: 0.8rem;
+}
+
+@media (max-width: 480px) {
+  .ctrl-instructions {
+    font-size: 0.7rem;
+    /* lets us pass content block into mixin */
+  }
+}
+
 .get-ready-screen {
   display: none;
 }
