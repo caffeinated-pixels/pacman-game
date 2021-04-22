@@ -28,10 +28,6 @@
   box-sizing: border-box;
 }
 
-.invisible-wall {
-  // background-color: lightblue;
-}
-
 .border-top {
   border-top: $wall-border;
   @include mq-max(480px) {

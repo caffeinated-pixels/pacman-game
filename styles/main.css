@@ -342,14 +342,14 @@ body {
   border: 1px solid black;
   border-radius: 5px;
   width: 80%;
-  margin: 20px auto 0;
+  margin: 1.25em auto 0;
   padding: 0.75em;
   background: #d3d3d3;
 }
 
 @media (max-width: 480px) {
   .joypad-container {
-    margin-top: 10px;
+    margin-top: 0.5em;
     padding: 0.5em;
     width: 90%;
     /* lets us pass content block into mixin */
@@ -441,4 +441,34 @@ body {
   font-family: 'Dela Gothic One', cursive;
   font-size: 1.25rem;
   color: #4d4787;
+}
+
+footer {
+  font-family: 'Dela Gothic One', cursive;
+  font-size: 0.7rem;
+  text-align: center;
+  color: black;
+}
+
+footer p {
+  margin-bottom: 0;
+}
+
+@media (max-width: 480px) {
+  footer p {
+    margin-top: 0.3em;
+    font-size: 0.6rem;
+    /* lets us pass content block into mixin */
+  }
+}
+
+a {
+  color: #337ab7;
+  text-decoration: none;
+}
+
+a:hover,
+a:focus {
+  color: #b45922;
+  text-decoration: underline;
 }

@@ -1,0 +1,27 @@
+// main: ./main.scss
+
+footer {
+  font-family: 'Dela Gothic One', cursive;
+  font-size: 0.7rem;
+  text-align: center;
+  color: black;
+}
+
+footer p {
+  margin-bottom: 0;
+  @include mq-max(480px) {
+    margin-top: 0.3em;
+    font-size: 0.6rem;
+  }
+}
+
+a {
+  color: #337ab7;
+  text-decoration: none;
+}
+
+a:hover,
+a:focus {
+  color: #b45922;
+  text-decoration: underline;
+}
