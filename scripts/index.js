@@ -38,7 +38,7 @@ const ghostDirections = [-width, -1, width, 1] // up, left, down, right
 /************************************************
 EVENT LISTENERS (START)
 *************************************************/
-document.addEventListener('keydown', handleControlInput)
+document.addEventListener('keyup', handleControlInput)
 startButton.addEventListener('click', handleStartBtn)
 resetButton.addEventListener('click', resetGame)
 document
@@ -262,7 +262,7 @@ function resetGame () {
 
 function handleControlInput (event) {
   if (state.isPaused) return
-  const input = event.type === 'keydown' ? event.key : event.currentTarget.id
+  const input = event.type === 'keyup' ? event.key : event.currentTarget.id
 
   const pacmanCurrentTile = state.squares[state.pacmanCurrentIndex]
   removePacman(pacmanCurrentTile)
