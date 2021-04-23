@@ -270,18 +270,22 @@ function handleControlInput (event) {
   switch (input) {
     case 'ArrowDown':
     case 'down':
+    case 's':
       movePacman(state, width)
       break
     case 'ArrowUp':
     case 'up':
+    case 'w':
       movePacman(state, -width)
       break
     case 'ArrowLeft':
     case 'left':
+    case 'a':
       movePacman(state, -1)
       break
     case 'ArrowRight':
     case 'right':
+    case 'd':
       movePacman(state, 1)
       break
   }
