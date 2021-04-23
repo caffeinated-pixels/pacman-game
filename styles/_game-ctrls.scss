@@ -85,6 +85,8 @@
 }
 
 .right-container {
+  font-family: 'Dela Gothic One', cursive;
+
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -96,4 +98,18 @@
   font-family: 'Dela Gothic One', cursive;
   font-size: 1.25rem;
   color: #4d4787;
+}
+
+.btn-label {
+  font-size: 0.6rem;
+  text-align: center;
+}
+
+.game-btns-container {
+  display: flex;
+  justify-content: space-between;
+  width: 95%;
+}
+
+.round-btn-container {
 }
