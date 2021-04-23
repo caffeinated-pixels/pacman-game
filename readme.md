@@ -1,6 +1,6 @@
 # Pacman game
 
-This a simplified Pacman clone that I built in HTML and vanilla JavaScript.
+This a simplified Pacman clone that I built in HTML and vanilla JavaScript. You can [see the game in action here](https://mercboy-pacman.netlify.app/).
 
 As a starting point, I used Ania Kubow's [Scrimba tutorial](https://scrimba.com/). However, I have significantly refactored, expanded and styled the tutorial version to make the game my own and to look and play more like the Namco 1980 arcade classic. Doing so has been fun, challenging and learning experience and a good excuse to fire up Pacman on MAME.
 
