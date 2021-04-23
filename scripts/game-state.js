@@ -3,7 +3,7 @@ export const state = {
   score: 0,
   hiscore: 0,
   livesLeft: 2,
-  pacmanCurrentIndex: 0,
+  pacmanCurrentIndex: 658,
   pacmanCurrentDirection: 1,
   pacmanMovementClass: 'pacman-facing-right',
   dotsEaten: 0,
