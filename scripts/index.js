@@ -261,7 +261,7 @@ function resetGame () {
 }
 
 function handleControlInput (event) {
-  if (state.isPaused) return
+  // if (state.isPaused) return
   const input = event.type === 'keyup' ? event.key : event.currentTarget.id
 
   const pacmanCurrentTile = state.squares[state.pacmanCurrentIndex]
@@ -288,6 +288,8 @@ function handleControlInput (event) {
     case 'd':
       movePacman(state, 1)
       break
+    case 'p':
+      handleStartBtn()
   }
 
   state.squares[state.pacmanCurrentIndex].classList.add(
