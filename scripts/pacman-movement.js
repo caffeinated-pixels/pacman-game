@@ -1,5 +1,4 @@
 export function movePacman (state, direction) {
-  if (state.isPaused) return
   const newIndex = state.pacmanCurrentIndex + direction
   if (
     !state.squares[newIndex].classList.contains('ghost-lair') &&

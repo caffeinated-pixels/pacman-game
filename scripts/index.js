@@ -261,6 +261,7 @@ function resetGame () {
 }
 
 function handleControlInput (event) {
+  if (state.isPaused) return
   const input = event.type === 'keyup' ? event.key : event.currentTarget.id
 
   const pacmanCurrentTile = state.squares[state.pacmanCurrentIndex]
