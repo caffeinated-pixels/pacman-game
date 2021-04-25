@@ -288,8 +288,6 @@ function handleControlInput (event) {
     case 'd':
       movePacman(state, 1)
       break
-    case 'p':
-      handleStartBtn()
   }
 
   state.squares[state.pacmanCurrentIndex].classList.add(
