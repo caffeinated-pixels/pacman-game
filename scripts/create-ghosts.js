@@ -1,4 +1,4 @@
-function ghost (
+function createGhost ({
   className,
   startIndex,
   respawnIndex,
@@ -6,7 +6,7 @@ function ghost (
   speed,
   currentDirection,
   scatterTarget
-) {
+}) {
   return {
     className,
     startIndex,
@@ -29,10 +29,42 @@ function ghost (
 
 export function createNewGhosts (width) {
   return [
-    ghost('blinky', 321, 377, 0, 500, -1, -1),
-    ghost('pinky', 378, 378, 5, 500, -width, -28),
-    ghost('inky', 376, 376, 30, 500, 1, 895),
-    ghost('clyde', 379, 379, 90, 500, -1, 868)
+    createGhost({
+      className: 'blinky',
+      startIndex: 321,
+      respawnIndex: 377,
+      startTimer: 0,
+      speed: 500,
+      currentDirection: -1,
+      scatterTarget: -1
+    }),
+    createGhost({
+      className: 'pinky',
+      startIndex: 378,
+      respawnIndex: 378,
+      startTimer: 5,
+      speed: 500,
+      currentDirection: -width,
+      scatterTarget: -28
+    }),
+    createGhost({
+      className: 'inky',
+      startIndex: 376,
+      respawnIndex: 376,
+      startTimer: 30,
+      speed: 500,
+      currentDirection: 1,
+      scatterTarget: 895
+    }),
+    createGhost({
+      className: 'clyde',
+      startIndex: 379,
+      respawnIndex: 379,
+      startTimer: 90,
+      speed: 500,
+      currentDirection: -1,
+      scatterTarget: 868
+    })
   ]
 
   // return [new Ghost('clyde', 379, 379, 0, 500, -1, 868)]
