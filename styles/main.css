@@ -2,7 +2,7 @@ body {
   margin: 0;
   display: flex;
   justify-content: center;
-  font-family: 'Press Start 2P', cursive;
+  font-family: "Press Start 2P", cursive;
   color: white;
 }
 
@@ -12,7 +12,6 @@ body {
   border-radius: 20px;
   position: relative;
 }
-
 @media (max-width: 480px) {
   .game-screen {
     padding: 0.75em 0.25em;
@@ -50,14 +49,12 @@ body {
   right: 0;
   transform: translateY(-50%);
 }
-
 @media (max-width: 480px) {
   .game-message {
     font-size: 1.3rem;
     /* lets us pass content block into mixin */
   }
 }
-
 .game-message p {
   margin: 0 1.75em 0.2em;
 }
@@ -65,7 +62,6 @@ body {
 .ctrl-instructions {
   font-size: 0.8rem;
 }
-
 @media (max-width: 480px) {
   .ctrl-instructions {
     font-size: 0.7rem;
@@ -92,7 +88,6 @@ body {
 .lives-left {
   width: 70px;
 }
-
 @media (max-width: 480px) {
   .lives-left {
     width: 45px;
@@ -106,10 +101,9 @@ body {
   width: 30px;
   height: 30px;
 }
-
 @media (max-width: 480px) {
   .life,
-  .next-bonus {
+.next-bonus {
     width: 20px;
     height: 20px;
     /* lets us pass content block into mixin */
@@ -121,7 +115,6 @@ body {
   background-position: center;
   background-size: contain;
 }
-
 @media (max-width: 480px) {
   .next-bonus {
     margin-right: 0.5em;
@@ -140,7 +133,6 @@ body {
   height: 465px;
   border: solid black;
 }
-
 @media (max-width: 480px) {
   .grid {
     width: 336px;
@@ -154,7 +146,6 @@ body {
   height: 15px;
   background-color: #202020;
 }
-
 @media (max-width: 480px) {
   .cell {
     width: 12px;
@@ -170,7 +161,6 @@ body {
 .border-top {
   border-top: 3px solid #2121ff;
 }
-
 @media (max-width: 480px) {
   .border-top {
     border-width: 2px;
@@ -181,7 +171,6 @@ body {
 .border-right {
   border-right: 3px solid #2121ff;
 }
-
 @media (max-width: 480px) {
   .border-right {
     border-width: 2px;
@@ -192,7 +181,6 @@ body {
 .border-bottom {
   border-bottom: 3px solid #2121ff;
 }
-
 @media (max-width: 480px) {
   .border-bottom {
     border-width: 2px;
@@ -203,7 +191,6 @@ body {
 .border-left {
   border-left: 3px solid #2121ff;
 }
-
 @media (max-width: 480px) {
   .border-left {
     border-width: 2px;
@@ -221,7 +208,6 @@ body {
   border: 6px solid #202020;
   box-sizing: border-box;
 }
-
 @media (max-width: 480px) {
   .pac-dot {
     border-width: 5px;
@@ -233,7 +219,15 @@ body {
   border: 2px solid #202020;
   border-radius: 100%;
   box-sizing: border-box;
-  animation: powerpill 2.5s infinite;
+  -webkit-animation: powerpill 2.5s infinite;
+          animation: powerpill 2.5s infinite;
+}
+
+@-webkit-keyframes powerpill {
+  50% {
+    transform: scale(1.15);
+    background-color: #eafa8d;
+  }
 }
 
 @keyframes powerpill {
@@ -242,7 +236,6 @@ body {
     background-color: #eafa8d;
   }
 }
-
 .bonus-sq {
   background-repeat: no-repeat;
   background-position: center;
@@ -294,25 +287,21 @@ body {
     transform: rotate(0deg);
   }
 }
-
 @keyframes rotateTop {
   50% {
     transform: rotate(0deg);
   }
 }
-
 @-webkit-keyframes rotateBottom {
   50% {
     transform: rotate(0deg);
   }
 }
-
 @keyframes rotateBottom {
   50% {
     transform: rotate(0deg);
   }
 }
-
 .ghost {
   border: none;
   border-radius: 0;
@@ -344,7 +333,14 @@ body {
 
 .frightened-ghost-flash {
   background-image: url(../media/scared-ghost-flash.png);
-  animation: flash 1s infinite linear;
+  -webkit-animation: flash 1s infinite linear;
+          animation: flash 1s infinite linear;
+}
+
+@-webkit-keyframes flash {
+  50% {
+    background-image: url(../media/scared-ghost.png);
+  }
 }
 
 @keyframes flash {
@@ -352,7 +348,6 @@ body {
     background-image: url(../media/scared-ghost.png);
   }
 }
-
 .joypad-container {
   border: 1px solid black;
   border-radius: 5px;
@@ -361,7 +356,6 @@ body {
   padding: 0.75em;
   background: #d3d3d3;
 }
-
 @media (max-width: 480px) {
   .joypad-container {
     margin-top: 0.5em;
@@ -378,7 +372,6 @@ body {
   background: #808080;
   background: linear-gradient(to bottom right, #999999, #808080);
 }
-
 @media (max-width: 480px) {
   .btn-container {
     padding: 0.5em;
@@ -404,7 +397,6 @@ body {
   background-color: #ab3c63;
   border-radius: 100%;
 }
-
 @media (max-width: 480px) {
   .game-btn {
     width: 35px;
@@ -416,6 +408,7 @@ body {
 .d-btn {
   border-radius: 5%;
   background-color: #313130;
+  touch-action: manipulation;
 }
 
 .button:hover,
@@ -445,7 +438,7 @@ body {
 }
 
 .right-container {
-  font-family: 'Dela Gothic One', cursive;
+  font-family: "Dela Gothic One", cursive;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -454,7 +447,7 @@ body {
 
 .mercBoy-logo {
   text-align: center;
-  font-family: 'Dela Gothic One', cursive;
+  font-family: "Dela Gothic One", cursive;
   font-size: 1.25rem;
   color: #4d4787;
 }
@@ -471,7 +464,7 @@ body {
 }
 
 footer {
-  font-family: 'Dela Gothic One', cursive;
+  font-family: "Dela Gothic One", cursive;
   font-size: 0.7rem;
   text-align: center;
   color: black;
@@ -480,7 +473,6 @@ footer {
 footer p {
   margin-bottom: 0;
 }
-
 @media (max-width: 480px) {
   footer p {
     margin-top: 0.3em;
