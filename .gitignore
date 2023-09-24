@@ -1,3 +1,5 @@
 /node_modules
 .~lock.pacman grid.ods#
 .~lock.pacman grid.csv#
+.parcel-cache/
+/dist

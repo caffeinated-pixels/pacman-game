@@ -2,7 +2,7 @@ body {
   margin: 0;
   display: flex;
   justify-content: center;
-  font-family: "Press Start 2P", cursive;
+  font-family: 'Press Start 2P', cursive;
   color: white;
 }
 
@@ -103,7 +103,7 @@ body {
 }
 @media (max-width: 480px) {
   .life,
-.next-bonus {
+  .next-bonus {
     width: 20px;
     height: 20px;
     /* lets us pass content block into mixin */
@@ -220,7 +220,7 @@ body {
   border-radius: 100%;
   box-sizing: border-box;
   -webkit-animation: powerpill 2.5s infinite;
-          animation: powerpill 2.5s infinite;
+  animation: powerpill 2.5s infinite;
 }
 
 @-webkit-keyframes powerpill {
@@ -334,7 +334,7 @@ body {
 .frightened-ghost-flash {
   background-image: url(../media/scared-ghost-flash.png);
   -webkit-animation: flash 1s infinite linear;
-          animation: flash 1s infinite linear;
+  animation: flash 1s infinite linear;
 }
 
 @-webkit-keyframes flash {
@@ -438,7 +438,7 @@ body {
 }
 
 .right-container {
-  font-family: "Dela Gothic One", cursive;
+  font-family: 'Dela Gothic One', cursive;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -447,7 +447,7 @@ body {
 
 .mercBoy-logo {
   text-align: center;
-  font-family: "Dela Gothic One", cursive;
+  font-family: 'Dela Gothic One', cursive;
   font-size: 1.25rem;
   color: #4d4787;
 }
@@ -464,7 +464,7 @@ body {
 }
 
 footer {
-  font-family: "Dela Gothic One", cursive;
+  font-family: 'Dela Gothic One', cursive;
   font-size: 0.7rem;
   text-align: center;
   color: black;
