@@ -49,10 +49,6 @@
   }
 }
 
-.start-screen {
-  // display: none;
-}
-
 .ctrl-instructions {
   font-size: 0.8rem;
   @include mq-max(480px) {
@@ -107,5 +103,5 @@
 }
 
 .bonus-cherry {
-  background-image: url(../media/bonus-cherry.png);
+  background-image: url(../../media/bonus-cherry.png);
 }
