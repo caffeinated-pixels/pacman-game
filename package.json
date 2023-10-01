@@ -16,7 +16,7 @@
   "author": "Stevie Gill",
   "license": "ISC",
   "devDependencies": {
-    "@parcel/transformer-sass": "^2.9.3",
+    "@parcel/transformer-sass": "^2.6.2",
     "eslint": "^7.23.0",
     "parcel": "^2.6.2"
   }
