@@ -1,39 +1,37 @@
-import { layout } from './layout.js'
-import { state } from './game-state.js'
-import { createNewGhosts, drawGhosts } from './create-ghosts.js'
-import { movePacman } from './pacman-movement.js'
+import { layout } from './layout'
+import { state } from './game-state'
+import { createNewGhosts, drawGhosts } from './create-ghosts'
+import { movePacman } from './pacman-movement'
+import {
+  grid,
+  scoreDisplay,
+  hiscoreDisplay,
+  livesLeftDisplay,
+  startScreen,
+  pauseScreen,
+  getReadyScreen,
+  gameoverScreen,
+  startButton,
+  resetButton,
+} from './constants/dom'
+import {
+  playIcon,
+  pauseIcon,
+  pacmanHTML,
+  width,
+  height,
+  pacmanStartIndex,
+  ghostDirections,
+} from './constants/generalConstants'
 
-/************************************************
-HTML ELEMENT VARIABLES (START)
-*************************************************/
-const grid = document.querySelector('.grid')
-const scoreDisplay = document.getElementById('score')
-const hiscoreDisplay = document.getElementById('hiscore')
-const livesLeftDisplay = document.getElementById('lives-left')
-const startScreen = document.getElementById('start-screen')
-const pauseScreen = document.getElementById('pause-screen')
-const getReadyScreen = document.getElementById('get-ready-screen')
-const gameoverScreen = document.getElementById('gameover-screen')
-const startButton = document.getElementById('start-btn')
-const resetButton = document.getElementById('reset')
-/************************************************
-HTML ELEMENT VARIABLES (END)
-*************************************************/
-
-/************************************************
-  GLOBAL CONSTANTS (START)
-*************************************************/
-const playIcon = '<i class="fas fa-play"></i>'
-const pauseIcon = '<i class="fas fa-pause"></i>'
-const pacmanHTML =
-  '<div class="pacman-top"></div><div class="pacman-bottom"></div>'
-const width = 28
-const height = 31
-const pacmanStartIndex = 658
-const ghostDirections = [-width, -1, width, 1] // up, left, down, right
-/************************************************
-  GLOBAL CONSTANTS (END)
-*************************************************/
+import {
+  startGameSound,
+  munchSound,
+  fruitEatenSound,
+  deathSound,
+  ghostEatenSound,
+  powerPillSound,
+} from './constants/audioObjects'
 
 /************************************************
 EVENT LISTENERS (START)
@@ -47,41 +45,6 @@ document
 /************************************************
 EVENT LISTENERS (END)
 *************************************************/
-
-/************************************************
-AUDIO OBJECTS (START)
-*************************************************/
-const startGameSoundUrl = new URL('../../media/start-game.mp3', import.meta.url)
-const startGameSound = new Audio(startGameSoundUrl.href)
-
-const munchSoundUrl = new URL('../../media/pacman-munch.mp3', import.meta.url)
-const munchSound = new Audio(munchSoundUrl.href)
-
-const fruitEatenSoundUrl = new URL(
-  '../../media/fruit-eaten.mp3',
-  import.meta.url
-)
-const fruitEatenSound = new Audio(fruitEatenSoundUrl.href)
-
-const deathSoundUrl = new URL('../../media/pacman-death.mp3', import.meta.url)
-const deathSound = new Audio(deathSoundUrl.href)
-
-const ghostEatenSoundUrl = new URL(
-  '../../media/ghost-eaten.mp3',
-  import.meta.url
-)
-const ghostEatenSound = new Audio(ghostEatenSoundUrl.href)
-
-const powerPillSoundUrl = new URL(
-  '../../media/pacman-energizer.mp3',
-  import.meta.url
-)
-const powerPillSound = new Audio(powerPillSoundUrl.href)
-
-function stopPowerPillSound() {
-  powerPillSound.pause()
-  powerPillSound.currentTime = 0
-}
 
 // fix for getting audio to play on iOS
 const audioToUnlock = [
@@ -103,10 +66,6 @@ function unlockAudioForiOS() {
 
   document.removeEventListener('touchstart', unlockAudioForiOS)
 }
-
-/************************************************
-AUDIO OBJECTS (END)
-*************************************************/
 
 /************************************************
 GAMEBOARD SETUP FUNCTIONS (START)
