@@ -23,7 +23,6 @@ import {
   pacmanStartIndex,
   ghostDirections,
 } from './constants/generalConstants'
-
 import {
   startGameSound,
   munchSound,
@@ -32,6 +31,7 @@ import {
   ghostEatenSound,
   powerPillSound,
 } from './constants/audioObjects'
+import { createBoard } from './functions/createBoard'
 
 /************************************************
 EVENT LISTENERS (START)
@@ -70,7 +70,7 @@ function unlockAudioForiOS() {
 /************************************************
 GAMEBOARD SETUP FUNCTIONS (START)
 *************************************************/
-createBoard()
+createBoard(state, grid, layout)
 getHiscoreFromStorage()
 
 function getHiscoreFromStorage() {
@@ -78,63 +78,6 @@ function getHiscoreFromStorage() {
     state.hiscore = localStorage.pacmanHiscore
     hiscoreDisplay.textContent = state.hiscore
   }
-}
-
-function createBoard() {
-  state.squares = layout.map((cell) => {
-    const square = document.createElement('div')
-
-    grid.appendChild(square)
-    square.classList.add('cell', cell)
-
-    if (cell === 'door') {
-      square.classList.add('ghost-lair')
-    }
-
-    if (cell === 'bonus-sq') {
-      square.classList.add('blank')
-    }
-
-    return square
-  })
-
-  addWallborders()
-  updateLivesDisplay()
-}
-
-function addWallborders() {
-  state.squares.forEach((square, i, arr) => {
-    // checking for wall exterior sides
-    const isAtTopEdge = i - width < 0
-    const isAtRightEdge = i % width === width - 1
-    const isAtBottomEdge = i + width >= width * height
-    const isAtLeftEdge = i % width === 0
-
-    // check for wall internal sides
-    const isTopSide =
-      i - width > 28 && !arr[i - width].classList.contains('wall')
-
-    const isRightSide = i + 1 < 867 && !arr[i + 1].classList.contains('wall')
-
-    const isBottomSide =
-      i + width < width * 30 && !arr[i + width].classList.contains('wall')
-
-    const isLeftSide = i - 1 > 0 && !arr[i - 1].classList.contains('wall')
-
-    // add wall border classes
-    if (square.classList.contains('wall')) {
-      if (isAtTopEdge || isTopSide) {
-        square.classList.add('border-top')
-      }
-      if (isAtRightEdge || isRightSide) {
-        square.classList.add('border-right')
-      }
-      if (isAtBottomEdge || isBottomSide) {
-        square.classList.add('border-bottom')
-      }
-      if (isAtLeftEdge || isLeftSide) square.classList.add('border-left')
-    }
-  })
 }
 
 function updateLivesDisplay() {
