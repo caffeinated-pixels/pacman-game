@@ -1,4 +1,6 @@
-export const grid = document.querySelector<HTMLDivElement>('.grid')
+// TODO: add more robust types
+
+export const grid = document.querySelector('.grid') as HTMLDivElement
 export const scoreDisplay = document.getElementById('score') as HTMLSpanElement
 export const hiscoreDisplay = document.getElementById(
   'hiscore'

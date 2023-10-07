@@ -1,5 +1,5 @@
+// TODO: sort imports
 import { layout } from './layout'
-import { state } from './game-state'
 import { createNewGhosts, drawGhosts } from './create-ghosts'
 import { movePacman } from './pacman-movement'
 import {
@@ -19,7 +19,6 @@ import {
   pauseIcon,
   pacmanHTML,
   width,
-  height,
   pacmanStartIndex,
   ghostDirections,
 } from './constants/generalConstants'
@@ -33,6 +32,7 @@ import {
   stopPowerPillSound,
 } from './constants/audioObjects'
 import { createBoard } from './functions/createBoard'
+import { initializeState } from './functions/initializeState'
 
 /************************************************
 EVENT LISTENERS (START)
@@ -71,13 +71,14 @@ function unlockAudioForiOS() {
 /************************************************
 GAMEBOARD SETUP FUNCTIONS (START)
 *************************************************/
-createBoard(state, grid, layout)
+const state = initializeState()
+createBoard(state)
 getHiscoreFromStorage()
 
 function getHiscoreFromStorage() {
   if (localStorage.pacmanHiscore) {
     state.hiscore = localStorage.pacmanHiscore
-    hiscoreDisplay.textContent = state.hiscore
+    hiscoreDisplay.textContent = state.hiscore.toString()
   }
 }
 
@@ -155,6 +156,7 @@ function pauseGame() {
 }
 
 function resetGame() {
+  // TODO: fix blank screen on reset
   state.ghosts.forEach((ghost) => {
     clearInterval(ghost.timerId)
     clearTimeout(ghost.flashTimerId)
@@ -180,7 +182,7 @@ function resetGame() {
 
   stopPowerPillSound()
   updateScore()
-  createBoard(state, grid, layout)
+  createBoard(state)
 }
 
 function handleControlInput(event) {

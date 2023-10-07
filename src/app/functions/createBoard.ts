@@ -47,24 +47,7 @@ const updateLivesDisplay = (state) => {
   }
 }
 
-export const createBoard = (state, grid, layout) => {
-  state.squares = layout.map((cell) => {
-    const square = document.createElement('div')
-
-    grid.appendChild(square)
-    square.classList.add('cell', cell)
-
-    if (cell === 'door') {
-      square.classList.add('ghost-lair')
-    }
-
-    if (cell === 'bonus-sq') {
-      square.classList.add('blank')
-    }
-
-    return square
-  })
-
+export const createBoard = (state) => {
   addWallborders(state)
   updateLivesDisplay(state)
 }
