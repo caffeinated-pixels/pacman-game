@@ -30,6 +30,7 @@ import {
   deathSound,
   ghostEatenSound,
   powerPillSound,
+  stopPowerPillSound,
 } from './constants/audioObjects'
 import { createBoard } from './functions/createBoard'
 
@@ -179,7 +180,7 @@ function resetGame() {
 
   stopPowerPillSound()
   updateScore()
-  createBoard()
+  createBoard(state, grid, layout)
 }
 
 function handleControlInput(event) {
@@ -327,7 +328,7 @@ SCORING/ENDPOINT FUNCTIONS (START)
 *************************************************/
 
 function updateScore() {
-  scoreDisplay.textContent = state.score
+  scoreDisplay.textContent = state.score.toString()
 }
 
 function checkForLifeLost() {
