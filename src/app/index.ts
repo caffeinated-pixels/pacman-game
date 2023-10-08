@@ -1,5 +1,4 @@
 // TODO: sort imports
-import { layout } from './layout'
 import { createNewGhosts, drawGhosts } from './create-ghosts'
 import { movePacman } from './pacman-movement'
 import {
@@ -32,7 +31,7 @@ import {
   stopPowerPillSound,
 } from './constants/audioObjects'
 import { createBoard } from './functions/createBoard'
-import { initializeState } from './functions/initializeState'
+import { createSquares, initializeState } from './functions/initializeState'
 
 /************************************************
 EVENT LISTENERS (START)
@@ -156,7 +155,6 @@ function pauseGame() {
 }
 
 function resetGame() {
-  // TODO: fix blank screen on reset
   state.ghosts.forEach((ghost) => {
     clearInterval(ghost.timerId)
     clearTimeout(ghost.flashTimerId)
@@ -182,6 +180,7 @@ function resetGame() {
 
   stopPowerPillSound()
   updateScore()
+  state.squares = createSquares()
   createBoard(state)
 }
 
