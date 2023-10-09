@@ -388,8 +388,8 @@ function gameOver() {
 function checkForHiscore() {
   if (state.score > state.hiscore) {
     state.hiscore = state.score
-    hiscoreDisplay.textContent = state.hiscore
-    localStorage.setItem('pacmanHiscore', state.hiscore)
+    hiscoreDisplay.textContent = state.hiscore.toString()
+    localStorage.setItem('pacmanHiscore', state.hiscore.toString())
   }
 }
 
@@ -413,7 +413,7 @@ function startNextLevel() {
   removePacman(pacmanCurrentTile)
 
   grid.innerHTML = ''
-  createBoard()
+  createBoard(state)
 
   getReadyTimer()
 }
