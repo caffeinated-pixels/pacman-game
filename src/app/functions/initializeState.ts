@@ -1,4 +1,6 @@
 import { grid } from '../constants/dom'
+import { width } from '../constants/generalConstants'
+import { createNewGhosts } from '../create-ghosts'
 import { layout } from '../layout'
 
 export const createSquares = () => {
@@ -21,7 +23,6 @@ export const createSquares = () => {
 }
 
 export const initializeState = () => {
-  // TODO: fix never type for ghosts
   return {
     squares: createSquares(),
     score: 0,
@@ -36,7 +37,7 @@ export const initializeState = () => {
     secondBonusRemoved: false,
     isPaused: true,
     isGameOver: true,
-    ghosts: [],
+    ghosts: createNewGhosts(width),
     getReadyTimer: NaN,
     gameoverTimer: NaN,
   }

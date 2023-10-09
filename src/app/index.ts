@@ -125,7 +125,6 @@ function startGame() {
 
   drawPacman()
 
-  state.ghosts = createNewGhosts(width)
   drawGhosts(state)
   state.ghosts.forEach((ghost) => initGhostMovement(ghost))
 
@@ -177,6 +176,7 @@ function resetGame() {
   state.secondBonusRemoved = false
   grid.innerHTML = ''
   startButton.innerHTML = playIcon
+  state.ghosts = createNewGhosts(width)
 
   stopPowerPillSound()
   updateScore()
