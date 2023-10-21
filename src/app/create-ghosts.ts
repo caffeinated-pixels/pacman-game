@@ -1,3 +1,22 @@
+export type Ghost = {
+  className: 'blinky' | 'pinky' | 'inky' | 'clyde'
+  startIndex: number
+  respawnIndex: number
+  startTimer: number
+  speed: number
+  currentDirection: number
+  scatterTarget: number
+  currentIndex: number
+  targetTile: number
+  nextDirection: number
+  isFrightened: boolean
+  isFlashing: boolean
+  firstMoveAfterFrightened: boolean
+  timerId: number
+  frightenedTimer: number
+  flashTimerId: number
+}
+
 const createGhost = ({
   className,
   startIndex,
@@ -27,7 +46,7 @@ const createGhost = ({
   }
 }
 
-export const createNewGhosts = (width) => {
+export const createNewGhosts = (width: number): Ghost[] => {
   return [
     createGhost({
       className: 'blinky',

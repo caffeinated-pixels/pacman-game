@@ -1,7 +1,26 @@
 import { grid } from '../constants/dom'
 import { width } from '../constants/generalConstants'
-import { createNewGhosts } from '../create-ghosts'
+import { Ghost, createNewGhosts } from '../create-ghosts'
 import { layout } from '../layout'
+
+export type GameState = {
+  squares: HTMLDivElement[]
+  score: number
+  hiscore: number
+  livesLeft: number
+  pacmanCurrentIndex: number
+  pacmanCurrentDirection: number
+  pacmanMovementClass: string
+  dotsEaten: number
+  ghostsEatenPoints: number
+  firstBonusRemoved: boolean
+  secondBonusRemoved: boolean
+  isPaused: boolean
+  isGameOver: boolean
+  ghosts: Ghost[]
+  getReadyTimer: number
+  gameoverTimer: number
+}
 
 export const createSquares = () => {
   return layout.map((cell) => {
@@ -22,7 +41,7 @@ export const createSquares = () => {
   })
 }
 
-export const initializeState = () => {
+export const initializeState = (): GameState => {
   return {
     squares: createSquares(),
     score: 0,

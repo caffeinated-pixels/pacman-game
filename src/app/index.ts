@@ -32,6 +32,7 @@ import {
 } from './constants/audioObjects'
 import { createBoard } from './functions/createBoard'
 import { createSquares, initializeState } from './functions/initializeState'
+import { checkForHiscore, getHiscoreFromStorage } from './functions/hiscore'
 
 /************************************************
 EVENT LISTENERS (START)
@@ -72,14 +73,7 @@ GAMEBOARD SETUP FUNCTIONS (START)
 *************************************************/
 const state = initializeState()
 createBoard(state)
-getHiscoreFromStorage()
-
-function getHiscoreFromStorage() {
-  if (localStorage.pacmanHiscore) {
-    state.hiscore = localStorage.pacmanHiscore
-    hiscoreDisplay.textContent = state.hiscore.toString()
-  }
-}
+getHiscoreFromStorage(state)
 
 function updateLivesDisplay() {
   livesLeftDisplay.innerHTML = ''
@@ -380,17 +374,9 @@ function removeAllGhostClasses(ghost) {
 function gameOver() {
   state.isGameOver = true
   gameoverScreen.style.display = 'block'
-  checkForHiscore()
+  checkForHiscore(state)
 
   state.gameoverTimer = setTimeout(resetGame, 2000)
-}
-
-function checkForHiscore() {
-  if (state.score > state.hiscore) {
-    state.hiscore = state.score
-    hiscoreDisplay.textContent = state.hiscore.toString()
-    localStorage.setItem('pacmanHiscore', state.hiscore.toString())
-  }
 }
 
 function checkForLevelEnd() {
