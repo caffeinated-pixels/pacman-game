@@ -34,6 +34,7 @@ import { createBoard } from './functions/createBoard'
 import { createSquares, initializeState } from './functions/initializeState'
 import { checkForHiscore, getHiscoreFromStorage } from './functions/hiscore'
 import { updateLivesDisplay } from './functions/display'
+import { drawPacman } from './functions/pacman'
 
 /************************************************
 EVENT LISTENERS (START)
@@ -78,15 +79,7 @@ getHiscoreFromStorage(state)
 
 updateLivesDisplay(state)
 
-function drawPacman() {
-  state.pacmanCurrentIndex = pacmanStartIndex
-  state.pacmanMovementClass = 'pacman-facing-right'
-  state.squares[state.pacmanCurrentIndex].classList.add(
-    'pacman',
-    state.pacmanMovementClass
-  )
-  state.squares[state.pacmanCurrentIndex].innerHTML = pacmanHTML
-}
+drawPacman(state)
 /************************************************
 GAMEBOARD SETUP FUNCTIONS (END)
 *************************************************/
@@ -109,7 +102,7 @@ function startGame() {
   startButton.innerHTML = pauseIcon
   getReadyScreen.style.display = 'none'
 
-  drawPacman()
+  drawPacman(state)
 
   drawGhosts(state)
   state.ghosts.forEach((ghost) => initGhostMovement(ghost))
