@@ -33,6 +33,7 @@ import {
 import { createBoard } from './functions/createBoard'
 import { createSquares, initializeState } from './functions/initializeState'
 import { checkForHiscore, getHiscoreFromStorage } from './functions/hiscore'
+import { updateLivesDisplay } from './functions/display'
 
 /************************************************
 EVENT LISTENERS (START)
@@ -75,16 +76,7 @@ const state = initializeState()
 createBoard(state)
 getHiscoreFromStorage(state)
 
-function updateLivesDisplay() {
-  livesLeftDisplay.innerHTML = ''
-
-  for (let i = 0; i < state.livesLeft; i++) {
-    const live = document.createElement('div')
-    live.classList.add('life')
-    live.innerHTML = pacmanHTML
-    livesLeftDisplay.appendChild(live)
-  }
-}
+updateLivesDisplay(state)
 
 function drawPacman() {
   state.pacmanCurrentIndex = pacmanStartIndex
@@ -349,7 +341,7 @@ function removeLife() {
     gameOver()
   } else {
     state.livesLeft--
-    updateLivesDisplay()
+    updateLivesDisplay(state)
     getReadyTimer()
   }
 }
