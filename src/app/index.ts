@@ -1,24 +1,9 @@
 // TODO: sort imports
-import { createNewGhosts, drawGhosts } from './create-ghosts'
 import { movePacman } from './pacman-movement'
+import { grid, gameoverScreen, startButton, resetButton } from './constants/dom'
 import {
-  grid,
-  scoreDisplay,
-  hiscoreDisplay,
-  livesLeftDisplay,
-  startScreen,
-  pauseScreen,
-  getReadyScreen,
-  gameoverScreen,
-  startButton,
-  resetButton,
-} from './constants/dom'
-import {
-  playIcon,
-  pauseIcon,
   pacmanHTML,
   width,
-  pacmanStartIndex,
   ghostDirections,
 } from './constants/generalConstants'
 import {
@@ -31,17 +16,26 @@ import {
   stopPowerPillSound,
 } from './constants/audioObjects'
 import { createBoard } from './functions/createBoard'
-import { createSquares, initializeState } from './functions/initializeState'
-import { checkForHiscore, getHiscoreFromStorage } from './functions/hiscore'
+import { initializeState } from './functions/initializeState'
+import {
+  checkForHiscore,
+  getHiscoreFromStorage,
+  updateScore,
+} from './functions/scoring'
 import { updateLivesDisplay } from './functions/display'
 import { drawPacman } from './functions/pacman'
+import {
+  getReadyTimer,
+  handleStartBtn,
+  resetGame,
+} from './functions/stopStartGame'
 
 /************************************************
 EVENT LISTENERS (START)
 *************************************************/
 document.addEventListener('keyup', handleControlInput)
-startButton.addEventListener('click', handleStartBtn)
-resetButton.addEventListener('click', resetGame)
+startButton.addEventListener('click', () => handleStartBtn(state))
+resetButton.addEventListener('click', () => resetGame(state))
 document
   .querySelectorAll('.d-btn')
   .forEach((item) => item.addEventListener('click', handleControlInput))
@@ -87,82 +81,6 @@ GAMEBOARD SETUP FUNCTIONS (END)
 /************************************************
 GAME CONTROLS FUNCTIONS (START)
 *************************************************/
-function handleStartBtn() {
-  if (state.isGameOver) {
-    startGameSound.play()
-    getReadyTimer()
-  } else if (state.isPaused) {
-    resumeGame()
-  } else if (!state.isPaused) {
-    pauseGame()
-  }
-}
-
-function startGame() {
-  startButton.innerHTML = pauseIcon
-  getReadyScreen.style.display = 'none'
-
-  drawPacman(state)
-
-  drawGhosts(state)
-  state.ghosts.forEach((ghost) => initGhostMovement(ghost))
-
-  state.isGameOver = false
-  state.isPaused = false
-}
-
-function resumeGame() {
-  state.isPaused = false
-  startButton.innerHTML = pauseIcon
-  pauseScreen.style.display = 'none'
-  state.ghosts.forEach((ghost) => initGhostMovement(ghost))
-}
-
-function getReadyTimer() {
-  startScreen.style.display = 'none'
-  getReadyScreen.style.display = 'block'
-
-  state.getReadyTimer = setTimeout(startGame, 1500)
-}
-
-function pauseGame() {
-  state.isPaused = true
-  startButton.innerHTML = playIcon
-  pauseScreen.style.display = 'block'
-  state.ghosts.forEach((ghost) => clearInterval(ghost.timerId))
-}
-
-function resetGame() {
-  state.ghosts.forEach((ghost) => {
-    clearInterval(ghost.timerId)
-    clearTimeout(ghost.flashTimerId)
-  })
-
-  startScreen.style.display = 'block'
-  pauseScreen.style.display = 'none'
-  getReadyScreen.style.display = 'none'
-  gameoverScreen.style.display = 'none'
-  clearTimeout(state.getReadyTimer)
-  clearTimeout(state.gameoverTimer)
-
-  state.isPaused = true
-  state.isGameOver = true
-  state.score = 0
-  state.livesLeft = 2
-  state.dotsEaten = 0
-  state.ghostsEatenPoints = 200
-  state.firstBonusRemoved = false
-  state.secondBonusRemoved = false
-  grid.innerHTML = ''
-  startButton.innerHTML = playIcon
-  state.ghosts = createNewGhosts(width)
-
-  stopPowerPillSound()
-  updateScore()
-  state.squares = createSquares()
-  createBoard(state)
-}
-
 function handleControlInput(event) {
   if (state.isPaused) return
   const input = event.type === 'keyup' ? event.key : event.currentTarget.id
@@ -225,7 +143,7 @@ function didPacmanEatDot() {
     state.squares[state.pacmanCurrentIndex].classList.add('blank')
     state.dotsEaten++
     state.score += 10
-    updateScore()
+    updateScore(state)
     munchSound.play()
   }
 }
@@ -242,7 +160,7 @@ function didPacmanEatPowerPill() {
     state.ghostsEatenPoints = 200
     powerPillSound.currentTime = 0
     powerPillSound.play()
-    updateScore()
+    updateScore(state)
     frightenGhosts()
   }
 }
@@ -275,7 +193,7 @@ function didPacmanEatBonus() {
   ) {
     state.squares[state.pacmanCurrentIndex].classList.remove('bonus-cherry')
     state.score += 100
-    updateScore()
+    updateScore(state)
     fruitEatenSound.play()
 
     if (!state.firstBonusRemoved) {
@@ -306,11 +224,6 @@ PACMAN EATING FUNCTIONS (END)
 /************************************************
 SCORING/ENDPOINT FUNCTIONS (START)
 *************************************************/
-
-function updateScore() {
-  scoreDisplay.textContent = state.score.toString()
-}
-
 function checkForLifeLost() {
   const pacmanCurrentTile = state.squares[state.pacmanCurrentIndex]
   const didGhostGetPacman = pacmanCurrentTile.classList.contains('ghost')
@@ -335,7 +248,7 @@ function removeLife() {
   } else {
     state.livesLeft--
     updateLivesDisplay(state)
-    getReadyTimer()
+    getReadyTimer(state)
   }
 }
 
@@ -386,7 +299,7 @@ function startNextLevel() {
   grid.innerHTML = ''
   createBoard(state)
 
-  getReadyTimer()
+  getReadyTimer(state)
 }
 /************************************************
 SCORING FUNCTIONS (END)
@@ -461,7 +374,7 @@ function returnGhostToLair(ghost) {
 
   // state.score += 200
   calcGhostEatenPoints()
-  updateScore()
+  updateScore(state)
   // re-add classnames of ghost.className and 'ghost' to the ghosts new postion
   state.squares[ghost.currentIndex].classList.add(ghost.className, 'ghost')
 }
