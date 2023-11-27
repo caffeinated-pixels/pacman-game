@@ -3,7 +3,6 @@ import { movePacman } from './pacman-movement'
 import { grid, gameoverScreen, startButton, resetButton } from './constants/dom'
 import { pacmanHTML, width } from './constants/generalConstants'
 import {
-  startGameSound,
   munchSound,
   fruitEatenSound,
   deathSound,
@@ -25,40 +24,17 @@ import {
   handleStartBtn,
   resetGame,
 } from './functions/stopStartGame'
+import { initiateAudio } from './functions/initiateAudio'
 
-/************************************************
-EVENT LISTENERS (START)
-*************************************************/
 document.addEventListener('keyup', handleControlInput)
 startButton.addEventListener('click', () => handleStartBtn(state))
 resetButton.addEventListener('click', () => resetGame(state))
 document
   .querySelectorAll('.d-btn')
   .forEach((item) => item.addEventListener('click', handleControlInput))
-/************************************************
-EVENT LISTENERS (END)
-*************************************************/
 
 // fix for getting audio to play on iOS
-const audioToUnlock = [
-  startGameSound,
-  munchSound,
-  fruitEatenSound,
-  deathSound,
-  ghostEatenSound,
-  powerPillSound,
-]
-document.addEventListener('touchstart', unlockAudioForiOS)
-
-function unlockAudioForiOS() {
-  audioToUnlock.forEach((audio) => {
-    audio.play()
-    audio.pause()
-    audio.currentTime = 0
-  })
-
-  document.removeEventListener('touchstart', unlockAudioForiOS)
-}
+initiateAudio()
 
 /************************************************
 GAMEBOARD SETUP FUNCTIONS (START)
