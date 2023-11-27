@@ -11,20 +11,21 @@ import {
   stopPowerPillSound,
 } from './constants/audioObjects'
 import { createBoard } from './functions/createBoard'
-import { initializeState } from './functions/initializeState'
+
 import {
   checkForHiscore,
   getHiscoreFromStorage,
   updateScore,
 } from './functions/scoring'
 import { updateLivesDisplay } from './functions/display'
-import { drawPacman } from './functions/pacman'
+
 import {
   getReadyTimer,
   handleStartBtn,
   resetGame,
 } from './functions/stopStartGame'
-import { initiateAudio } from './functions/initiateAudio'
+
+import { initializeGame } from './functions/initialize game'
 
 document.addEventListener('keyup', handleControlInput)
 startButton.addEventListener('click', () => handleStartBtn(state))
@@ -33,22 +34,7 @@ document
   .querySelectorAll('.d-btn')
   .forEach((item) => item.addEventListener('click', handleControlInput))
 
-// fix for getting audio to play on iOS
-initiateAudio()
-
-/************************************************
-GAMEBOARD SETUP FUNCTIONS (START)
-*************************************************/
-const state = initializeState()
-createBoard(state)
-getHiscoreFromStorage(state)
-
-updateLivesDisplay(state)
-
-drawPacman(state)
-/************************************************
-GAMEBOARD SETUP FUNCTIONS (END)
-*************************************************/
+const state = initializeGame()
 
 /************************************************
 GAME CONTROLS FUNCTIONS (START)
