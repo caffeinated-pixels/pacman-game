@@ -26,6 +26,8 @@ import {
 } from './functions/stopStartGame'
 
 import { initializeGame } from './functions/initialize game'
+import { resetGhostTimers } from './functions/ghostLogic'
+import { frightenGhosts } from './functions/ghostFrighten'
 
 document.addEventListener('keyup', handleControlInput)
 startButton.addEventListener('click', () => handleStartBtn(state))
@@ -119,7 +121,7 @@ function didPacmanEatPowerPill() {
     powerPillSound.currentTime = 0
     powerPillSound.play()
     updateScore(state)
-    frightenGhosts()
+    frightenGhosts(state)
   }
 }
 
@@ -213,7 +215,7 @@ function removeLife() {
 function removeAllGhosts() {
   state.ghosts.forEach((ghost) => {
     clearInterval(ghost.timerId)
-    resetGhostTimers(ghost)
+    resetGhostTimers(state, ghost)
     removeAllGhostClasses(ghost)
   })
 }
@@ -266,43 +268,6 @@ SCORING FUNCTIONS (END)
 /************************************************
 FRIGHTEN & UNFRIGHTEN GHOST FUNCTIONS (START)
 *************************************************/
-function frightenGhosts() {
-  state.ghosts.forEach((ghost) => {
-    resetGhostTimers(ghost)
-
-    if (!state.squares[ghost.currentIndex].classList.contains('ghost-lair')) {
-      ghost.isFrightened = true
-      ghost.firstMoveAfterFrightened = true
-      state.squares[ghost.currentIndex].classList.add('frightened-ghost')
-
-      ghost.flashTimerId = setTimeout(() => makeGhostFlash(ghost), 7000)
-      ghost.frightenedTimer = setTimeout(unFrightenGhosts, 10000)
-    }
-  })
-}
-
-function unFrightenGhosts() {
-  state.ghosts.forEach((ghost) => {
-    ghost.isFrightened = false
-    ghost.isFlashing = false
-  })
-  state.ghostsEatenPoints = 200
-}
-
-function makeGhostFlash(ghost) {
-  if (ghost.isFrightened) {
-    ghost.isFlashing = true
-    state.squares[ghost.currentIndex].classList.add('frightened-ghost-flash')
-  }
-}
-
-function resetGhostTimers(ghost) {
-  // so that eating second pill while ghosts frightened resets timer
-  clearTimeout(ghost.frightenedTimer)
-  clearTimeout(ghost.flashTimerId)
-  state.squares[ghost.currentIndex].classList.remove('frightened-ghost-flash')
-  ghost.isFlashing = false
-}
 
 function whichGhostWasEaten(pacmanCurrentSquare) {
   if (pacmanCurrentSquare.classList.contains('blinky')) return state.ghosts[0]
@@ -313,7 +278,7 @@ function whichGhostWasEaten(pacmanCurrentSquare) {
 
 function returnGhostToLair(ghost) {
   removeAllGhostClasses(ghost)
-  resetGhostTimers(ghost)
+  resetGhostTimers(state, ghost)
 
   // change ghosts currentIndex back to its startIndex
   ghost.isFrightened = false
