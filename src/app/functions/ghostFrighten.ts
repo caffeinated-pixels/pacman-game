@@ -1,5 +1,8 @@
+import { width } from '../constants/generalConstants'
 import { Ghost } from '../create-ghosts'
+import { removeAllGhostClasses } from './gameOver'
 import { GameState } from './initializeState'
+import { calcGhostEatenPoints, updateScore } from './scoring'
 
 const resetGhostTimers = (state: GameState, ghost: Ghost) => {
   // so that eating second pill while ghosts frightened resets timer
@@ -37,4 +40,30 @@ function unFrightenGhosts(state: GameState) {
     ghost.isFlashing = false
   })
   state.ghostsEatenPoints = 200
+}
+
+export const whichGhostWasEaten = (
+  state: GameState,
+  pacmanCurrentSquare: HTMLDivElement
+) => {
+  if (pacmanCurrentSquare.classList.contains('blinky')) return state.ghosts[0]
+  if (pacmanCurrentSquare.classList.contains('pinky')) return state.ghosts[1]
+  if (pacmanCurrentSquare.classList.contains('inky')) return state.ghosts[2]
+  return state.ghosts[3] // if (pacmanCurrentSquare.classList.contains('clyde'))
+}
+
+export const returnGhostToLair = (state: GameState, ghost: Ghost) => {
+  removeAllGhostClasses(state, ghost)
+  resetGhostTimers(state, ghost)
+
+  // change ghosts currentIndex back to its startIndex
+  ghost.isFrightened = false
+  ghost.currentIndex = ghost.respawnIndex
+  ghost.currentDirection = -width
+
+  // state.score += 200
+  calcGhostEatenPoints(state)
+  updateScore(state)
+  // re-add classnames of ghost.className and 'ghost' to the ghosts new postion
+  state.squares[ghost.currentIndex].classList.add(ghost.className, 'ghost')
 }

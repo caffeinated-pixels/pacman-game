@@ -28,7 +28,7 @@ const removeLife = (state: GameState) => {
   }
 }
 
-const removeAllGhostClasses = (state: GameState, ghost: Ghost) => {
+export const removeAllGhostClasses = (state: GameState, ghost: Ghost) => {
   state.squares[ghost.currentIndex].classList.remove(
     ghost.className,
     'ghost',
@@ -37,7 +37,7 @@ const removeAllGhostClasses = (state: GameState, ghost: Ghost) => {
   )
 }
 
-const removeAllGhosts = (state: GameState) => {
+export const removeAllGhosts = (state: GameState) => {
   state.ghosts.forEach((ghost) => {
     clearInterval(ghost.timerId)
     resetGhostTimers(state, ghost)
@@ -45,7 +45,10 @@ const removeAllGhosts = (state: GameState) => {
   })
 }
 
-const removePacman = (state: GameState, pacmanCurrentTile: HTMLElement) => {
+export const removePacman = (
+  state: GameState,
+  pacmanCurrentTile: HTMLElement
+) => {
   pacmanCurrentTile.classList.remove('pacman', state.pacmanMovementClass)
   pacmanCurrentTile.innerHTML = ''
 }

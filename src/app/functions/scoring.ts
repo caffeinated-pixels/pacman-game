@@ -20,3 +20,8 @@ export const checkForHiscore = (state: GameState) => {
     localStorage.setItem('pacmanHiscore', state.hiscore.toString())
   }
 }
+
+export const calcGhostEatenPoints = (state: GameState) => {
+  state.score += state.ghostsEatenPoints
+  state.ghostsEatenPoints *= 2
+}
