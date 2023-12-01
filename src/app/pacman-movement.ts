@@ -1,4 +1,6 @@
-export function movePacman (state, direction) {
+import { GameState } from './functions/initializeState'
+
+export const movePacman = (state: GameState, direction: number) => {
   const newIndex = state.pacmanCurrentIndex + direction
   if (
     !state.squares[newIndex].classList.contains('ghost-lair') &&
