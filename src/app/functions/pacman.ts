@@ -110,10 +110,16 @@ function didPacmanEatGhost(state: GameState) {
     ghostEatenSound.play()
   }
 }
-// TODO: fix type for event
-export const handleControlInput = (event: any, state: GameState) => {
+
+export const handleControlInput = (
+  event: KeyboardEvent | Event,
+  state: GameState
+) => {
   if (state.isPaused) return
-  const input = event.type === 'keyup' ? event.key : event.currentTarget?.id
+  const input =
+    (event as KeyboardEvent).type === 'keyup'
+      ? (event as KeyboardEvent).key
+      : (event.currentTarget as HTMLElement)?.id
 
   const pacmanCurrentTile = state.squares[state.pacmanCurrentIndex]
   removePacman(pacmanCurrentTile, state)

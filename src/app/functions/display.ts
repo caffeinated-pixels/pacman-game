@@ -1,7 +1,8 @@
 import { livesLeftDisplay } from '../constants/dom'
 import { pacmanHTML } from '../constants/generalConstants'
+import { GameState } from './initializeState'
 
-export const updateLivesDisplay = (state) => {
+export const updateLivesDisplay = (state: GameState) => {
   livesLeftDisplay.innerHTML = ''
 
   for (let i = 0; i < state.livesLeft; i++) {

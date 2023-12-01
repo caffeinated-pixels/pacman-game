@@ -1,7 +1,8 @@
 import { width, height, pacmanHTML } from '../constants/generalConstants'
 import { livesLeftDisplay } from '../constants/dom'
+import { GameState } from './initializeState'
 
-const addWallborders = (state) => {
+const addWallborders = (state: GameState) => {
   state.squares.forEach((square, i, arr) => {
     // checking for wall exterior sides
     const isAtTopEdge = i - width < 0
@@ -36,7 +37,7 @@ const addWallborders = (state) => {
   })
 }
 
-const updateLivesDisplay = (state) => {
+const updateLivesDisplay = (state: GameState) => {
   livesLeftDisplay.innerHTML = ''
 
   for (let i = 0; i < state.livesLeft; i++) {
@@ -47,7 +48,7 @@ const updateLivesDisplay = (state) => {
   }
 }
 
-export const createBoard = (state) => {
+export const createBoard = (state: GameState) => {
   addWallborders(state)
   updateLivesDisplay(state)
 }

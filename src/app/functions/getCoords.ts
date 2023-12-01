@@ -1,3 +1,5 @@
+import { Ghost } from '../create-ghosts'
+
 export const getIndexCoords = (tileIndex: number) => {
   // find the X,Y coordinates of a given index
   const coordY = Math.floor(tileIndex / 28)
@@ -12,7 +14,11 @@ export const calcDistance = (point1XY: number[], point2XY: number[]) => {
   )
 }
 
-export const getTargetTileDistance = (legalDirections, nextTile, ghost) => {
+export const getTargetTileDistance = (
+  legalDirections: number[],
+  nextTile: number,
+  ghost: Ghost
+) => {
   const shortestDistance = legalDirections.map((direction) => {
     const optionTileIndex = nextTile + direction
 

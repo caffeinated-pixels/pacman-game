@@ -1,5 +1,9 @@
+import { GameState } from './functions/initializeState'
+
+type GhostClasses = 'blinky' | 'pinky' | 'inky' | 'clyde'
+
 export type Ghost = {
-  className: 'blinky' | 'pinky' | 'inky' | 'clyde'
+  className: GhostClasses
   startIndex: number
   respawnIndex: number
   startTimer: number
@@ -17,6 +21,16 @@ export type Ghost = {
   flashTimerId: number
 }
 
+type CreateGhostParams = {
+  className: GhostClasses
+  startIndex: number
+  respawnIndex: number
+  startTimer: number
+  speed: number
+  currentDirection: number
+  scatterTarget: number
+}
+
 const createGhost = ({
   className,
   startIndex,
@@ -25,7 +39,7 @@ const createGhost = ({
   speed,
   currentDirection,
   scatterTarget,
-}) => {
+}: CreateGhostParams) => {
   return {
     className,
     startIndex,
@@ -92,8 +106,8 @@ export const createNewGhosts = (width: number): Ghost[] => {
   // return [new Ghost('blinky', 417, 377, 0, 1000, 1, -1)]
 }
 
-export const drawGhosts = (state) => {
-  state.ghosts.forEach((ghost) => {
+export const drawGhosts = (state: GameState) => {
+  state.ghosts.forEach((ghost: Ghost) => {
     state.squares[ghost.currentIndex].classList.add(ghost.className)
     state.squares[ghost.currentIndex].classList.add('ghost')
   })
