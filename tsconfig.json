@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "lib": ["ESNEXT", "dom"],
+
+    "noUnusedLocals": true /* Report errors on unused locals. */,
+    "noUnusedParameters": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "noImplicitAny": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    // needed for import.meta.url to work with TypeScript
+    "target": "ESNEXT",
+    "module": "ESNEXT",
+    "moduleResolution": "node"
+  }
+}

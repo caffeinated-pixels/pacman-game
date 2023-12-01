@@ -9,7 +9,6 @@ import {
   pacmanStartIndex,
   width,
 } from '../constants/generalConstants'
-import { Ghost } from '../create-ghosts'
 import { movePacman } from '../pacman-movement'
 import { checkForLifeLost } from './gameOver'
 import {
@@ -31,7 +30,7 @@ export const drawPacman = (state: GameState) => {
   state.squares[state.pacmanCurrentIndex].innerHTML = pacmanHTML
 }
 
-const removePacman = (pacmanCurrentTile, state: GameState) => {
+const removePacman = (pacmanCurrentTile: HTMLDivElement, state: GameState) => {
   pacmanCurrentTile.classList.remove('pacman', state.pacmanMovementClass)
   pacmanCurrentTile.innerHTML = ''
 }
@@ -111,10 +110,10 @@ function didPacmanEatGhost(state: GameState) {
     ghostEatenSound.play()
   }
 }
-
-export const handleControlInput = (event, state: GameState) => {
+// TODO: fix type for event
+export const handleControlInput = (event: any, state: GameState) => {
   if (state.isPaused) return
-  const input = event.type === 'keyup' ? event.key : event.currentTarget.id
+  const input = event.type === 'keyup' ? event.key : event.currentTarget?.id
 
   const pacmanCurrentTile = state.squares[state.pacmanCurrentIndex]
   removePacman(pacmanCurrentTile, state)
