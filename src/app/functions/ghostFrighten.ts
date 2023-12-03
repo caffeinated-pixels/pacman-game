@@ -29,7 +29,7 @@ export const frightenGhosts = (state: GameState) => {
       state.squares[ghost.currentIndex].classList.add('frightened-ghost')
 
       ghost.flashTimerId = setTimeout(() => makeGhostFlash(state, ghost), 7000)
-      ghost.frightenedTimer = setTimeout(unFrightenGhosts, 10000)
+      ghost.frightenedTimer = setTimeout(() => unFrightenGhosts(state), 10000)
     }
   })
 }
