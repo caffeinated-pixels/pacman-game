@@ -145,7 +145,7 @@ const moveGhost = (state: GameState, ghost: Ghost) => {
 }
 
 export const initGhostMovement = (state: GameState, ghost: Ghost) => {
-  ghost.timerId = setInterval(function () {
+  ghost.timerId = setInterval(() => {
     // each ghost has dotsEaten threshold for leaving lair
     if (state.dotsEaten >= ghost.startTimer) {
       moveGhost(state, ghost)

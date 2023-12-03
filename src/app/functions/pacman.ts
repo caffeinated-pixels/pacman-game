@@ -66,12 +66,12 @@ function didPacmanEatPowerPill(state: GameState) {
 function addBonusToBoard(state: GameState) {
   if (state.dotsEaten === 70 && !state.firstBonusRemoved) {
     state.squares[490].classList.add('bonus-cherry')
-    setTimeout(removeFirstCherry, 10000)
+    setTimeout(() => removeFirstCherry(state), 10000)
   }
 
   if (state.dotsEaten === 170 && !state.secondBonusRemoved) {
     state.squares[490].classList.add('bonus-cherry')
-    setTimeout(removeSecondCherry, 10000)
+    setTimeout(() => removeSecondCherry(state), 10000)
   }
 }
 

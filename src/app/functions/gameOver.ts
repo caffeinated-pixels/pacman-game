@@ -12,7 +12,7 @@ const gameOver = (state: GameState) => {
   gameoverScreen.style.display = 'block'
   checkForHiscore(state)
 
-  state.gameoverTimer = setTimeout(resetGame, 2000)
+  state.gameoverTimer = setTimeout(() => resetGame(state), 2000)
 }
 
 const removeLife = (state: GameState) => {
