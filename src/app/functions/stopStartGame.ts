@@ -53,6 +53,8 @@ const startGame = (state: GameState) => {
 
   drawPacman(state)
 
+  // TODO: only need to create ghosts on new level, not on game start
+  state.ghosts = createNewGhosts(width)
   drawGhosts(state)
   state.ghosts.forEach((ghost) => initGhostMovement(state, ghost))
 
