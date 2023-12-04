@@ -1,12 +1,45 @@
-function createGhost ({
+import { GameState } from './functions/initializeState'
+
+type GhostClasses = 'blinky' | 'pinky' | 'inky' | 'clyde'
+
+export type Ghost = {
+  className: GhostClasses
+  startIndex: number
+  respawnIndex: number
+  startTimer: number
+  speed: number
+  currentDirection: number
+  scatterTarget: number
+  currentIndex: number
+  targetTile: number
+  nextDirection: number
+  isFrightened: boolean
+  isFlashing: boolean
+  firstMoveAfterFrightened: boolean
+  timerId: number
+  frightenedTimer: number
+  flashTimerId: number
+}
+
+type CreateGhostParams = {
+  className: GhostClasses
+  startIndex: number
+  respawnIndex: number
+  startTimer: number
+  speed: number
+  currentDirection: number
+  scatterTarget: number
+}
+
+const createGhost = ({
   className,
   startIndex,
   respawnIndex,
   startTimer,
   speed,
   currentDirection,
-  scatterTarget
-}) {
+  scatterTarget,
+}: CreateGhostParams) => {
   return {
     className,
     startIndex,
@@ -23,11 +56,11 @@ function createGhost ({
     firstMoveAfterFrightened: false,
     timerId: NaN,
     frightenedTimer: NaN,
-    flashTimerId: NaN
+    flashTimerId: NaN,
   }
 }
 
-export function createNewGhosts (width) {
+export const createNewGhosts = (width: number): Ghost[] => {
   return [
     createGhost({
       className: 'blinky',
@@ -36,7 +69,7 @@ export function createNewGhosts (width) {
       startTimer: 0,
       speed: 500,
       currentDirection: -1,
-      scatterTarget: -1
+      scatterTarget: -1,
     }),
     createGhost({
       className: 'pinky',
@@ -45,7 +78,7 @@ export function createNewGhosts (width) {
       startTimer: 5,
       speed: 500,
       currentDirection: -width,
-      scatterTarget: -28
+      scatterTarget: -28,
     }),
     createGhost({
       className: 'inky',
@@ -54,7 +87,7 @@ export function createNewGhosts (width) {
       startTimer: 30,
       speed: 500,
       currentDirection: 1,
-      scatterTarget: 895
+      scatterTarget: 895,
     }),
     createGhost({
       className: 'clyde',
@@ -63,8 +96,8 @@ export function createNewGhosts (width) {
       startTimer: 90,
       speed: 500,
       currentDirection: -1,
-      scatterTarget: 868
-    })
+      scatterTarget: 868,
+    }),
   ]
 
   // return [new Ghost('clyde', 379, 379, 0, 500, -1, 868)]
@@ -73,8 +106,8 @@ export function createNewGhosts (width) {
   // return [new Ghost('blinky', 417, 377, 0, 1000, 1, -1)]
 }
 
-export function drawGhosts (state) {
-  state.ghosts.forEach(ghost => {
+export const drawGhosts = (state: GameState) => {
+  state.ghosts.forEach((ghost: Ghost) => {
     state.squares[ghost.currentIndex].classList.add(ghost.className)
     state.squares[ghost.currentIndex].classList.add('ghost')
   })
