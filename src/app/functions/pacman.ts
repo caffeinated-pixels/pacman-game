@@ -117,7 +117,7 @@ export const handleControlInput = (
 ) => {
   if (state.isPaused) return
   const input =
-    (event as KeyboardEvent).type === 'keyup'
+    (event as KeyboardEvent).type === 'keydown'
       ? (event as KeyboardEvent).key
       : (event.currentTarget as HTMLElement)?.id
 
