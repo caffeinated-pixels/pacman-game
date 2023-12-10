@@ -10,12 +10,13 @@ import { pacmanInterval } from './constants/generalConstants'
 const state = initializeGame()
 
 document.addEventListener('keydown', (e) => {
-  if (!state.pacmanTimerId) {
-    state.pacmanTimerId = setInterval(
-      () => handleControlInput(e, state),
-      pacmanInterval
-    )
-  }
+  if (state.isPaused || state.pacmanTimerId) return
+
+  handleControlInput(e, state)
+  state.pacmanTimerId = setInterval(
+    () => handleControlInput(e, state),
+    pacmanInterval
+  )
 })
 document.addEventListener('keyup', () => {
   clearInterval(state.pacmanTimerId)
