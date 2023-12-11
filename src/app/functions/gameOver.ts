@@ -60,6 +60,7 @@ export const checkForLifeLost = (state: GameState) => {
     pacmanCurrentTile.classList.contains('frightened-ghost')
 
   if (didGhostGetPacman && !isGhostFrightened) {
+    clearInterval(state.pacmanTimerId)
     removeLife(state)
     removeAllGhosts(state)
     removePacman(state, pacmanCurrentTile)
