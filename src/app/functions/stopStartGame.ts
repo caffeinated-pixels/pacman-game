@@ -7,12 +7,7 @@ import {
   startButton,
   startScreen,
 } from '../constants/dom'
-import {
-  pacmanInterval,
-  pauseIcon,
-  playIcon,
-  width,
-} from '../constants/generalConstants'
+import { pauseIcon, playIcon, width } from '../constants/generalConstants'
 import { createNewGhosts, drawGhosts } from '../create-ghosts'
 import { createBoard } from './createBoard'
 import { initGhostMovement } from './ghostLogic'
@@ -69,10 +64,10 @@ const startGame = (state: GameState) => {
   // automatically start pacman moving left
   const fakeEvent = { type: 'keydown', key: 'a' } as KeyboardEvent
   handleControlInput(fakeEvent, state)
-  state.pacmanTimerId = setInterval(
-    () => handleControlInput(fakeEvent, state),
-    pacmanInterval
-  )
+  // state.pacmanTimerId = setInterval(
+  //   () => handleControlInput(fakeEvent, state),
+  //   pacmanInterval
+  // )
 }
 
 export const resetGame = (state: GameState) => {

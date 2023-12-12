@@ -11,12 +11,7 @@ const state = initializeGame()
 
 document.addEventListener('keydown', (e) => {
   if (state.isPaused) return
-  clearInterval(state.pacmanTimerId)
   handleControlInput(e, state)
-  state.pacmanTimerId = setInterval(
-    () => handleControlInput(e, state),
-    pacmanInterval
-  )
 })
 
 startButton.addEventListener('click', () => handleStartBtn(state))

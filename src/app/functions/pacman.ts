@@ -6,6 +6,7 @@ import {
 } from '../constants/audioObjects'
 import {
   pacmanHTML,
+  pacmanInterval,
   pacmanStartIndex,
   width,
 } from '../constants/generalConstants'
@@ -111,40 +112,62 @@ function didPacmanEatGhost(state: GameState) {
   }
 }
 
-export const handleControlInput = (
-  event: KeyboardEvent | Event,
-  state: GameState
-) => {
-  if (state.isPaused) return
-  const input =
-    (event as KeyboardEvent).type === 'keydown'
-      ? (event as KeyboardEvent).key
-      : (event.currentTarget as HTMLElement)?.id
-
-  const pacmanCurrentTile = state.squares[state.pacmanCurrentIndex]
-  removePacman(pacmanCurrentTile, state)
-
+const getRequestedDirection = (state: GameState, input: string) => {
   switch (input) {
     case 'ArrowDown':
     case 'down':
     case 's':
-      movePacman(state, width)
-      break
+      return width
     case 'ArrowUp':
     case 'up':
     case 'w':
-      movePacman(state, -width)
-      break
+      return -width
     case 'ArrowLeft':
     case 'left':
     case 'a':
-      movePacman(state, -1)
-      break
+      return -1
     case 'ArrowRight':
     case 'right':
     case 'd':
-      movePacman(state, 1)
-      break
+      return 1
+
+    default:
+      return state.pacmanCurrentDirection
+  }
+}
+
+const movePacman = (state: GameState, direction: number) => {
+  if (state.isPaused) return
+  const newIndex = state.pacmanCurrentIndex + direction
+  console.log('🚀 turbo ~ movePacman ~ newIndex:', newIndex)
+  const pacmanCurrentTile = state.squares[state.pacmanCurrentIndex]
+  removePacman(pacmanCurrentTile, state)
+  if (
+    !state.squares[newIndex].classList.contains('ghost-lair') &&
+    !state.squares[newIndex].classList.contains('wall')
+  ) {
+    state.pacmanCurrentIndex = newIndex
+    state.pacmanCurrentDirection = direction
+    switch (direction) {
+      case 1:
+        state.pacmanMovementClass = 'pacman-facing-right'
+        break
+      case -1:
+        state.pacmanMovementClass = 'pacman-facing-left'
+        break
+      case 28:
+        state.pacmanMovementClass = 'pacman-facing-down'
+        break
+      case -28:
+        state.pacmanMovementClass = 'pacman-facing-up'
+        break
+    }
+  }
+
+  if (state.pacmanCurrentIndex === 392) {
+    state.pacmanCurrentIndex = 419
+  } else if (state.pacmanCurrentIndex === 419) {
+    state.pacmanCurrentIndex = 392
   }
 
   state.squares[state.pacmanCurrentIndex].classList.add(
@@ -160,4 +183,31 @@ export const handleControlInput = (
   didPacmanEatBonus(state)
   checkForLevelEnd(state)
   checkForLifeLost(state)
+}
+
+export const handleControlInput = (
+  event: KeyboardEvent | Event,
+  state: GameState
+) => {
+  const input =
+    (event as KeyboardEvent).type === 'keydown'
+      ? (event as KeyboardEvent).key
+      : (event.currentTarget as HTMLElement)?.id
+
+  const requestedDirection = getRequestedDirection(state, input)
+  const requestedIndex = state.pacmanCurrentIndex + requestedDirection
+
+  if (
+    !state.squares[requestedIndex].classList.contains('ghost-lair') &&
+    !state.squares[requestedIndex].classList.contains('wall')
+  ) {
+    clearInterval(state.pacmanTimerId)
+
+    movePacman(state, requestedDirection)
+
+    state.pacmanTimerId = setInterval(
+      () => movePacman(state, requestedDirection),
+      pacmanInterval
+    )
+  }
 }
