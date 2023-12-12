@@ -10,7 +10,6 @@ import {
   pacmanStartIndex,
   width,
 } from '../constants/generalConstants'
-import { movePacman } from '../pacman-movement'
 import { checkForLifeLost } from './gameOver'
 import {
   frightenGhosts,
@@ -136,17 +135,21 @@ const getRequestedDirection = (state: GameState, input: string) => {
   }
 }
 
+const checkForWall = (state: GameState, requestedIndex: number) => {
+  return (
+    state.squares[requestedIndex].classList.contains('wall') ||
+    state.squares[requestedIndex].classList.contains('ghost-lair')
+  )
+}
+
 const movePacman = (state: GameState, direction: number) => {
   if (state.isPaused) return
-  const newIndex = state.pacmanCurrentIndex + direction
-  console.log('🚀 turbo ~ movePacman ~ newIndex:', newIndex)
+  const requestedIndex = state.pacmanCurrentIndex + direction
+
   const pacmanCurrentTile = state.squares[state.pacmanCurrentIndex]
   removePacman(pacmanCurrentTile, state)
-  if (
-    !state.squares[newIndex].classList.contains('ghost-lair') &&
-    !state.squares[newIndex].classList.contains('wall')
-  ) {
-    state.pacmanCurrentIndex = newIndex
+  if (!checkForWall(state, requestedIndex)) {
+    state.pacmanCurrentIndex = requestedIndex
     state.pacmanCurrentDirection = direction
     switch (direction) {
       case 1:
@@ -197,17 +200,14 @@ export const handleControlInput = (
   const requestedDirection = getRequestedDirection(state, input)
   const requestedIndex = state.pacmanCurrentIndex + requestedDirection
 
-  if (
-    !state.squares[requestedIndex].classList.contains('ghost-lair') &&
-    !state.squares[requestedIndex].classList.contains('wall')
-  ) {
-    clearInterval(state.pacmanTimerId)
+  if (checkForWall(state, requestedIndex)) return
 
-    movePacman(state, requestedDirection)
+  clearInterval(state.pacmanTimerId)
 
-    state.pacmanTimerId = setInterval(
-      () => movePacman(state, requestedDirection),
-      pacmanInterval
-    )
-  }
+  movePacman(state, requestedDirection)
+
+  state.pacmanTimerId = setInterval(
+    () => movePacman(state, requestedDirection),
+    pacmanInterval
+  )
 }

@@ -5,7 +5,6 @@ import { handleStartBtn, resetGame } from './functions/stopStartGame'
 import { initializeGame } from './functions/initialize game'
 
 import { handleControlInput } from './functions/pacman'
-import { pacmanInterval } from './constants/generalConstants'
 
 const state = initializeGame()
 
