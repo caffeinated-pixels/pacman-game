@@ -144,27 +144,28 @@ const checkForWall = (state: GameState, requestedIndex: number) => {
 
 const movePacman = (state: GameState, direction: number) => {
   if (state.isPaused) return
+
   const requestedIndex = state.pacmanCurrentIndex + direction
+  if (checkForWall(state, requestedIndex)) return
 
   const pacmanCurrentTile = state.squares[state.pacmanCurrentIndex]
   removePacman(pacmanCurrentTile, state)
-  if (!checkForWall(state, requestedIndex)) {
-    state.pacmanCurrentIndex = requestedIndex
-    state.pacmanCurrentDirection = direction
-    switch (direction) {
-      case 1:
-        state.pacmanMovementClass = 'pacman-facing-right'
-        break
-      case -1:
-        state.pacmanMovementClass = 'pacman-facing-left'
-        break
-      case 28:
-        state.pacmanMovementClass = 'pacman-facing-down'
-        break
-      case -28:
-        state.pacmanMovementClass = 'pacman-facing-up'
-        break
-    }
+
+  state.pacmanCurrentIndex = requestedIndex
+  state.pacmanCurrentDirection = direction
+  switch (direction) {
+    case 1:
+      state.pacmanMovementClass = 'pacman-facing-right'
+      break
+    case -1:
+      state.pacmanMovementClass = 'pacman-facing-left'
+      break
+    case 28:
+      state.pacmanMovementClass = 'pacman-facing-down'
+      break
+    case -28:
+      state.pacmanMovementClass = 'pacman-facing-up'
+      break
   }
 
   if (state.pacmanCurrentIndex === 392) {
