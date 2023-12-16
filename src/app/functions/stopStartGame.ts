@@ -64,10 +64,6 @@ const startGame = (state: GameState) => {
   // automatically start pacman moving left
   const fakeEvent = { type: 'keydown', key: 'a' } as KeyboardEvent
   handleControlInput(fakeEvent, state)
-  // state.pacmanTimerId = setInterval(
-  //   () => handleControlInput(fakeEvent, state),
-  //   pacmanInterval
-  // )
 }
 
 export const resetGame = (state: GameState) => {
