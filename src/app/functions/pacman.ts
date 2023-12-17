@@ -202,6 +202,8 @@ export const handleControlInput = (
   const requestedIndex = state.pacmanCurrentIndex + requestedDirection
 
   if (checkForWall(state, requestedIndex)) return
+  // prevent spamming of movement keys to speed up pacman
+  if (requestedDirection === state.pacmanCurrentDirection) return
 
   clearInterval(state.pacmanTimerId)
 
