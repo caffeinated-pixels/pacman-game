@@ -1,3 +1,4 @@
+import { ghostInterval } from './constants/generalConstants'
 import { GameState } from './functions/initializeState'
 
 type GhostClasses = 'blinky' | 'pinky' | 'inky' | 'clyde'
@@ -67,7 +68,7 @@ export const createNewGhosts = (width: number): Ghost[] => {
       startIndex: 321,
       respawnIndex: 377,
       startTimer: 0,
-      speed: 500,
+      speed: ghostInterval,
       currentDirection: -1,
       scatterTarget: -1,
     }),
@@ -76,7 +77,7 @@ export const createNewGhosts = (width: number): Ghost[] => {
       startIndex: 378,
       respawnIndex: 378,
       startTimer: 5,
-      speed: 500,
+      speed: ghostInterval,
       currentDirection: -width,
       scatterTarget: -28,
     }),
@@ -85,7 +86,7 @@ export const createNewGhosts = (width: number): Ghost[] => {
       startIndex: 376,
       respawnIndex: 376,
       startTimer: 30,
-      speed: 500,
+      speed: ghostInterval,
       currentDirection: 1,
       scatterTarget: 895,
     }),
@@ -94,7 +95,7 @@ export const createNewGhosts = (width: number): Ghost[] => {
       startIndex: 379,
       respawnIndex: 379,
       startTimer: 90,
-      speed: 500,
+      speed: ghostInterval,
       currentDirection: -1,
       scatterTarget: 868,
     }),

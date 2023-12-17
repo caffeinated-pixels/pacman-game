@@ -20,6 +20,7 @@ export type GameState = {
   ghosts: Ghost[]
   getReadyTimer: number
   gameoverTimer: number
+  pacmanTimerId: number
 }
 
 export const createSquares = () => {
@@ -59,5 +60,6 @@ export const initializeState = (): GameState => {
     ghosts: createNewGhosts(width),
     getReadyTimer: NaN,
     gameoverTimer: NaN,
+    pacmanTimerId: NaN,
   }
 }

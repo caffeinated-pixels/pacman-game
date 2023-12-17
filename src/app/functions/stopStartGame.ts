@@ -12,7 +12,7 @@ import { createNewGhosts, drawGhosts } from '../create-ghosts'
 import { createBoard } from './createBoard'
 import { initGhostMovement } from './ghostLogic'
 import { GameState, createSquares } from './initializeState'
-import { drawPacman } from './pacman'
+import { drawPacman, handleControlInput } from './pacman'
 import { updateScore } from './scoring'
 
 const resumeGame = (state: GameState) => {
@@ -60,6 +60,10 @@ const startGame = (state: GameState) => {
 
   state.isGameOver = false
   state.isPaused = false
+
+  // automatically start pacman moving left
+  const fakeEvent = { type: 'keydown', key: 'a' } as KeyboardEvent
+  handleControlInput(fakeEvent, state)
 }
 
 export const resetGame = (state: GameState) => {
@@ -67,6 +71,7 @@ export const resetGame = (state: GameState) => {
     clearInterval(ghost.timerId)
     clearTimeout(ghost.flashTimerId)
   })
+  clearInterval(state.pacmanTimerId)
 
   startScreen.style.display = 'block'
   pauseScreen.style.display = 'none'

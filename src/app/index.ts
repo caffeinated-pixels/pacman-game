@@ -8,7 +8,11 @@ import { handleControlInput } from './functions/pacman'
 
 const state = initializeGame()
 
-document.addEventListener('keyup', (e) => handleControlInput(e, state))
+document.addEventListener('keydown', (e) => {
+  if (state.isPaused) return
+  handleControlInput(e, state)
+})
+
 startButton.addEventListener('click', () => handleStartBtn(state))
 resetButton.addEventListener('click', () => resetGame(state))
 document

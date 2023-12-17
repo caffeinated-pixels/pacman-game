@@ -23,12 +23,23 @@ Features that I've added to the tutorial version include:
 - game sounds
 - d-pad controls (for mobile screens)
 
-I've spent an insane amount of time working on this game, so I feel that it's time to move on for now. However, I do hope to return to my Pacman game at some point to add in some fixes as well extra features based on the original game, such as:
+## Pac-man revisited 2023
 
+I've been tweaking the game and adding some new features, including:
+
+- using Parcel to serve as a JS bundle (making it easier to modularize)
+- complete typescript conversion
+- updated speed and controls to match the original game better:
+  - both pac-man and the ghosts move significantly faster around the maze (making it more difficult)
+  - ghosts now slow down while frightened
+  - pac-man moves continuously without further input and only stops moving if he hits a wall
+
+Other potential features/fixes that I may (or may not) work on in the future:
+
+- better pac-man and ghost movement animations
 - ghost scatter-chase alternation behaviour
 - more bonus items
 - increasing difficultly with new levels
-- continuous Pacman movement
 - ghosts travelling back to the lair after being eaten (rather than instantly respawning there)
 - make eating frightened ghost more reliable
 - pause function should also pause the frightened timer
