@@ -1,7 +1,7 @@
 {
   "name": "pac-man",
   "version": "1.0.0",
-  "description": "a simple pac-man game based on a Scrimba tutorial by Ania Kubow",
+  "description": "A pac-man clone inspired an Ania Kubow tutorial on Scrimba",
   "source": "src/index.html",
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "scripts": {
@@ -16,8 +16,8 @@
   "author": "Stevie Gill",
   "license": "ISC",
   "devDependencies": {
-    "@parcel/transformer-sass": "^2.9.3",
+    "@parcel/transformer-sass": "^2.10.3",
     "eslint": "^8.50.0",
-    "parcel": "^2.9.3"
+    "parcel": "^2.10.3"
   }
 }
