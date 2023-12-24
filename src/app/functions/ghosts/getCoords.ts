@@ -1,4 +1,4 @@
-import { Ghost } from '../create-ghosts'
+import { Ghost } from './create-ghosts'
 
 export const getIndexCoords = (tileIndex: number) => {
   // find the X,Y coordinates of a given index

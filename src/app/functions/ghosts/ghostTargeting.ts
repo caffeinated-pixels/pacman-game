@@ -1,7 +1,7 @@
-import { width } from '../constants/generalConstants'
-import { Ghost } from '../create-ghosts'
+import { width } from '../../constants/generalConstants'
+import { Ghost } from './create-ghosts'
 import { calcDistance, getIndexCoords } from './getCoords'
-import { GameState } from './initializeState'
+import { GameState } from '../game-setup/initializeState'
 
 function getBlinkysTarget(state: GameState) {
   // Blinky's target is Pacman's current tile

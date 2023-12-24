@@ -1,7 +1,7 @@
-import { grid } from '../constants/dom'
-import { width } from '../constants/generalConstants'
-import { Ghost, createNewGhosts } from '../create-ghosts'
-import { layout } from '../layout'
+import { grid } from '../../constants/dom'
+import { width } from '../../constants/generalConstants'
+import { Ghost, createNewGhosts } from '../ghosts/create-ghosts'
+import { layout } from './layout'
 
 export type GameState = {
   squares: HTMLDivElement[]

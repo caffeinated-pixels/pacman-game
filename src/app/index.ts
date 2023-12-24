@@ -1,10 +1,10 @@
 import { startButton, resetButton } from './constants/dom'
 
-import { handleStartBtn, resetGame } from './functions/stopStartGame'
+import { handleStartBtn, resetGame } from './functions/game-setup/stopStartGame'
 
-import { initializeGame } from './functions/initialize game'
+import { initializeGame } from './functions/game-setup/initialize game'
 
-import { handleControlInput } from './functions/pacman'
+import { handleControlInput } from './functions/pac-man/pacman'
 
 const state = initializeGame()
 

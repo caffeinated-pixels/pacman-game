@@ -1,5 +1,5 @@
-import { hiscoreDisplay, scoreDisplay } from '../constants/dom'
-import { GameState } from './initializeState'
+import { hiscoreDisplay, scoreDisplay } from '../../constants/dom'
+import { GameState } from '../game-setup/initializeState'
 
 export const updateScore = (state: GameState) => {
   scoreDisplay.textContent = state.score.toString()

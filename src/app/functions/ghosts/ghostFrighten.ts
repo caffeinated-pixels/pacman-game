@@ -2,12 +2,12 @@ import {
   ghostFrightenedInterval,
   ghostInterval,
   width,
-} from '../constants/generalConstants'
-import { Ghost } from '../create-ghosts'
-import { removeAllGhostClasses } from './gameOver'
+} from '../../constants/generalConstants'
+import { Ghost } from './create-ghosts'
+import { removeAllGhostClasses } from '../game-checks/gameOver'
 import { initGhostMovement } from './ghostLogic'
-import { GameState } from './initializeState'
-import { calcGhostEatenPoints, updateScore } from './scoring'
+import { GameState } from '../game-setup/initializeState'
+import { calcGhostEatenPoints, updateScore } from '../game-checks/scoring'
 
 const resetGhostTimers = (state: GameState, ghost: Ghost) => {
   // so that eating second pill while ghosts frightened resets timer
