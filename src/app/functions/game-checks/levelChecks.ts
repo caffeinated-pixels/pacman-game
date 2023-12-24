@@ -1,9 +1,9 @@
-import { stopPowerPillSound } from '../constants/audioObjects'
-import { grid } from '../constants/dom'
-import { createBoard } from './createBoard'
+import { stopPowerPillSound } from '../../constants/audioObjects'
+import { grid } from '../../constants/dom'
+import { createBoard } from '../game-setup/createBoard'
 import { removeAllGhosts, removePacman } from './gameOver'
-import { GameState, createSquares } from './initializeState'
-import { getReadyTimer } from './stopStartGame'
+import { GameState, createSquares } from '../game-setup/initializeState'
+import { getReadyTimer } from '../game-setup/stopStartGame'
 
 export const checkForLevelEnd = (state: GameState) => {
   // default is >243

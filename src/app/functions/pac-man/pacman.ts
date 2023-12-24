@@ -3,22 +3,22 @@ import {
   ghostEatenSound,
   munchSound,
   powerPillSound,
-} from '../constants/audioObjects'
+} from '../../constants/audioObjects'
 import {
   pacmanHTML,
   pacmanInterval,
   pacmanStartIndex,
   width,
-} from '../constants/generalConstants'
-import { checkForLifeLost } from './gameOver'
+} from '../../constants/generalConstants'
+import { checkForLifeLost } from '../game-checks/gameOver'
 import {
   frightenGhosts,
   returnGhostToLair,
   whichGhostWasEaten,
-} from './ghostFrighten'
-import { GameState } from './initializeState'
-import { checkForLevelEnd } from './levelChecks'
-import { updateScore } from './scoring'
+} from '../ghosts/ghostFrighten'
+import { GameState } from '../game-setup/initializeState'
+import { checkForLevelEnd } from '../game-checks/levelChecks'
+import { updateScore } from '../game-checks/scoring'
 
 export const drawPacman = (state: GameState) => {
   state.pacmanCurrentIndex = pacmanStartIndex

@@ -1,9 +1,9 @@
-import { ghostDirections } from '../constants/generalConstants'
-import { Ghost } from '../create-ghosts'
-import { checkForLifeLost } from './gameOver'
+import { ghostDirections } from '../../constants/generalConstants'
+import { Ghost } from './create-ghosts'
+import { checkForLifeLost } from '../game-checks/gameOver'
 import { getTargetTileDistance } from './getCoords'
 import { setGhostTarget } from './ghostTargeting'
-import { GameState } from './initializeState'
+import { GameState } from '../game-setup/initializeState'
 
 const isGhostFrightened = (state: GameState, ghost: Ghost) => {
   if (ghost.isFrightened) {

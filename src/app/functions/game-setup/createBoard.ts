@@ -1,5 +1,5 @@
-import { width, height, pacmanHTML } from '../constants/generalConstants'
-import { livesLeftDisplay } from '../constants/dom'
+import { width, height, pacmanHTML } from '../../constants/generalConstants'
+import { livesLeftDisplay } from '../../constants/dom'
 import { GameState } from './initializeState'
 
 const addWallborders = (state: GameState) => {

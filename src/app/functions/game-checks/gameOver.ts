@@ -1,11 +1,11 @@
-import { deathSound, stopPowerPillSound } from '../constants/audioObjects'
-import { gameoverScreen } from '../constants/dom'
-import { Ghost } from '../create-ghosts'
-import { updateLivesDisplay } from './display'
-import { resetGhostTimers } from './ghostLogic'
-import { GameState } from './initializeState'
+import { deathSound, stopPowerPillSound } from '../../constants/audioObjects'
+import { gameoverScreen } from '../../constants/dom'
+import { Ghost } from '../ghosts/create-ghosts'
+import { updateLivesDisplay } from './updateLivesDisplay'
+import { resetGhostTimers } from '../ghosts/ghostLogic'
+import { GameState } from '../game-setup/initializeState'
 import { checkForHiscore } from './scoring'
-import { getReadyTimer, resetGame } from './stopStartGame'
+import { getReadyTimer, resetGame } from '../game-setup/stopStartGame'
 
 const gameOver = (state: GameState) => {
   state.isGameOver = true

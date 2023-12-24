@@ -1,4 +1,7 @@
-import { startGameSound, stopPowerPillSound } from '../constants/audioObjects'
+import {
+  startGameSound,
+  stopPowerPillSound,
+} from '../../constants/audioObjects'
 import {
   gameoverScreen,
   getReadyScreen,
@@ -6,14 +9,14 @@ import {
   pauseScreen,
   startButton,
   startScreen,
-} from '../constants/dom'
-import { pauseIcon, playIcon, width } from '../constants/generalConstants'
-import { createNewGhosts, drawGhosts } from '../create-ghosts'
+} from '../../constants/dom'
+import { pauseIcon, playIcon, width } from '../../constants/generalConstants'
+import { createNewGhosts, drawGhosts } from '../ghosts/create-ghosts'
 import { createBoard } from './createBoard'
-import { initGhostMovement } from './ghostLogic'
+import { initGhostMovement } from '../ghosts/ghostLogic'
 import { GameState, createSquares } from './initializeState'
-import { drawPacman, handleControlInput } from './pacman'
-import { updateScore } from './scoring'
+import { drawPacman, handleControlInput } from '../pac-man/pacman'
+import { updateScore } from '../game-checks/scoring'
 
 const resumeGame = (state: GameState) => {
   state.isPaused = false

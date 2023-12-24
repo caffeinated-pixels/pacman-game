@@ -1,5 +1,5 @@
-import { ghostInterval } from './constants/generalConstants'
-import { GameState } from './functions/initializeState'
+import { ghostInterval } from '../../constants/generalConstants'
+import { GameState } from '../game-setup/initializeState'
 
 type GhostClasses = 'blinky' | 'pinky' | 'inky' | 'clyde'
 

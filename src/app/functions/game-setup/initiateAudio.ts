@@ -5,7 +5,7 @@ import {
   deathSound,
   ghostEatenSound,
   powerPillSound,
-} from '../constants/audioObjects'
+} from '../../constants/audioObjects'
 
 // fix for getting audio to play on iOS
 export const initiateAudio = () => {
