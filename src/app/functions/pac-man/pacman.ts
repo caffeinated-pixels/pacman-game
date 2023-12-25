@@ -35,7 +35,7 @@ const removePacman = (pacmanCurrentTile: HTMLDivElement, state: GameState) => {
   pacmanCurrentTile.innerHTML = ''
 }
 
-function didPacmanEatDot(state: GameState) {
+const didPacmanEatDot = (state: GameState) => {
   if (state.squares[state.pacmanCurrentIndex].classList.contains('pac-dot')) {
     state.squares[state.pacmanCurrentIndex].classList.remove('pac-dot')
     state.squares[state.pacmanCurrentIndex].classList.add('blank')
@@ -46,7 +46,7 @@ function didPacmanEatDot(state: GameState) {
   }
 }
 
-function didPacmanEatPowerPill(state: GameState) {
+const didPacmanEatPowerPill = (state: GameState) => {
   if (
     state.squares[state.pacmanCurrentIndex].classList.contains('power-pill')
   ) {
@@ -63,7 +63,7 @@ function didPacmanEatPowerPill(state: GameState) {
   }
 }
 
-function addBonusToBoard(state: GameState) {
+const addBonusToBoard = (state: GameState) => {
   if (state.dotsEaten === 70 && !state.firstBonusRemoved) {
     state.squares[490].classList.add('bonus-cherry')
     setTimeout(() => removeFirstCherry(state), 10000)
@@ -75,17 +75,17 @@ function addBonusToBoard(state: GameState) {
   }
 }
 
-function removeFirstCherry(state: GameState) {
+const removeFirstCherry = (state: GameState) => {
   state.squares[490].classList.remove('bonus-cherry')
   state.firstBonusRemoved = true
 }
 
-function removeSecondCherry(state: GameState) {
+const removeSecondCherry = (state: GameState) => {
   state.squares[490].classList.remove('bonus-cherry')
   state.secondBonusRemoved = true
 }
 
-function didPacmanEatBonus(state: GameState) {
+const didPacmanEatBonus = (state: GameState) => {
   if (
     state.squares[state.pacmanCurrentIndex].classList.contains('bonus-cherry')
   ) {
@@ -102,7 +102,7 @@ function didPacmanEatBonus(state: GameState) {
   }
 }
 
-function didPacmanEatGhost(state: GameState) {
+const didPacmanEatGhost = (state: GameState) => {
   const pacmanCurrentSquare = state.squares[state.pacmanCurrentIndex]
   if (pacmanCurrentSquare.classList.contains('frightened-ghost')) {
     const ghost = whichGhostWasEaten(state, pacmanCurrentSquare)
