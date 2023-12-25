@@ -41,7 +41,7 @@ export const frightenGhosts = (state: GameState) => {
   })
 }
 
-function unFrightenGhosts(state: GameState) {
+const unFrightenGhosts = (state: GameState) => {
   state.ghosts.forEach((ghost) => {
     ghost.isFrightened = false
     ghost.isFlashing = false
