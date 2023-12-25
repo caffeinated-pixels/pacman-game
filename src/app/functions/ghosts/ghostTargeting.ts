@@ -3,12 +3,12 @@ import { Ghost } from './create-ghosts'
 import { calcDistance, getIndexCoords } from './getCoords'
 import { GameState } from '../game-setup/initializeState'
 
-function getBlinkysTarget(state: GameState) {
+const getBlinkysTarget = (state: GameState) => {
   // Blinky's target is Pacman's current tile
   return state.pacmanCurrentIndex
 }
 
-function getPinkysTarget(state: GameState) {
+const getPinkysTarget = (state: GameState) => {
   // Pinky's target is 4 ahead of Pacman's current tile
   const pacmanXY = getIndexCoords(state.pacmanCurrentIndex)
 
@@ -25,7 +25,7 @@ function getPinkysTarget(state: GameState) {
   return state.pacmanCurrentIndex + fourTileOffset
 }
 
-function getInkysTarget(state: GameState) {
+const getInkysTarget = (state: GameState) => {
   // inky has the most complex targeting scheme!!!
   // we find 2 tile offset from pacman's heading and draw a line from blinky's position
   // we then double the distance and continue past the offset in the same direction
@@ -55,7 +55,7 @@ function getInkysTarget(state: GameState) {
   return targetTileIndex
 }
 
-function getClydesTarget(state: GameState, clyde: Ghost) {
+const getClydesTarget = (state: GameState, clyde: Ghost) => {
   const pacmanXY = getIndexCoords(state.pacmanCurrentIndex)
   const clydeXY = getIndexCoords(clyde.currentIndex)
 
