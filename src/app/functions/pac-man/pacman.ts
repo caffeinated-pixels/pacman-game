@@ -148,6 +148,11 @@ const movePacman = (state: GameState, direction: number) => {
   const requestedIndex = state.pacmanCurrentIndex + direction
   if (checkForWall(state, requestedIndex)) return
 
+  /**
+   * check before and after pacman moves to see if he ate a frightened ghost
+   */
+  didPacmanEatGhost(state)
+
   const pacmanCurrentTile = state.squares[state.pacmanCurrentIndex]
   removePacman(pacmanCurrentTile, state)
 
