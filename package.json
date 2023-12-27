@@ -19,7 +19,9 @@
   "license": "ISC",
   "devDependencies": {
     "@parcel/transformer-sass": "^2.10.3",
-    "eslint": "^8.50.0",
+    "@typescript-eslint/eslint-plugin": "^6.16.0",
+    "@typescript-eslint/parser": "^6.16.0",
+    "eslint": "^8.56.0",
     "husky": "^8.0.0",
     "lint-staged": "^15.2.0",
     "parcel": "^2.10.3"
