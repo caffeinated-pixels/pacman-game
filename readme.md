@@ -41,7 +41,6 @@ Other potential features/fixes that I may (or may not) work on in the future:
 - more bonus items
 - increasing difficultly with new levels
 - ghosts travelling back to the lair after being eaten (rather than instantly respawning there)
-- make eating frightened ghost more reliable
 - pause function should also pause the frightened timer
 
 ## Coding notes
