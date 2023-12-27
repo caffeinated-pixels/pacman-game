@@ -1,0 +1,6 @@
+{
+  "*.{js,jsx,ts,tsx}": [
+    "eslint --max-warnings=0",
+    "tsc -p tsconfig.json --noEmit"
+  ]
+}
